@@ -16,7 +16,7 @@
       <div class="input-group mb-3">
         <input class="form-control form-control-sm" id="search-bar" type="text" [ngbTypeahead]="search"
           [resultFormatter]="searchFormatter">
-        <button class="btn btn-outline-secondary" type="button" (click)="open(content)">New</button>
+        <button class="btn btn-outline-primary" type="button" (click)="open(content)"><i class="bi bi-house-add"></i></button>
       </div>
     </div>
   </div>
@@ -67,30 +67,70 @@
         <div class="resident-info">
           <h6>Resident Information</h6>
           <div style="padding: 10px;">
-            <table class="table table-sm table-hover table-striped">
-              <thead>
+            <div class="input-group mb-3">
+              <select class="form-select" id="inputGroupSelect01">
+                <option value="1">Ronelle Siazon</option>
+                <option value="2">Roger Tan</option>
+              </select>
+              <button class="btn btn-outline-primary" type="button"><i class="bi bi-person-add"></i></button>
+            </div>
+            <table class="table table-sm table-bordered table-striped" id="resident-table">
+              <tbody>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Middle Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col">Occupation</th>
-                  <th scope="col">Present Address</th>
-                  <th scope="col">Age</th>
-                  <th scope="col">Sex</th>
-                  <th scope="col">Nationality</th>
-                  <th scope="col">Civil Status</th>
-                  <th scope="col">Date of Birth</th>
-                  <th scope="col">Contact No</th>
+                  <th>First Name</th>
+                  <td>Ronelle</td>
+                  <th>Nationality</th>
+                  <td>Filipino</td>
                 </tr>
-              </thead>
+                <tr>
+                  <th>Middle Name</th>
+                  <td>Claude</td>
+                  <th>Civil Status</th>
+                  <td>Married</td>
+                </tr>
+                <tr>
+                  <th>Last Name</th>
+                  <td>Siazon</td>
+                  <th>Date of Birth</th>
+                  <td>Oct 12 2024</td>
+                </tr>
+                <tr>
+                  <th>Occupation</th>
+                  <td>Businessman</td>
+                  <th>Contact No</th>
+                  <td>12354389324</td>
+                </tr>
+                <tr>
+                  <th>Present Address</th>
+                  <td>Caloocan City</td>
+                  <th>Name / Person to be notified in case of Emergency</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Age</th>
+                  <td>29</td>
+                  <th>Address</th>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>Sex</th>
+                  <td>Male</td>
+                  <th>Contact No.</th>
+                  <td></td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
       </div>
     </div>
+    <hr />
     <div class="footer">
-      
+      <div class="row">
+        <div class="col-sm-2">
+          <h6>Attachment Files</h6>
+        </div>
+      </div>
     </div>
 
 

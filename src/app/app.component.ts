@@ -12,7 +12,7 @@ import TileLayer from 'ol/layer/Tile';
 import Vector from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import { Point } from 'ol/geom';
-import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbCarouselModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
 import { RouterLink } from '@angular/router';
 
@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbTypeaheadModule, NgbCollapseModule, RouterLink, NgbCarouselModule],
+  imports: [RouterOutlet, NgbTypeaheadModule, NgbCollapseModule, RouterLink, NgbCarouselModule, NgbAccordionModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
   isMenuCollapsed = true;
 
   searchFormatter = (result: string) => result.toUpperCase();
+  items = ['Ronelle Siazon', 'Roger Tan'];
 
   ngOnInit(): void {
     // const background = new Image();
@@ -65,11 +66,8 @@ export class AppComponent implements OnInit {
 
     this.map.on("click", this.mapClick);
 
-  }
-
-  mapClick(event: any) {
     const iconFeature = new Feature({
-      geometry: new Point(ol.fromLonLat([122.2959, 13.9512])),
+      geometry: new Point(ol.fromLonLat([120.9909, 14.6633])),
       name: 'Somewhere near Nottingham',
     });
     const marker = new VectorLayer({
@@ -86,6 +84,11 @@ export class AppComponent implements OnInit {
       })
     })
     this.map?.addLayer(marker)
+
+  }
+
+  mapClick(event: any) {
+    
   }
 
   search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
