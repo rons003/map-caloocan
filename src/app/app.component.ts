@@ -12,15 +12,16 @@ import TileLayer from 'ol/layer/Tile';
 import Vector from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import { Point } from 'ol/geom';
-import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbDropdownModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbTypeaheadModule, NgbCollapseModule, RouterLink, NgbDropdownModule],
+  imports: [RouterOutlet, NgbTypeaheadModule, NgbCollapseModule, RouterLink, NgbDropdownModule, NgbCarouselModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -39,6 +40,10 @@ export class AppComponent implements OnInit {
   searchFormatter = (result: string) => result.toUpperCase();
   items = ['Ronelle Siazon', 'Roger Tan'];
 
+  images = [944, 1011, 984].map((n) => 'assets/barangay.jpg');
+
+  resident: string = '';
+
   ngOnInit(): void {
     const background = new Image();
     background.src = "assets/map.png";
@@ -50,28 +55,7 @@ export class AppComponent implements OnInit {
           canvas.height / 2 - background.height / 2);
       }
     }
-
-    // this.map = new Map({
-    //   target: 'map',
-    //   layers: [
-    //     new TileLayer({
-    //       source: new OSM()
-    //     }),
-    //   ],
-    //   view: new View({
-    //     center: ol.fromLonLat([120.9909, 14.6633]),
-    //     zoom: 19,
-    //     minZoom: 16
-    //   })
-    // });
-
-    // this.map.on("click", this.mapClick);
-
   }
-
-  // mapClick(event: any) {
-
-  // }
 
   search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
     text$.pipe(
@@ -103,5 +87,19 @@ export class AppComponent implements OnInit {
       default:
         return `with: ${reason}`;
     }
+  }
+
+  onSearch() {
+    console.log('On Search', this.resident);
+    const pin = new Image();
+    pin.src = "assets/pin.png";
+    pin.onload = () => {
+      const canvas: HTMLCanvasElement = this.canvas.nativeElement;
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.drawImage(pin, 300,500, 50, 50);
+      }
+    }
+
   }
 }
