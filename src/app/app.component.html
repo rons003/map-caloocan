@@ -1,141 +1,240 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
   <div class="container-fluid">
-    <a class="navbar-brand" [routerLink]="'.'">Barangay 132 Residence Tracker System</a>
+    <a class="navbar-brand" [routerLink]="'.'"><img class="rounded-circle" src="assets/logo3.jpg" width="80"
+        height="80" /> Barangay 132 Residence Tracker System</a>
 
     <!-- Step 3: Toggle the value of the property when the toggler button is clicked. -->
     <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">&#9776;</button>
 
     <!-- Step 2: Add the ngbCollapse directive to the element below. -->
 
+    <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item active">
+          <!-- Step 4: Close the menu when a link is clicked. -->
+          <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true"><img class="rounded"
+              src="assets/mayor.jpg" width="180" height="80" /></a>
+
+        </li>
+        <li class="nav-item active">
+          <!-- Step 4: Close the menu when a link is clicked. -->
+          <a class="nav-link" [routerLink]="'.'" (click)="isMenuCollapsed = true">
+            <img class="rounded-circle" src="assets/logo1.jpg" width="80" height="80" />
+          </a>
+
+        </li>
+      </ul>
+    </div>
+
   </div>
 </nav>
 
 <div class="container-fluid">
   <div class="z-1 position-absolute p-3 rounded-3">
-    <div style="padding-left: 50px;">
+    <div class="pl-3">
       <div class="input-group mb-3">
         <input class="form-control form-control-sm" id="search-bar" type="text" [ngbTypeahead]="search"
           [resultFormatter]="searchFormatter">
-        <button class="btn btn-outline-primary" type="button" (click)="open(content)"><i class="bi bi-house-add"></i></button>
+        <button class="btn btn-outline-primary" type="button" (click)="open(content)"><i
+            class="bi bi-house-add"></i></button>
       </div>
     </div>
   </div>
   <div class="row">
-    <div id="map"></div>
+    <div class="col p-0">
+      <canvas #canvas width="1850" height="1000"></canvas>
+    </div>
   </div>
 </div>
 
 
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">New Establishment</h4>
+    <h4 class="modal-title" id="modal-basic-title">Residents Master Data</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-3">
         <div class="establishment-info">
           <h6>Establishment Information</h6>
-          <div style="padding: 10px;">
-            <div class="mb-3">
-              <label class="form-label">Code</label>
-              <input type="text" class="form-control" placeholder="Code">
+          <div class="p-1">
+            <div class="row">
+              <div class="col">
+                <div class="mb-2">
+                  <label class="form-label">Code</label>
+                  <input type="text" class="form-control form-control-sm" placeholder="Code">
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Block</label>
+                  <select class="form-select form-select-sm">
+                    <option selected>Select Block</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Address</label>
+                  <textarea class="form-control form-control-sm" rows="3" placeholder="Address"></textarea>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Establishment Type</label>
+                  <select class="form-select form-select-sm">
+                    <option selected>Select Type</option>
+                    <option value="1">Residential</option>
+                    <option value="2">Commercial</option>
+                    <option value="3">Apartment</option>
+                    <option>Others</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <label class="form-label">Block</label>
-              <input type="text" class="form-control" placeholder="Block">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Address</label>
-              <input type="text" class="form-control" placeholder="Address">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Establishment Type</label>
-              <select class="form-select">
-                <option selected>Select Type</option>
-                <option value="1">Residential</option>
-                <option value="2">Commercial</option>
-                <option value="3">Apartment</option>
-                <option>Others</option>
-              </select>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h6>Images</h6>
+              <div class="p-1">
+                <img src="assets/barangay.jpg" class="img-fluid" width="150" height="100">
+              </div>
             </div>
           </div>
 
         </div>
       </div>
-      <div class="col">
+      <div class="col-sm-9">
         <div class="resident-info">
           <h6>Resident Information</h6>
-          <div style="padding: 10px;">
-            <div class="input-group mb-3">
-              <select class="form-select" id="inputGroupSelect01">
-                <option value="1">Ronelle Siazon</option>
-                <option value="2">Roger Tan</option>
+          <div class="p-1">
+            <div class="input-group input-group-sm mb-3">
+              <select class="form-select">
+                <option value="1">Roger Tan</option>
+                <option value="2">Ronelle Siazon</option>
               </select>
-              <button class="btn btn-outline-primary" type="button"><i class="bi bi-person-add"></i></button>
+              <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                  Action
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button ngbDropdownItem>Add</button>
+                  <button ngbDropdownItem>Edit</button>
+                  <div class="dropdown-divider"></div>
+                  <button ngbDropdownItem>Delete</button>
+                </div>
+              </div>
             </div>
-            <table class="table table-sm table-bordered table-striped" id="resident-table">
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered table-striped" id="resident-table">
+                <tbody>
+                  <tr>
+                    <th>First Name</th>
+                    <td>Roger</td>
+                    <th>Nationality</th>
+                    <td>Filipino</td>
+                  </tr>
+                  <tr>
+                    <th>Middle Name</th>
+                    <td>Anzures</td>
+                    <th>Civil Status</th>
+                    <td>Married</td>
+                  </tr>
+                  <tr>
+                    <th>Last Name</th>
+                    <td>Tan</td>
+                    <th>Date of Birth</th>
+                    <td>Oct 12 2024</td>
+                  </tr>
+                  <tr>
+                    <th>Occupation</th>
+                    <td>Businessman</td>
+                    <th>Contact No</th>
+                    <td>12354389324</td>
+                  </tr>
+                  <tr>
+                    <th>Present Address</th>
+                    <td>Caloocan City</td>
+                    <th>Name / Person to be notified in case of Emergency</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Age</th>
+                    <td>29</td>
+                    <th>Address</th>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <th>Sex</th>
+                    <td>Male</td>
+                    <th>Contact No.</th>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <table class="table table-sm table-bordered table-striped" id="generate-forms">
               <tbody>
                 <tr>
-                  <th>First Name</th>
-                  <td>Ronelle</td>
-                  <th>Nationality</th>
-                  <td>Filipino</td>
+                  <th>Barangay ID</th>
+                  <td><button type="button" class="btn btn-outline-primary btn-sm">Generate</button></td>
+                  <th>Barangay Residency Form</th>
+                  <td><button type="button" class="btn btn-outline-primary btn-sm">Generate</button></td>
                 </tr>
-                <tr>
-                  <th>Middle Name</th>
-                  <td>Claude</td>
-                  <th>Civil Status</th>
-                  <td>Married</td>
-                </tr>
-                <tr>
-                  <th>Last Name</th>
-                  <td>Siazon</td>
-                  <th>Date of Birth</th>
-                  <td>Oct 12 2024</td>
-                </tr>
-                <tr>
-                  <th>Occupation</th>
-                  <td>Businessman</td>
-                  <th>Contact No</th>
-                  <td>12354389324</td>
-                </tr>
-                <tr>
-                  <th>Present Address</th>
-                  <td>Caloocan City</td>
-                  <th>Name / Person to be notified in case of Emergency</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Age</th>
-                  <td>29</td>
-                  <th>Address</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Sex</th>
-                  <td>Male</td>
-                  <th>Contact No.</th>
-                  <td></td>
-                </tr>
+
               </tbody>
             </table>
+            <h6>Attachment Files</h6>
+            <div class="p-1">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="table-responsive">
+                    <table class="table table-sm table-striped table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Filename</th>
+                          <td width="5%" class="text-center"><button class="btn btn-sm btn-link p-0"
+                              type="button">New</button></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>2398723234SLKJ.pdf</td>
+                          <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                              Delete</button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>ROGER_TAN_FORM.doc</td>
+                          <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i>
+                              Delete</button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <hr />
-    <div class="footer">
-      <div class="row">
-        <div class="col-sm-2">
-          <h6>Attachment Files</h6>
-        </div>
-      </div>
+
     </div>
 
 
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-sm btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <div>
+      <button type="button" class="btn btn-sm btn-secondary" style="margin-right: 12px;"><i
+          class="bi bi-pin-map-fill"></i> Pin Location</button>
+      <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-geo-alt-fill"></i> Track</button>
+    </div>
+    <div>
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="modal.close('Save click')"><i
+          class="bi bi-save"></i> Save</button>
+    </div>
   </div>
+
 </ng-template>
