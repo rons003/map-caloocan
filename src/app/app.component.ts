@@ -44,18 +44,34 @@ export class AppComponent implements OnInit {
 
   resident: string = '';
 
+  pinDescription: boolean = false;
+
+  background = new Image();
+
+
   ngOnInit(): void {
-    const background = new Image();
-    background.src = "assets/map.png";
-    background.onload = () => {
-      const canvas: HTMLCanvasElement = this.canvas.nativeElement;
-      const context = canvas.getContext('2d');
-      if (context) {
-        context.drawImage(background, canvas.width / 2 - background.width / 2,
-          canvas.height / 2 - background.height / 2);
-      }
-    }
+    const canvas = this.canvas.nativeElement;
+    canvas.width = 1400;
+    canvas.height = 700;
+    this.background.src = "assets/map.png";
+    this.background.onload = this.Render.bind(this);
   }
+
+  Render = () => {
+    //...snip doing any actual drawing for the purpose of this question
+    const canvas = this.canvas.nativeElement;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d');
+    context.drawImage(this.background, 0, 0, canvas.width, canvas.height);
+
+    const pin = new Image();
+    pin.src = "assets/pin.png";
+    pin.onload = () => {
+      context.drawImage(pin, 300, 500, 50, 50);
+      console.log('PIN LOCATE');
+    }
+
+  }
+
 
   search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
     text$.pipe(
@@ -90,16 +106,83 @@ export class AppComponent implements OnInit {
   }
 
   onSearch() {
-    console.log('On Search', this.resident);
-    const pin = new Image();
-    pin.src = "assets/pin.png";
-    pin.onload = () => {
-      const canvas: HTMLCanvasElement = this.canvas.nativeElement;
-      const context = canvas.getContext('2d');
-      if (context) {
-        context.drawImage(pin, 300,500, 50, 50);
-      }
-    }
+    // console.log('On Search', this.resident);
+    // const pin = new Image();
+    // pin.src = "assets/pin.png";
+    // pin.onload = () => {
+    //   const canvas: HTMLCanvasElement = this.canvas.nativeElement;
+    //   const context = canvas.getContext('2d');
+    //   if (context) {
+    //     context.drawImage(pin, 300, 500, 50, 50);
+    //     console.log('PIN LOCATE');
+    //   }
+    // }
 
+  }
+
+  onMouseMove(event: MouseEvent) {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const canvas = this.canvas.nativeElement;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d');
+    const { x, y } = this.getMousePos(canvas, event);
+
+  }
+
+  getMousePos(canvas: any, evt: any) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    return {
+      x: (evt.clientX - rect.left) * scaleX,
+      y: (evt.clientY - rect.top) * scaleY
+    }
+  }
+
+  onMouseDown(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    const canvas = this.canvas.nativeElement;
+    const { x, y } = this.getMousePos(canvas, event);
+
+  }
+
+  onMouseUp(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  scale = 1;
+  zoomIntensity = 0.1;
+  zoomInOut(event: WheelEvent) {
+    event.preventDefault();
+    const canvas = this.canvas.nativeElement;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d');
+
+    let x = event.clientX - canvas.offsetLeft;
+    let y = event.clientY - canvas.offsetTop;
+    const wheel = event.deltaY < 0 ? 1 : -1;
+    // Compute zoom factor.
+
+    let zoom = Math.exp(wheel * this.zoomIntensity);
+    this.scale = Math.min(this.scale * zoom, 30);
+
+    if (this.scale <= 1) {
+      context.resetTransform();
+      this.scale = 1;
+      return;
+    }
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    let t = context.getTransform();
+    context.resetTransform();
+    context.translate(x, y);
+    context.scale(zoom, zoom);
+    context.translate(-x, -y);
+    context.transform(t.a, t.b, t.c, t.d, t.e, t.f);
+    requestAnimationFrame(this.Render);
   }
 }
