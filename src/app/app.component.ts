@@ -17,12 +17,14 @@ import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction }
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MasterDataComponent } from './shared/master-data/master-data.component';
+import { ApiService } from './services/api.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbTypeaheadModule, NgbCollapseModule, RouterLink, NgbDropdownModule, NgbCarouselModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterOutlet, NgbTypeaheadModule, NgbCollapseModule, RouterLink, NgbDropdownModule, NgbCarouselModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -34,12 +36,9 @@ export class AppComponent implements OnInit {
   map: Map | undefined;
   contextRef!: CanvasRenderingContext2D;
 
-  residence: string[] = ['Roger Tan', 'Ronelle Siazon', 'Rey Anzures'];
-
   isMenuCollapsed = true;
 
   searchFormatter = (result: string) => result.toUpperCase();
-  items = ['Ronelle Siazon', 'Roger Tan'];
 
   images = [944, 1011, 984].map((n) => 'assets/barangay.jpg');
 
@@ -49,14 +48,32 @@ export class AppComponent implements OnInit {
 
   background = new Image();
 
+  residents: any[] = [];
+  search: string = '';
+  constructor(private apiService: ApiService) {
 
+  }
+
+  //-------------------API CALLS------------------
+  getResident() {
+    let options = {
+      params: { filter: this.search }
+    }
+    this.apiService.getResident(options)
+      .subscribe(res => {
+        this.residents = res;
+      });
+  }
+  //----------------------------------------------
 
   ngOnInit(): void {
+    this.getResident();
     const canvas = this.canvas.nativeElement;
     canvas.width = 1300;
     canvas.height = 650;
     this.background.src = "assets/map.png";
     this.background.onload = this.Render.bind(this);
+
   }
 
   Render = () => {
@@ -65,27 +82,31 @@ export class AppComponent implements OnInit {
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.drawImage(this.background, 0, 0, canvas.width, canvas.height);
 
+  }
+
+  track() {
+    const canvas = this.canvas.nativeElement;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d');
     const pin = new Image();
     pin.src = "assets/pin.png";
     pin.onload = () => {
       context.drawImage(pin, 300, 500, 50, 50);
       context.font = "12px Arial";
       context.fillStyle = "purple";
-      context.fillText("Roger Tan", 300, 560);
-      // context.strokeText("Roger Tan", 300, 560);
+      context.fillText("Jaybee Cruz", 300, 560);
     }
-
+    this.modalService.dismissAll();
   }
 
 
-  search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      map((term) =>
-        term === '' ? [] : this.residence.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
-      ),
-    );
+  // search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
+  //   text$.pipe(
+  //     debounceTime(200),
+  //     distinctUntilChanged(),
+  //     map((term) =>
+  //       term === '' ? [] : this.residence.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
+  //     ),
+  //   );
 
   open() {
     const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
@@ -114,18 +135,7 @@ export class AppComponent implements OnInit {
   }
 
   onSearch() {
-    // console.log('On Search', this.resident);
-    // const pin = new Image();
-    // pin.src = "assets/pin.png";
-    // pin.onload = () => {
-    //   const canvas: HTMLCanvasElement = this.canvas.nativeElement;
-    //   const context = canvas.getContext('2d');
-    //   if (context) {
-    //     context.drawImage(pin, 300, 500, 50, 50);
-    //     console.log('PIN LOCATE');
-    //   }
-    // }
-
+    this.getResident();
   }
 
   onMouseMove(event: MouseEvent) {

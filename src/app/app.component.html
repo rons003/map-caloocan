@@ -13,7 +13,7 @@
 </div>
 <div class="d-flex justify-content-center p-1">
   <canvas #canvas (mousemove)="onMouseMove($event)" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
-    (wheel)="zoomInOut($event)" ></canvas>
+    (wheel)="zoomInOut($event)"></canvas>
 </div>
 <div class="container-fluid">
   <div class="row justify-content-between fixed-row-bottom p-3">
@@ -32,8 +32,8 @@
         <button type="button" class="list-group-item list-group-item-action list-group-button"
           (click)="openLg(searchmodal)"><i class="bi bi-search"></i> <br>
           Search</button>
-        <button type="button" class="list-group-item list-group-item-action list-group-button"
-          (click)="open()"><i class="bi bi-person-add"></i> <br> New
+        <button type="button" class="list-group-item list-group-item-action list-group-button" (click)="open()"><i
+            class="bi bi-person-add"></i> <br> New
           Resident</button>
       </ul>
     </div>
@@ -58,8 +58,9 @@
   <div class="modal-body">
     <div class="row mb-3">
       <div class="col text-center">
-        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="resident" [ngbTypeahead]="search"
-          [resultFormatter]="searchFormatter" (change)="onSearch()">
+        <!-- <input type="text" class="form-control" placeholder="Search" [(ngModel)]="resident" [ngbTypeahead]="search"
+          [resultFormatter]="searchFormatter" (change)="onSearch()"> -->
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search" (change)="onSearch()">
       </div>
     </div>
     <div class="row mb-3">
@@ -72,18 +73,28 @@
     </div>
     <div class="row mb-3">
       <div class="col">
-        <ol class="list-group list-group-numbered">
-          <li class="list-group-item d-flex justify-content-between align-items-start">
+        <ol class="list-group list-group-numbered mb-3">
+          <li class="list-group-item d-flex justify-content-between align-items-start"
+            *ngFor="let o of residents;let i = index">
             <div class="ms-2 me-auto">
-              <div class="fw-bold">Roger Tan</div>
-              A20 Block 1
+              <div class="fw-bold">{{o.first_name}} {{ o.last_name}} <img src="assets/img_avatar.png" alt="Avatar"
+                  width="28" height="28" style="border-radius: 50%; margin-left: 5px;"></div>
+              <label class="me-1">Block: {{ o.block }}</label>
+              <label class="me-1">Code: {{o.code}}</label>
+              <label class="me-1">Address: {{ o.address }}</label>
 
             </div>
-            <button type="button" class="btn btn-outline-primary btn-sm">Track <i
-                class="bi bi-arrow-right-short"></i></button>
+            <div class="d-grid gap-1">
+              <button type="button" class="btn btn-primary btn-sm" (click)="open()"><i
+                class="bi bi-arrow-right-short"></i> Details</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="track()"><i
+                class="bi bi-geo-alt-fill"></i> Track</button>
+            </div>
+           
           </li>
 
         </ol>
+        <label>Result: {{ residents.length }}</label>
       </div>
     </div>
   </div>
