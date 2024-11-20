@@ -51,8 +51,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const canvas = this.canvas.nativeElement;
-    canvas.width = 1400;
-    canvas.height = 700;
+    canvas.width = 1300;
+    canvas.height = 650;
     this.background.src = "assets/map.png";
     this.background.onload = this.Render.bind(this);
   }
@@ -63,12 +63,12 @@ export class AppComponent implements OnInit {
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.drawImage(this.background, 0, 0, canvas.width, canvas.height);
 
-    const pin = new Image();
-    pin.src = "assets/pin.png";
-    pin.onload = () => {
-      context.drawImage(pin, 300, 500, 50, 50);
-      console.log('PIN LOCATE');
-    }
+    // const pin = new Image();
+    // pin.src = "assets/pin.png";
+    // pin.onload = () => {
+    //   context.drawImage(pin, 300, 500, 50, 50);
+    //   console.log('PIN LOCATE');
+    // }
 
   }
 
@@ -93,6 +93,10 @@ export class AppComponent implements OnInit {
       },
     );
   }
+
+  openLg(content: TemplateRef<any>) {
+		this.modalService.open(content, { size: 'xl', centered: true });
+	}
 
   private getDismissReason(reason: any): string {
     switch (reason) {
