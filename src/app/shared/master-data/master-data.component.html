@@ -12,16 +12,12 @@
                         <div class="col">
                             <div class="mb-2">
                                 <label class="form-label">Code</label>
-                                <input type="text" class="form-control form-control-sm" placeholder="Code">
+                                <input type="text" class="form-control form-control-sm" placeholder="Code" [(ngModel)]="code">
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Block</label>
-                                <select class="form-select form-select-sm">
-                                    <option selected>Select Block</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                <select class="form-select form-select-sm" [(ngModel)]="block">
+                                    <option *ngFor="let o of blocks;" [value]="o.value">{{ o.label }}</option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -31,12 +27,8 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Establishment Type</label>
-                                <select class="form-select form-select-sm">
-                                    <option selected>Select Type</option>
-                                    <option value="1">Residential</option>
-                                    <option value="2">Commercial</option>
-                                    <option value="3">Apartment</option>
-                                    <option>Others</option>
+                                <select class="form-select form-select-sm" [(ngModel)]="type">
+                                    <option *ngFor="let o of types;" [value]="o.value">{{ o.label }}</option>
                                 </select>
                             </div>
                             <div class="mb-2">
@@ -150,7 +142,7 @@
         <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-geo-alt-fill"></i> Track</button>
     </div>
     <div>
-        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="closeModal()"><i
-                class="bi bi-save"></i> Save</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="closeModal()"><i class="bi bi-save"></i>
+            Save</button>
     </div>
 </div>
