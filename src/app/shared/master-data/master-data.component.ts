@@ -3,6 +3,8 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbActiveModal, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResidentInfoComponent } from '../resident-info/resident-info.component';
+import { ApiService } from '../../services/api.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-master-data',
@@ -12,6 +14,7 @@ import { ResidentInfoComponent } from '../resident-info/resident-info.component'
   styleUrl: './master-data.component.scss'
 })
 export class MasterDataComponent implements OnInit, OnDestroy {
+  private ngUnsubscribe = new Subject<void>();
   private modalService = inject(NgbModal);
   closeResult = '';
 
@@ -33,19 +36,40 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   block: number = 1;
   address: string = '';
   type: string = 'Residential';
-
+  id: number = 0;
   residents: any[] = [];
   selectedResident: number = 0;
 
-  constructor(private activeModal: NgbActiveModal) {
+  action: string = 'Add';
+
+  constructor(private activeModal: NgbActiveModal,
+    private apiService: ApiService
+  ) {
 
   }
 
+  getResidentInfo() {
+    this.apiService.getResidentInfo(this.id)
+      .subscribe(res => {
+        const data = res.body;
+        this.code = data.code;
+        this.block = data.block;
+        this.address = data.address;
+        this.type = data.type;
+
+      });
+  }
+
   ngOnInit(): void {
+    if (this.action === 'View') {
+      this.getResidentInfo();
+    }
   }
 
 
   ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   closeModal() {

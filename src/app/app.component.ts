@@ -19,6 +19,7 @@ import { FormsModule } from '@angular/forms';
 import { MasterDataComponent } from './shared/master-data/master-data.component';
 import { ApiService } from './services/api.service';
 import { CommonModule } from '@angular/common';
+import { ResidentInfoComponent } from './shared/resident-info/resident-info.component';
 
 
 @Component({
@@ -113,6 +114,18 @@ export class AppComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result != 'close') {
 
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  openResidentInfo(id: number) {
+    const modalRef = this.modalService.open(ResidentInfoComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.action = 'View';
+    modalRef.result.then((result) => {
+      if (result != 'close') {
       }
     }).catch((error) => {
       console.log(error);

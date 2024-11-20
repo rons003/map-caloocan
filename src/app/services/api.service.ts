@@ -20,4 +20,21 @@ export class ApiService {
     let url_ = this.baseUrl + "/resident/";
     return this.http.request<any[]>("get", url_, options_);
   }
+
+  getResidentInfo(id: number): Observable<any> {
+    let url_ = this.baseUrl + "/resident/{id}";
+    if (id === undefined || id === null)
+      throw new Error("The parameter 'id' must be defined.");
+    url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    url_ = url_.replace(/[?&]$/, "");
+
+    let options_: any = {
+      observe: "response",
+      headers: new HttpHeaders({
+        "Accept": "application/json"
+      })
+    };
+
+    return this.http.request<any>("get", url_, options_);
+  }
 }
