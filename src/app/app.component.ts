@@ -49,27 +49,6 @@ export class AppComponent implements OnInit {
 
   background = new Image();
 
-  blocks: any[] = [
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-    { value: 1, label: 4 },
-  ];
-
-  types: any[] = [
-    { value: "Residential", label: "Residential" },
-    { value: "Commercial", label: "Commercial" },
-    { value: "Apartment", label: "Apartment" },
-    { value: "Others", label: "Others" },
-  ]
-
-  code: string = '';
-  block: number = 1;
-  address: string = '';
-  type: string = 'Residential';
-
-  residents: any[] = [];
-
 
 
   ngOnInit(): void {

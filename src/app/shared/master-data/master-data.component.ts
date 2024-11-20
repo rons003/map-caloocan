@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResidentInfoComponent } from '../resident-info/resident-info.component';
 
 @Component({
   selector: 'app-master-data',
@@ -11,6 +12,8 @@ import { NgbActiveModal, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './master-data.component.scss'
 })
 export class MasterDataComponent implements OnInit, OnDestroy {
+  private modalService = inject(NgbModal);
+  closeResult = '';
 
   blocks: any[] = [
     { value: 1, label: 1 },
@@ -32,9 +35,10 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   type: string = 'Residential';
 
   residents: any[] = [];
+  selectedResident: number = 0;
 
   constructor(private activeModal: NgbActiveModal) {
-    
+
   }
 
   ngOnInit(): void {
@@ -46,6 +50,18 @@ export class MasterDataComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.activeModal.close('close');
+  }
+
+  newResidentInfo() {
+    const modalRef = this.modalService.open(ResidentInfoComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+        this.residents.push(result);
+        console.log(this.residents);
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
 }
