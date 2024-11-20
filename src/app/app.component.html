@@ -13,7 +13,7 @@
 </div>
 <div class="d-flex justify-content-center p-1">
   <canvas #canvas (mousemove)="onMouseMove($event)" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
-    (wheel)="zoomInOut($event)"></canvas>
+    (wheel)="zoomInOut($event)" ></canvas>
 </div>
 <div class="container-fluid">
   <div class="row justify-content-between fixed-row-bottom p-3">
@@ -33,7 +33,7 @@
           (click)="openLg(searchmodal)"><i class="bi bi-search"></i> <br>
           Search</button>
         <button type="button" class="list-group-item list-group-item-action list-group-button"
-          (click)="open(content)"><i class="bi bi-person-add"></i> <br> New
+          (click)="open()"><i class="bi bi-person-add"></i> <br> New
           Resident</button>
       </ul>
     </div>
@@ -51,162 +51,6 @@
           [ngbTypeahead]="search" [resultFormatter]="searchFormatter" (change)="onSearch()">
         <button class="btn btn-outline-primary" type="button" (click)="open(content)"><i
             class="bi bi-house-add"></i></button> -->
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Resident Master Data</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <div class="row mb-3">
-      <div class="col-sm-4">
-        <div class="establishment-info">
-          <h6>Establishment Information</h6>
-          <div class="p-1">
-            <div class="row">
-              <div class="col">
-                <div class="mb-2">
-                  <label class="form-label">Code</label>
-                  <input type="text" class="form-control form-control-sm" placeholder="Code">
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Block</label>
-                  <select class="form-select form-select-sm">
-                    <option selected>Select Block</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                  </select>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Address</label>
-                  <textarea class="form-control form-control-sm" rows="3" placeholder="Address"></textarea>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Establishment Type</label>
-                  <select class="form-select form-select-sm">
-                    <option selected>Select Type</option>
-                    <option value="1">Residential</option>
-                    <option value="2">Commercial</option>
-                    <option value="3">Apartment</option>
-                    <option>Others</option>
-                  </select>
-                </div>
-                <div class="mb-2">
-                  <label class="form-label">Image Attachment</label>
-                  <input class="form-control form-control-sm" id="formFileSm" type="file">
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-      <div class="col-sm-8">
-        <img src="assets/barangay.jpg" width="100%" height="420">
-      </div>
-    </div>
-    <div class="row">
-      <div class="resident-info">
-        <h6>Resident Information</h6>
-        <div class="p-1">
-          <div class="input-group input-group-sm mb-3">
-            <select class="form-select">
-              <option value="1">Roger Tan</option>
-              <option value="2">Ronelle Siazon</option>
-            </select>
-            <div ngbDropdown class="d-inline-block">
-              <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                Action
-              </button>
-              <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem>Add</button>
-                <button ngbDropdownItem>Edit</button>
-                <div class="dropdown-divider"></div>
-                <button ngbDropdownItem>Delete</button>
-              </div>
-            </div>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-sm table-bordered table-striped" id="resident-table">
-              <tbody>
-                <tr>
-                  <th>First Name</th>
-                  <td>Roger</td>
-                  <th>Nationality</th>
-                  <td>Filipino</td>
-                </tr>
-                <tr>
-                  <th>Middle Name</th>
-                  <td>Anzures</td>
-                  <th>Civil Status</th>
-                  <td>Married</td>
-                </tr>
-                <tr>
-                  <th>Last Name</th>
-                  <td>Tan</td>
-                  <th>Date of Birth</th>
-                  <td>Oct 12 2024</td>
-                </tr>
-                <tr>
-                  <th>Occupation</th>
-                  <td>Businessman</td>
-                  <th>Contact No</th>
-                  <td>12354389324</td>
-                </tr>
-                <tr>
-                  <th>Present Address</th>
-                  <td>Caloocan City</td>
-                  <th>Name / Person to be notified in case of Emergency</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Age</th>
-                  <td>29</td>
-                  <th>Address</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Sex</th>
-                  <td>Male</td>
-                  <th>Contact No.</th>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>Attachment File</th>
-                  <td> <input class="form-control form-control-sm" type="file"></td>
-                </tr>
-                <tr>
-                  <th>Barangay ID</th>
-                  <td class="text-end"><button type="button" class="btn btn-outline-primary btn-sm">Generate</button>
-                  </td>
-                  <th>Barangay Residency Form</th>
-                  <td class="text-end"><button type="button" class="btn btn-outline-primary btn-sm">Generate</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="modal-footer">
-    <div>
-      <button type="button" class="btn btn-sm btn-secondary" style="margin-right: 12px;"><i
-          class="bi bi-pin-map-fill"></i> Pin Location</button>
-      <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-geo-alt-fill"></i> Track</button>
-    </div>
-    <div>
-      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="modal.close('Save click')"><i
-          class="bi bi-save"></i> Save</button>
-    </div>
-  </div>
-
-</ng-template>
 
 
 <ng-template #searchmodal let-modal>
@@ -214,15 +58,16 @@
   <div class="modal-body">
     <div class="row mb-3">
       <div class="col text-center">
-        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="resident"
-          [ngbTypeahead]="search" [resultFormatter]="searchFormatter" (change)="onSearch()">
+        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="resident" [ngbTypeahead]="search"
+          [resultFormatter]="searchFormatter" (change)="onSearch()">
       </div>
     </div>
     <div class="row mb-3">
       <div class="col text-center">
         <h6>Searching <div class="spinner-border spinner-border-sm" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div></h6>
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </h6>
       </div>
     </div>
     <div class="row mb-3">
@@ -231,12 +76,13 @@
           <li class="list-group-item d-flex justify-content-between align-items-start">
             <div class="ms-2 me-auto">
               <div class="fw-bold">Roger Tan</div>
-              A20 Block 1 
-              
+              A20 Block 1
+
             </div>
-            <button type="button" class="btn btn-outline-primary btn-sm">Track <i class="bi bi-arrow-right-short"></i></button>
+            <button type="button" class="btn btn-outline-primary btn-sm">Track <i
+                class="bi bi-arrow-right-short"></i></button>
           </li>
-          
+
         </ol>
       </div>
     </div>

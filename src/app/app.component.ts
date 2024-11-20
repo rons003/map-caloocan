@@ -16,6 +16,7 @@ import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, N
 import { debounceTime, distinctUntilChanged, map, Observable, OperatorFunction } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MasterDataComponent } from './shared/master-data/master-data.component';
 
 
 @Component({
@@ -63,12 +64,15 @@ export class AppComponent implements OnInit {
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.drawImage(this.background, 0, 0, canvas.width, canvas.height);
 
-    // const pin = new Image();
-    // pin.src = "assets/pin.png";
-    // pin.onload = () => {
-    //   context.drawImage(pin, 300, 500, 50, 50);
-    //   console.log('PIN LOCATE');
-    // }
+    const pin = new Image();
+    pin.src = "assets/pin.png";
+    pin.onload = () => {
+      context.drawImage(pin, 300, 500, 50, 50);
+      context.font = "12px Arial";
+      context.fillStyle = "purple";
+      context.fillText("Roger Tan", 300, 560);
+      // context.strokeText("Roger Tan", 300, 560);
+    }
 
   }
 
@@ -82,21 +86,20 @@ export class AppComponent implements OnInit {
       ),
     );
 
-  open(content: TemplateRef<any>) {
+  open() {
+    const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.result.then((result) => {
+      if (result != 'close') {
 
-    this.modalService.open(content, { size: 'xl', ariaLabelledBy: 'modal-basic-title', backdrop: 'static' }).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      },
-    );
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   openLg(content: TemplateRef<any>) {
-		this.modalService.open(content, { size: 'xl', centered: true });
-	}
+    this.modalService.open(content, { size: 'xl', centered: true });
+  }
 
   private getDismissReason(reason: any): string {
     switch (reason) {
@@ -188,5 +191,16 @@ export class AppComponent implements OnInit {
     context.translate(-x, -y);
     context.transform(t.a, t.b, t.c, t.d, t.e, t.f);
     requestAnimationFrame(this.Render);
+  }
+
+  clickCanvas(event: MouseEvent, content: TemplateRef<any>) {
+    const canvas = this.canvas.nativeElement;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d');
+    const { x, y } = this.getMousePos(canvas, event);
+
+    console.log(x, y);
+    if ((x > 301 && x < 340) && (y > 501 && y < 540)) {
+      console.log(x, y);
+    }
   }
 }
