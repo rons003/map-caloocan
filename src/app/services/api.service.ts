@@ -33,7 +33,7 @@ export class ApiService {
     return this.http.request<any[]>("get", url_, options_);
   }
 
-  getResidentInfo(id: number): Observable<any> {
+  getMasterData(id: number): Observable<any> {
     let url_ = this.baseUrl + "/resident/{id}";
     if (id === undefined || id === null)
       throw new Error("The parameter 'id' must be defined.");

@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">New Master Data</h4>
+    <h4 class="modal-title" id="modal-basic-title">{{ modalHeaderText }}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <div class="modal-body">
@@ -60,7 +60,7 @@
                                 <button ngbDropdownItem (click)="newResidentInfo()">Add</button>
                                 <button ngbDropdownItem>Edit</button>
                                 <div class="dropdown-divider"></div>
-                                <button ngbDropdownItem>Delete</button>
+                                <button ngbDropdownItem (click)="deleteResident()">Delete</button>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                     <td>{{ residents[selectedResident].emergency_address }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Sex</th>
+                                    <th>Gender</th>
                                     <td>{{ residents[selectedResident].gender }}</td>
                                     <th>Contact No.</th>
                                     <td>{{ residents[selectedResident].emergency_contact_no }}</td>
@@ -141,8 +141,12 @@
         <button type="button" class="btn btn-sm btn-primary" *ngIf="action == 'View'"><i class="bi bi-geo-alt-fill"></i>
             Track</button>
     </div>
-    <div>
+    <div *ngIf="action == 'Add'">
         <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addMasterData()"><i class="bi bi-save"></i>
             Save</button>
+    </div>
+    <div *ngIf="action == 'View'">
+        <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-save"></i>
+            Update</button>
     </div>
 </div>

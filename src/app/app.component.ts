@@ -120,10 +120,11 @@ export class AppComponent implements OnInit {
     });
   }
 
-  openResidentInfo(id: number) {
-    const modalRef = this.modalService.open(ResidentInfoComponent, { size: 'xl', backdrop: 'static' });
+  openMasterData(id: number, resident_id: number) {
+    const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.id = id;
-    modalRef.componentInstance.action = 'View';
+    modalRef.componentInstance.resident_id = resident_id;
+    modalRef.componentInstance.action = "View";
     modalRef.result.then((result) => {
       if (result != 'close') {
       }

@@ -58,23 +58,23 @@ export class ResidentInfoComponent implements OnInit {
   }
 
   getResidentInfo() {
-    this.apiService.getResidentInfo(this.id)
-      .subscribe(res => {
-        const data = res.body;
-        this.first_name = data.first_name;
-        this.middle_name = data.middle_name;
-        this.last_name = data.last_name;
-        this.occupation = data.occupation;
-        this.present_address = data.present_address;
-        this.age = data.age;
-        this.gender = data.sex;
-        this.nationality = data.nationality;
-        this.civil_status = data.civil_status;
-        this.contact_no = data.contact_no;
-        this.emergency_name = data.emergency_name;
-        this.emergency_address = data.address;
-        this.emergency_contact_no = data.emergency_contact_no;
-      });
+    // this.apiService.getResidentInfo(this.id)
+    //   .subscribe(res => {
+    //     const data = res.body;
+    //     this.first_name = data.first_name;
+    //     this.middle_name = data.middle_name;
+    //     this.last_name = data.last_name;
+    //     this.occupation = data.occupation;
+    //     this.present_address = data.present_address;
+    //     this.age = data.age;
+    //     this.gender = data.sex;
+    //     this.nationality = data.nationality;
+    //     this.civil_status = data.civil_status;
+    //     this.contact_no = data.contact_no;
+    //     this.emergency_name = data.emergency_name;
+    //     this.emergency_address = data.address;
+    //     this.emergency_contact_no = data.emergency_contact_no;
+    //   });
   }
 
   setResident() {

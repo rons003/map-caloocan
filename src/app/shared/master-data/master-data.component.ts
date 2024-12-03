@@ -45,6 +45,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   address: string = '';
   type: string = 'Residential';
   id: number = 0;
+  resident_id: number = 0;
   residents: any[] = [];
   selectedResident: number = 0;
 
@@ -55,7 +56,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   constructor(private activeModal: NgbActiveModal,
     private apiService: ApiService
   ) {
-
+    
   }
 
   imagesBase64: string[] = []
@@ -131,21 +132,23 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       });
   }
 
-  getResidentInfo() {
-    this.apiService.getResidentInfo(this.id)
+  getMasterData() {
+    this.apiService.getMasterData(this.id)
       .subscribe(res => {
         const data = res.body;
         this.code = data.code;
         this.block = data.block;
         this.address = data.address;
         this.type = data.type;
-
+        this.residents = data.residents
+        this.selectedResident = this.residents.findIndex(o=> o.id == this.resident_id);
       });
   }
 
   ngOnInit(): void {
     if (this.action === 'View') {
-      this.getResidentInfo();
+      this.modalHeaderText = "Master Data Information"
+      this.getMasterData();
     }
   }
 
@@ -164,7 +167,6 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     modalRef.result.then((result) => {
       if (result != 'close') {
         this.residents.push(result);
-        console.log(this.residents);
       }
     }).catch((error) => {
       console.log(error);
@@ -181,6 +183,11 @@ export class MasterDataComponent implements OnInit, OnDestroy {
         this.selectedFiles = res;
       });
     }
+  }
+
+  deleteResident(){
+    this.residents.splice(this.selectedResident, 1);
+    this.selectedResident = 0;
   }
 
 }
