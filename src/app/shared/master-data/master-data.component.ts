@@ -4,7 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { NgbActiveModal, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResidentInfoComponent } from '../resident-info/resident-info.component';
 import { ApiService } from '../../services/api.service';
-import { Subject } from 'rxjs';
+import { AsyncSubject, Observable, Subject } from 'rxjs';
+import Swal from 'sweetalert2';
+
+export interface SelectedFiles {
+  name: string;
+  file: any;
+  base64?: string;
+}
 
 @Component({
   selector: 'app-master-data',
@@ -51,6 +58,79 @@ export class MasterDataComponent implements OnInit, OnDestroy {
 
   }
 
+  imagesBase64: string[] = []
+
+  public selectedFiles: SelectedFiles[] = [];
+
+  public toFilesBase64(files: File[], selectedFiles: SelectedFiles[]): Observable<SelectedFiles[]> {
+    const result = new AsyncSubject<SelectedFiles[]>();
+    if (files?.length) {
+      Object.keys(files)?.forEach(async (file, i) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        reader.onload = (e) => {
+          selectedFiles = selectedFiles?.filter(f => f?.name != files[i]?.name)
+          selectedFiles.push({ name: files[i]?.name, file: files[i], base64: reader?.result as string })
+          result.next(selectedFiles);
+          if (files?.length === (i + 1)) {
+            result.complete();
+          }
+        };
+      });
+      return result;
+    } else {
+      result.next([]);
+      result.complete();
+      return result;
+    }
+  }
+
+  public onFileSelected(files: File[]) {
+    // this.selectedFiles = []; // clear
+    this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
+      this.selectedFiles = res;
+    });
+  }
+
+  addMasterData() {
+    Swal.showLoading();
+    const data = {
+      "code": this.code,
+      "block": this.block,
+      "address": this.address,
+      "type": this.type,
+      "residents": this.residents,
+      "images": this.selectedFiles
+    };
+    this.apiService.addMasterData(data)
+      .subscribe(res => {
+        Swal.close();
+        if (res.status == 'success') {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.closeModal();
+        } else {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "error",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+
+      }, error => {
+        Swal.close();
+      });
+  }
+
   getResidentInfo() {
     this.apiService.getResidentInfo(this.id)
       .subscribe(res => {
@@ -75,10 +155,6 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  addMasterData() {
-
-  }
-
   closeModal() {
     this.activeModal.close('close');
   }
@@ -96,9 +172,14 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   }
 
   onImageSelected(event: Event): void {
+    this.selectedFiles = [];
     const inputElement = event.target as HTMLInputElement;
     if (inputElement?.files && inputElement.files.length > 0) {
       this.selectedImages = inputElement.files;
+      const files = Array.from(this.selectedImages);
+      this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
+        this.selectedFiles = res;
+      });
     }
   }
 

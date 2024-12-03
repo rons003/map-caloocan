@@ -16,6 +16,18 @@ export class ApiService {
     this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
   }
 
+  addMasterData(body: any): Observable<any> {
+    let url_ = this.baseUrl + "/resident/create";
+
+    const content_ = body
+
+    let options_: any = {
+      body: content_
+    };
+
+    return this.http.request<any>("post", url_, options_);
+  }
+
   getResident(options_?: {}): Observable<any[]> {
     let url_ = this.baseUrl + "/resident/";
     return this.http.request<any[]>("get", url_, options_);
