@@ -17,6 +17,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   private ngUnsubscribe = new Subject<void>();
   private modalService = inject(NgbModal);
   closeResult = '';
+  modalHeaderText: string = 'New Master Data';
 
   blocks: any[] = [
     { value: 1, label: 1 },
@@ -41,6 +42,8 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   selectedResident: number = 0;
 
   action: string = 'Add';
+
+  selectedImages!: FileList;
 
   constructor(private activeModal: NgbActiveModal,
     private apiService: ApiService
@@ -72,6 +75,10 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
+  addMasterData() {
+
+  }
+
   closeModal() {
     this.activeModal.close('close');
   }
@@ -86,6 +93,13 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  onImageSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement?.files && inputElement.files.length > 0) {
+      this.selectedImages = inputElement.files;
+    }
   }
 
 }

@@ -3,90 +3,82 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <div class="modal-body">
-    <div class="table-responsive">
-        <table class="table table-sm table-bordered table-striped" id="resident-table">
-            <tbody>
-                <tr>
-                    <th>First Name</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="first_name">
-                    </td>
-                    <th>Nationality</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="nationality">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Middle Name</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="middle_name">
-                    </td>
-                    <th>Civil Status</th>
-                    <td>
-                        <select class="form-select form-select-sm" [(ngModel)]="civil_status">
-                            <option *ngFor="let o of list_civil_status;" [value]="o.value">{{ o.label }}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Last Name</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="last_name">
-                    </td>
-                    <th>Date of Birth</th>
-                    <td>
-                        <div class="input-group">
-                            <input class="form-control form-control-sm" placeholder="yyyy-mm-dd"
-                                [(ngModel)]="birth_date" ngbDatepicker #bdayDP="ngbDatepicker" />
-                            <button class="btn btn-sm btn-outline-secondary bi bi-calendar3" (click)="bdayDP.toggle()"
-                                type="button"></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Occupation</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="occupation">
-                    </td>
-                    <th>Contact No</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="contact_no">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Present Address</th>
-                    <td><textarea type="text" class="form-control form-control-sm" rows="3"
-                            [(ngModel)]="present_address"></textarea></td>
-                    <th>Name / Person to be notified in case of Emergency</th>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" [(ngModel)]="emergency_name">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Age</th>
-                    <td>
-                        <input type="number" class="form-control form-control-sm" [(ngModel)]="age">
-                    </td>
-                    <th>Emergency Address</th>
-                    <td><textarea type="text" class="form-control form-control-sm" rows="3"
-                            [(ngModel)]="emergency_address"></textarea></td>
-                </tr>
-                <tr>
-                    <th>Sex</th>
-                    <td>
-                        <select class="form-select form-select-sm" [(ngModel)]="gender">
-                            <option *ngFor="let o of genders;" [value]="o.value">{{ o.label }}</option>
-                        </select>
-                    </td>
-                    <th>Emergency Contact No.</th>
-                    <td><input type="text" class="form-control form-control-sm" [(ngModel)]="emergency_contact_no"></td>
-                </tr>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="mb-1">
+                <label class="form-label form-label-sm">First Name</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="first_name">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Last Name</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="last_name">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Middle Name</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="middle_name">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Occupation</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="occupation">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Present Address</label>
+                <textarea type="text" class="form-control form-control-sm" rows="3"
+                    [(ngModel)]="present_address"></textarea>
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Age</label>
+                <input type="number" class="form-control form-control-sm" [(ngModel)]="age">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Gender</label>
+                <select class="form-select form-select-sm" [(ngModel)]="gender">
+                    <option *ngFor="let o of genders;" [value]="o.value">{{ o.label }}</option>
+                </select>
+            </div>
 
-            </tbody>
-        </table>
+        </div>
+        <div class="col">
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Nationality</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="nationality">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Civil Status</label>
+                <select class="form-select form-select-sm" [(ngModel)]="civil_status">
+                    <option *ngFor="let o of list_civil_status;" [value]="o.value">{{ o.label }}</option>
+                </select>
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Date of Birth</label>
+                <div class="input-group">
+                    <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" [(ngModel)]="birth_date"
+                        ngbDatepicker #bdayDP="ngbDatepicker" />
+                    <button class="btn btn-sm btn-outline-secondary bi bi-calendar3" (click)="bdayDP.toggle()"
+                        type="button"></button>
+                </div>
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Contact No</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="contact_no">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Name / Person to be notified in case of emergency</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="emergency_name">
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Emergency Address</label>
+                <textarea type="text" class="form-control form-control-sm" rows="3"
+                    [(ngModel)]="emergency_address"></textarea>
+            </div>
+            <div class="mb-1">
+                <label class="form-label form-label-sm">Emergency Contact No.</label>
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="emergency_contact_no">
+            </div>
+        </div>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="setResident()"><i class="bi bi-save"></i>
-        Add</button>
-</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="setResident()"><i
+                class="bi bi-save"></i>
+            Add</button>
+    </div>

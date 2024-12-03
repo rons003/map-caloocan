@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Resident Master Data</h4>
+    <h4 class="modal-title" id="modal-basic-title">New Master Data</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <div class="modal-body">
@@ -34,7 +34,7 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Image Attachment</label>
-                                <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                <input class="form-control form-control-sm" type="file"  multiple="true" (change)="onImageSelected($event)" accept="image/*" >
                             </div>
                         </div>
                     </div>
@@ -44,94 +44,91 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <img src="assets/barangay.jpg" width="100%" height="420">
-        </div>
-    </div>
-    <div class="row">
-        <div class="resident-info">
-            <h6>Resident Information</h6>
-            <div class="p-1">
-                <div class="input-group input-group-sm mb-3">
-                    <select class="form-select" [(ngModel)]="selectedResident">
-                        <option *ngFor="let o of residents; let i = index" [value]="i">{{o.first_name}} {{
-                            o.last_name}}</option>
-                    </select>
-                    <div ngbDropdown class="d-inline-block">
-                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
-                            Action
-                        </button>
-                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                            <button ngbDropdownItem (click)="newResidentInfo()">Add</button>
-                            <button ngbDropdownItem>Edit</button>
-                            <div class="dropdown-divider"></div>
-                            <button ngbDropdownItem>Delete</button>
+            <div class="resident-info">
+                <h6>Resident Information</h6>
+                <div class="p-1">
+                    <div class="input-group input-group-sm mb-3">
+                        <select class="form-select" [(ngModel)]="selectedResident">
+                            <option *ngFor="let o of residents; let i = index" [value]="i">{{o.first_name}} {{
+                                o.last_name}}</option>
+                        </select>
+                        <div ngbDropdown class="d-inline-block">
+                            <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                                Action
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem (click)="newResidentInfo()">Add</button>
+                                <button ngbDropdownItem>Edit</button>
+                                <div class="dropdown-divider"></div>
+                                <button ngbDropdownItem>Delete</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="table-responsive" *ngIf="residents.length > 0">
-                    <table class="table table-sm table-bordered table-striped" id="resident-table">
-                        <tbody>
-                            <tr>
-                                <th>First Name</th>
-                                <td>{{ residents[selectedResident].first_name }}</td>
-                                <th>Nationality</th>
-                                <td>{{ residents[selectedResident].nationality }}</td>
-                            </tr>
-                            <tr>
-                                <th>Middle Name</th>
-                                <td>{{ residents[selectedResident].middle_name }}</td>
-                                <th>Civil Status</th>
-                                <td>{{ residents[selectedResident].civil_status }}</td>
-                            </tr>
-                            <tr>
-                                <th>Last Name</th>
-                                <td>{{ residents[selectedResident].last_name }}</td>
-                                <th>Date of Birth</th>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Occupation</th>
-                                <td>{{ residents[selectedResident].occupation }}</td>
-                                <th>Contact No</th>
-                                <td>{{ residents[selectedResident].contact_no }}</td>
-                            </tr>
-                            <tr>
-                                <th>Present Address</th>
-                                <td>{{ residents[selectedResident].present_address }}</td>
-                                <th>Name / Person to be notified in case of Emergency</th>
-                                <td>{{ residents[selectedResident].emergency_name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Age</th>
-                                <td>{{ residents[selectedResident].age }}</td>
-                                <th>Address</th>
-                                <td>{{ residents[selectedResident].emergency_address }}</td>
-                            </tr>
-                            <tr>
-                                <th>Sex</th>
-                                <td>{{ residents[selectedResident].gender }}</td>
-                                <th>Contact No.</th>
-                                <td>{{ residents[selectedResident].emergency_contact_no }}</td>
-                            </tr>
-                            <tr>
-                                <th>Attachment File</th>
-                                <td> <input class="form-control form-control-sm" type="file"></td>
-                            </tr>
-                            <tr>
-                                <th>Barangay ID</th>
-                                <td class="text-end"><button type="button"
-                                        class="btn btn-outline-primary btn-sm">Generate</button>
-                                </td>
-                                <th>Barangay Residency Form</th>
-                                <td class="text-end"><button type="button"
-                                        class="btn btn-outline-primary btn-sm">Generate</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive" *ngIf="residents.length > 0">
+                        <table class="table table-sm table-bordered table-striped" id="resident-table">
+                            <tbody>
+                                <tr>
+                                    <th>First Name</th>
+                                    <td>{{ residents[selectedResident].first_name }}</td>
+                                    <th>Nationality</th>
+                                    <td>{{ residents[selectedResident].nationality }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Middle Name</th>
+                                    <td>{{ residents[selectedResident].middle_name }}</td>
+                                    <th>Civil Status</th>
+                                    <td>{{ residents[selectedResident].civil_status }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Last Name</th>
+                                    <td>{{ residents[selectedResident].last_name }}</td>
+                                    <th>Date of Birth</th>
+                                    <td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Occupation</th>
+                                    <td>{{ residents[selectedResident].occupation }}</td>
+                                    <th>Contact No</th>
+                                    <td>{{ residents[selectedResident].contact_no }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Present Address</th>
+                                    <td>{{ residents[selectedResident].present_address }}</td>
+                                    <th>Name / Person to be notified in case of Emergency</th>
+                                    <td>{{ residents[selectedResident].emergency_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Age</th>
+                                    <td>{{ residents[selectedResident].age }}</td>
+                                    <th>Address</th>
+                                    <td>{{ residents[selectedResident].emergency_address }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sex</th>
+                                    <td>{{ residents[selectedResident].gender }}</td>
+                                    <th>Contact No.</th>
+                                    <td>{{ residents[selectedResident].emergency_contact_no }}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th>Attachment File</th>
+                                    <td> <input class="form-control form-control-sm" type="file"></td>
+                                </tr> -->
+                                <tr>
+                                    <th>Barangay ID</th>
+                                    <td class="text-end"><button type="button"
+                                            class="btn btn-outline-primary btn-sm">Generate</button>
+                                    </td>
+                                    <th>Barangay Residency Form</th>
+                                    <td class="text-end"><button type="button"
+                                            class="btn btn-outline-primary btn-sm">Generate</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
@@ -141,10 +138,11 @@
     <div>
         <button type="button" class="btn btn-sm btn-secondary" style="margin-right: 12px;"><i
                 class="bi bi-pin-map-fill"></i> Pin Location</button>
-        <button type="button" class="btn btn-sm btn-primary"><i class="bi bi-geo-alt-fill"></i> Track</button>
+        <button type="button" class="btn btn-sm btn-primary" *ngIf="action == 'View'"><i class="bi bi-geo-alt-fill"></i>
+            Track</button>
     </div>
     <div>
-        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="closeModal()"><i class="bi bi-save"></i>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addMasterData()"><i class="bi bi-save"></i>
             Save</button>
     </div>
 </div>
