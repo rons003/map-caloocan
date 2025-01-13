@@ -1,21 +1,43 @@
-<div class="d-flex justify-content-center pt-2">
-  <ul class="list-group list-group-horizontal text-center">
-    <li class="list-group-item"><span class="dot"></span> <br>Street</li>
-    <li class="list-group-item"><span class="dot-alley"></span> <br>Alley</li>
-    <li class="list-group-item"><span style="color: black; font-weight: 1000;">- - - </span> <br>Main Road</li>
-    <li class="list-group-item"><img class="thumbnail" src="assets/fire_hazard.png" width="40" height="30" /> <br>Fire
-      Hazard</li>
-    <li class="list-group-item"><img class="thumbnail" src="assets/flood_prone.png" width="40" height="30" /> <br>Flood
-      Prone</li>
-    <li class="list-group-item"><img class="thumbnail" src="assets/vacant_lot.png" width="40" height="30" /> <br>Vacant
-      Lot</li>
-  </ul>
-</div>
-<div class="d-flex justify-content-center p-1">
-  <canvas #canvas (mousemove)="onMouseMove($event)" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)"
-    (wheel)="zoomInOut($event)"></canvas>
-</div>
-<div class="container-fluid">
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">Caloocan City Barangay 132 Resident Tracker System</a>
+
+    <div class="collapse navbar-collapse" id="navbarsExample02">
+      <ul class="navbar-nav me-auto">
+
+      </ul>
+      <a class="navbar-brand">{{ today }} {{ time }}</a>
+    </div>
+  </div>
+</nav>
+
+<canvas #innerCanvas (click)="clickCanvas($event, searchmodal)"></canvas>
+<canvas #outerCanvas (click)="clickCanvas($event, searchmodal)"></canvas>
+<!-- <map name="workmap" style="position: absolute; z-index:1;">
+  <area alt="Brgy Hall" title="Brgy Hall" type="button" coords="873,1427,650,1278" shape="rect"
+    (click)="clickBrgyHall()">
+  <area type="button" (click)="clickBrgyHall()" target="" alt="House Number 1" title="House Number 1" href="" coords="734,152,751,257,839,250,821,143"
+    shape="poly">
+</map> -->
+<!-- <div class="row">
+  <div class="col-11">
+    
+  </div>
+  <div class="col-1">
+    <div class="d-flex justify-content-center p-1">
+      <ul class="list-group list-group-horizontal text-center">
+        <button type="button" class="list-group-item list-group-item-action list-group-button"
+          (click)="openLg(searchmodal)"><i class="bi bi-search"></i> <br>
+          Search</button>
+        <button type="button" class="list-group-item list-group-item-action list-group-button" (click)="open()"><i
+            class="bi bi-person-add"></i> <br> New
+          Resident</button>
+      </ul>
+    </div>
+
+  </div>
+</div> -->
+<!-- <div class="container-fluid">
   <div class="row justify-content-between fixed-row-bottom p-3">
     <div class="col">
       <div class="row">
@@ -44,7 +66,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 <!-- <input class="form-control form-control-sm" id="search-bar" type="text" [(ngModel)]="resident"
@@ -87,8 +109,7 @@
             <div class="d-grid gap-1">
               <button type="button" class="btn btn-primary btn-sm" (click)="openMasterData(o.establishment_id, o.id)"><i
                   class="bi bi-arrow-right-short"></i> Details</button>
-              <button type="button" class="btn btn-secondary btn-sm" (click)="track()"><i
-                  class="bi bi-geo-alt-fill"></i> Track</button>
+              <button type="button" class="btn btn-secondary btn-sm"><i class="bi bi-geo-alt-fill"></i> Track</button>
             </div>
 
           </li>
@@ -100,3 +121,5 @@
   </div>
 
 </ng-template>
+
+<!-- <img src="assets/map2.png" alt="Workplace" usemap="#workmap"> -->

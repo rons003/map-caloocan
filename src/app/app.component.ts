@@ -30,7 +30,8 @@ import { ResidentInfoComponent } from './shared/resident-info/resident-info.comp
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  @ViewChild('canvas', { static: true }) canvas!: ElementRef;
+  @ViewChild('innerCanvas', { static: true }) canvas!: ElementRef;
+  @ViewChild('outerCanvas', { static: true }) outerCanvas!: ElementRef;
 
   private modalService = inject(NgbModal);
   closeResult = '';
@@ -51,8 +52,11 @@ export class AppComponent implements OnInit {
 
   residents: any[] = [];
   search: string = '';
+  today: any;
+  time: any;
   constructor(private apiService: ApiService) {
-
+    this.today = new Date().toDateString();
+    this.time = new Date().toLocaleTimeString();
   }
 
   //-------------------API CALLS------------------
@@ -70,10 +74,32 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.getResident();
     const canvas = this.canvas.nativeElement;
-    canvas.width = 1300;
-    canvas.height = 650;
-    this.background.src = "assets/map.png";
+    canvas.width = 1918;
+    canvas.height = 2894;
+
+
+
+    const outerCanvas = this.outerCanvas.nativeElement;
+    outerCanvas.width = canvas.width;
+    outerCanvas.height = canvas.height;
+    this.background.src = "assets/map2.png";
     this.background.onload = this.Render.bind(this);
+
+
+    const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
+    context.fillStyle = "rgba(244, 4, 4, 0.57)";
+    context.strokeStyle = "yellow";
+    context.lineWidth = 5;
+    context.beginPath();
+
+    context.moveTo(648, 1276);
+    context.lineTo(646, 1418);
+    context.lineTo(873, 1420);
+    context.lineTo(873, 1271);
+
+    context.fill();
+    context.closePath();
+    context.stroke();
 
   }
 
@@ -82,6 +108,19 @@ export class AppComponent implements OnInit {
     const canvas = this.canvas.nativeElement;
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.drawImage(this.background, 0, 0, canvas.width, canvas.height);
+    // context.fillStyle = "rgba(244, 4, 4, 0.57)";
+    // context.strokeStyle = "yellow";
+    // context.lineWidth = 5;
+    // context.beginPath();
+
+    // context.moveTo(648,1276);
+    // context.lineTo(646,1418);
+    // context.lineTo(873,1420);
+    // context.lineTo(873,1271);
+
+    // context.fill();
+    // context.closePath();
+    // context.stroke();
 
   }
 
@@ -152,16 +191,6 @@ export class AppComponent implements OnInit {
     this.getResident();
   }
 
-  onMouseMove(event: MouseEvent) {
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    const canvas = this.canvas.nativeElement;
-    const context: CanvasRenderingContext2D = canvas.getContext('2d');
-    const { x, y } = this.getMousePos(canvas, event);
-
-  }
 
   getMousePos(canvas: any, evt: any) {
     const rect = canvas.getBoundingClientRect();
@@ -174,58 +203,18 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onMouseDown(event: MouseEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    const canvas = this.canvas.nativeElement;
-    const { x, y } = this.getMousePos(canvas, event);
-
-  }
-
-  onMouseUp(event: MouseEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-  scale = 1;
-  zoomIntensity = 0.1;
-  zoomInOut(event: WheelEvent) {
-    event.preventDefault();
-    const canvas = this.canvas.nativeElement;
+  clickCanvas(event: Event, content: TemplateRef<any>) {
+    const canvas = this.outerCanvas.nativeElement;
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
+    const { x, y } = this.getMousePos(canvas, event);
+    if (context.isPointInPath(x, y)) {
 
-    let x = event.clientX - canvas.offsetLeft;
-    let y = event.clientY - canvas.offsetTop;
-    const wheel = event.deltaY < 0 ? 1 : -1;
-    // Compute zoom factor.
-
-    let zoom = Math.exp(wheel * this.zoomIntensity);
-    this.scale = Math.min(this.scale * zoom, 30);
-
-    if (this.scale <= 1) {
-      context.resetTransform();
-      this.scale = 1;
-      return;
+      this.openLg(content)
+      this.clearCanvas(context, canvas);
     }
+  }
+
+  clearCanvas(context: CanvasRenderingContext2D, canvas: any) {
     context.clearRect(0, 0, canvas.width, canvas.height);
-
-    let t = context.getTransform();
-    context.resetTransform();
-    context.translate(x, y);
-    context.scale(zoom, zoom);
-    context.translate(-x, -y);
-    context.transform(t.a, t.b, t.c, t.d, t.e, t.f);
-    requestAnimationFrame(this.Render);
-  }
-
-  clickCanvas(event: MouseEvent, content: TemplateRef<any>) {
-    const canvas = this.canvas.nativeElement;
-    const context: CanvasRenderingContext2D = canvas.getContext('2d');
-    const { x, y } = this.getMousePos(canvas, event);
-
-    console.log(x, y);
-    if ((x > 301 && x < 340) && (y > 501 && y < 540)) {
-      console.log(x, y);
-    }
   }
 }
