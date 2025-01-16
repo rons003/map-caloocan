@@ -1,1 +1,39 @@
-<p>tracker-management works!</p>
+<div class="header p-2">
+    <h4>List of Establishments</h4>
+</div>
+<div class="body p-2">
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" class="text-end" width="3%">#</th>
+                <th scope="col">Code</th>
+                <th scope="col">Block</th>
+                <th scope="col">Address</th>
+                <th scope="col">Type</th>
+                <th scope="col" class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(e of establishments; track e; let i = $index) {
+            <tr>
+                <td class="text-end">{{ i + 1 }}</td>
+                <td>{{ e.code }}</td>
+                <td>{{ e.block }}</td>
+                <td>{{ e.address}}</td>
+                <td>{{ e.type }}</td>
+                <td class="overflow-hidden text-center">
+                    <div ngbDropdown container="body">
+                        <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Action</button>
+                        <div ngbDropdownMenu>
+                            <button ngbDropdownItem>Details</button>
+                            <button ngbDropdownItem>Edit</button>
+                            <button ngbDropdownItem>Inactive</button>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

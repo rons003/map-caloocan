@@ -49,4 +49,9 @@ export class ApiService {
 
     return this.http.request<any>("get", url_, options_);
   }
+
+  getEstablishments(options_?: {}): Observable<any[]> {
+    let url_ = this.baseUrl + "/establishment";
+    return this.http.request<any[]>("get", url_, options_);
+  }
 }
