@@ -3,7 +3,7 @@ import { TrackerManagementComponent } from './pages/tracker-management/tracker-m
 import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'tracker-management', pathMatch: 'full' },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: 'home',
         component: HomeComponent,
@@ -13,5 +13,5 @@ export const routes: Routes = [
         path: 'tracker-management',
         component: TrackerManagementComponent,
         data: { title: 'Tracker Management Page' }
-    },
+    }
 ];

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbModal, NgbModalModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { MasterDataComponent } from '../../shared/master-data/master-data.component';
+import { CoordinatesComponent } from '../../shared/coordinates/coordinates.component';
 @Component({
   selector: 'app-tracker-management',
   standalone: true,
@@ -54,6 +55,16 @@ export class TrackerManagementComponent implements OnInit {
     const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.action = "View";
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  openMap() {
+    const modalRef = this.modalService.open(CoordinatesComponent, { fullscreen: true });
     modalRef.result.then((result) => {
       if (result != 'close') {
       }

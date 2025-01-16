@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 
 import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbDropdownModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,9 +36,9 @@ export class HomeComponent implements OnInit {
 
   residents: any[] = [];
   search: string = '';
-  
+
   constructor(private apiService: ApiService) {
-    
+
   }
 
   //-------------------API CALLS------------------
@@ -69,10 +69,21 @@ export class HomeComponent implements OnInit {
 
 
     const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
-    
-    
-    // setInterval(this.highlightArea,2000);
-   
+
+    // context.fillStyle = "rgba(244, 4, 4, 0.57)";
+    // context.strokeStyle = "yellow";
+    // context.lineWidth = 5;
+    // context.beginPath();
+
+    // context.moveTo(648, 1276);
+    // context.lineTo(646, 1418);
+    // context.lineTo(873, 1420);
+    // context.lineTo(873, 1271);
+
+    // context.fill();
+    // context.closePath();
+    // context.stroke();
+
   }
 
   Render = () => {
@@ -80,27 +91,15 @@ export class HomeComponent implements OnInit {
     const canvas = this.canvas.nativeElement;
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.drawImage(this.background, 0, 0, canvas.width, canvas.height);
-    
+
   }
 
-  highlightArea = () => {
+  highlightArea () {
     console.log('high light area');
     const outerCanvas = this.outerCanvas.nativeElement;
     const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
     this.clearCanvas(context, outerCanvas);
-    context.fillStyle = "rgba(244, 4, 4, 0.57)";
-    context.strokeStyle = "yellow";
-    context.lineWidth = 5;
-    context.beginPath();
-
-    context.moveTo(648, 1276);
-    context.lineTo(646, 1418);
-    context.lineTo(873, 1420);
-    context.lineTo(873, 1271);
-
-    context.fill();
-    context.closePath();
-    context.stroke();
+    
     // requestAnimationFrame(this.highlightArea);
   }
 
@@ -183,15 +182,39 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  polygon: any[] = [];
+
   clickCanvas(event: Event, content: TemplateRef<any>) {
     const canvas = this.outerCanvas.nativeElement;
-    const context: CanvasRenderingContext2D = canvas.getContext('2d');
     const { x, y } = this.getMousePos(canvas, event);
-    if (context.isPointInPath(x, y)) {
+    this.polygon.push({
+      x: x,
+      y: y
+    });
+    this.drawPolygon();
+    console.log(this.polygon);
+  }
 
-      this.openLg(content)
-      this.clearCanvas(context, canvas);
+  drawPolygon() {
+    const outerCanvas = this.outerCanvas.nativeElement;
+    const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
+    this.clearCanvas(context, outerCanvas);
+    context.fillStyle = "rgba(63, 62, 62, 0.57)";
+    context.strokeStyle = "yellow";
+    context.lineWidth = 3;
+    context.beginPath();
+
+    for (let i = 0; i < this.polygon.length; i++) {
+      context.arc(this.polygon[i].x, this.polygon[i].y, 7, 0, 2 * Math.PI);
+      if (i == 0) {
+        context.moveTo(this.polygon[i].x, this.polygon[i].y);
+      } else {
+        context.lineTo(this.polygon[i].x, this.polygon[i].y);
+      }
     }
+    context.fill();
+    context.closePath();
+    context.stroke();
   }
 
   clearCanvas(context: CanvasRenderingContext2D, canvas: any) {
