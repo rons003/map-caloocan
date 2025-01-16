@@ -22,7 +22,9 @@
                 <th scope="col">Block</th>
                 <th scope="col">Address</th>
                 <th scope="col">Type</th>
-                <th scope="col" class="text-center">Action</th>
+                <th scope="col">No. of Resident</th>
+                <th scope="col">Map Area</th>
+                <th scope="col" class="text-center" width="5%">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -33,12 +35,14 @@
                 <td>{{ e.block }}</td>
                 <td>{{ e.address}}</td>
                 <td>{{ e.type }}</td>
+                <td>{{ e.no_of_resident }}</td>
+                <td>{{ mapAreaDescription(e.coordinates) }}</td>
                 <td class="overflow-hidden text-center">
                     <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Action</button>
                         <div ngbDropdownMenu>
                             <button ngbDropdownItem (click)="openMasterData(e.id)">Details</button>
-                            <button ngbDropdownItem (click)="openMap()">Locate</button>
+                            <button ngbDropdownItem (click)="openMap(e)">Locate</button>
                             <button ngbDropdownItem>Edit</button>
                             <button ngbDropdownItem>Inactive</button>
                         </div>

@@ -54,4 +54,16 @@ export class ApiService {
     let url_ = this.baseUrl + "/establishment";
     return this.http.request<any[]>("get", url_, options_);
   }
+
+  storeCoordinates(body: any): Observable<any> {
+    let url_ = this.baseUrl + "/establishment/coordinates";
+
+    const content_ = body
+
+    let options_: any = {
+      body: content_
+    };
+
+    return this.http.request<any>("post", url_, options_);
+  }
 }

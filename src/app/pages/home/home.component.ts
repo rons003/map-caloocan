@@ -200,7 +200,7 @@ export class HomeComponent implements OnInit {
     const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
     this.clearCanvas(context, outerCanvas);
     context.fillStyle = "rgba(63, 62, 62, 0.57)";
-    context.strokeStyle = "yellow";
+    context.strokeStyle = "rgba(193, 29, 29, 0.7)";
     context.lineWidth = 3;
     context.beginPath();
 

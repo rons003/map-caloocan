@@ -3,6 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-coordinates',
@@ -19,6 +20,12 @@ export class CoordinatesComponent implements OnInit {
   isDrawing: boolean = false;
   polygon: any[] = [];
 
+  id: number = 0;
+  code: string = '';
+  block: string = '';
+  type: string = '';
+  address: string = '';
+
   private modalService = inject(NgbModal);
 
   constructor(private activeModal: NgbActiveModal,
@@ -26,6 +33,43 @@ export class CoordinatesComponent implements OnInit {
   ) {
 
   }
+
+  // ----------------- API REQUEST ---------------------
+  saveCoordinates() {
+    Swal.showLoading();
+    let data = {
+      "establishment_id": this.id,
+      "coordinates": this.polygon
+    };
+    this.apiService.storeCoordinates(data)
+      .subscribe(res => {
+        Swal.close();
+        if (res.status == 'success') {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.closeModal();
+        } else {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "error",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+
+      }, error => {
+        Swal.close();
+      });
+  }
+  // ---------------------------------------------------
 
   ngOnInit(): void {
     const canvas = this.canvas.nativeElement;
@@ -37,6 +81,7 @@ export class CoordinatesComponent implements OnInit {
     outerCanvas.height = canvas.height;
     this.background.src = "assets/map2.png";
     this.background.onload = this.Render.bind(this);
+    this.drawPolygon();
   }
 
   Render = () => {
@@ -52,6 +97,7 @@ export class CoordinatesComponent implements OnInit {
   }
 
   selectArea() {
+    this.clearCanvas();
     this.polygon = [];
     if (this.isDrawing)
       this.isDrawing = false;
@@ -94,7 +140,7 @@ export class CoordinatesComponent implements OnInit {
     const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
     this.clearCanvas();
     context.fillStyle = "rgba(63, 62, 62, 0.57)";
-    context.strokeStyle = "yellow";
+    context.strokeStyle = context.strokeStyle = "rgb(11, 246, 38)";
     context.lineWidth = 3;
     context.beginPath();
 
@@ -115,6 +161,14 @@ export class CoordinatesComponent implements OnInit {
     const canvas = this.outerCanvas.nativeElement;
     const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  disableSave(): boolean {
+    if (this.polygon.length > 2) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 }

@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Map (Code: A20 , Block: 2, Type: Residential, Address: Calauag, Quezon)</h4>
+    <h4 class="modal-title" id="modal-basic-title">Map (Code: <span class="text-primary">{{ code }}</span>, Block: <span class="text-primary">{{ block }}</span>, Type: <span class="text-primary">{{ type }}</span>, Address: <span class="text-primary">{{ address}}</span>)</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <div class="map-controller">
     <button type="button" class="btn btn-outline-primary btn-sm m-1" *ngIf="!isDrawing" (click)="selectArea()"><i
             class="bi bi-pin-map-fill"></i> Select Area</button>
-    <button type="button" class="btn btn-outline-primary btn-sm m-1" *ngIf="isDrawing"><i class="bi bi-save"></i>
+    <button type="button" class="btn btn-outline-primary btn-sm m-1" *ngIf="isDrawing" (click)="saveCoordinates()" [disabled]="disableSave()"><i class="bi bi-save"></i>
         Save Coordinates</button>
     <button type="button" class="btn btn-outline-secondary btn-sm m-1" (click)="reset()"><i
             class="bi bi-arrow-counterclockwise"></i> Reset</button>

@@ -135,12 +135,6 @@
 
 </div>
 <div class="modal-footer">
-    <div>
-        <button type="button" class="btn btn-sm btn-secondary" style="margin-right: 12px;"><i
-                class="bi bi-pin-map-fill"></i> Pin Location</button>
-        <button type="button" class="btn btn-sm btn-primary" *ngIf="action == 'View'"><i class="bi bi-geo-alt-fill"></i>
-            Track</button>
-    </div>
     <div *ngIf="action == 'Add'">
         <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addMasterData()"><i class="bi bi-save"></i>
             Save</button>

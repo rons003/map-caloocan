@@ -63,14 +63,30 @@ export class TrackerManagementComponent implements OnInit {
     });
   }
 
-  openMap() {
+  openMap(e: any) {
     const modalRef = this.modalService.open(CoordinatesComponent, { fullscreen: true,  scrollable: true  });
+    modalRef.componentInstance.id = e.id;
+    modalRef.componentInstance.code = e.code;
+    modalRef.componentInstance.block = e.block;
+    modalRef.componentInstance.type = e.type;
+    modalRef.componentInstance.address = e.address;
+    modalRef.componentInstance.polygon = e.coordinates;
     modalRef.result.then((result) => {
       if (result != 'close') {
+      } else {
+        this.getEstablishments();
       }
     }).catch((error) => {
       console.log(error);
     });
+  }
+
+  mapAreaDescription(coordinates: any[]): string {
+    if( coordinates.length == 0) {
+      return 'No';
+    } else {
+      return 'Yes';
+    }
   }
   
 
