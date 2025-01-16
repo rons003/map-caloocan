@@ -141,6 +141,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
         this.address = data.address;
         this.type = data.type;
         this.residents = data.residents
+        this.resident_id = data.residents[0].id
         this.selectedResident = this.residents.findIndex(o=> o.id == this.resident_id);
       });
   }

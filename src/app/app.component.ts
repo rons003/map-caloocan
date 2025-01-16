@@ -19,14 +19,11 @@ import { ResidentInfoComponent } from './shared/resident-info/resident-info.comp
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   today: any;
   time: any;
   constructor() {
     this.today = new Date().toDateString();
     this.time = new Date().toLocaleTimeString();
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 }

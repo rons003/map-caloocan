@@ -2,6 +2,18 @@
     <h4>List of Establishments</h4>
 </div>
 <div class="body p-2">
+    <div class="page-controller mb-2">
+        <div class="row">
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="open()"><i
+                        class="bi bi-plus-circle"></i>
+                    New</button>
+            </div>
+            <!-- <div class="col">
+                <input type="text" class="form-control form-control-sm" />
+            </div> -->
+        </div>
+    </div>
     <table class="table table-sm table-striped table-bordered">
         <thead>
             <tr>
@@ -14,7 +26,7 @@
             </tr>
         </thead>
         <tbody>
-            @for(e of establishments; track e; let i = $index) {
+            @for(e of establishments | slice: (page-1) * pageSize : page * pageSize; track e; let i = $index) {
             <tr>
                 <td class="text-end">{{ i + 1 }}</td>
                 <td>{{ e.code }}</td>
@@ -25,7 +37,7 @@
                     <div ngbDropdown container="body">
                         <button type="button" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Action</button>
                         <div ngbDropdownMenu>
-                            <button ngbDropdownItem>Details</button>
+                            <button ngbDropdownItem (click)="openMasterData(e.id)">Details</button>
                             <button ngbDropdownItem>Edit</button>
                             <button ngbDropdownItem>Inactive</button>
                         </div>
@@ -36,4 +48,6 @@
             }
         </tbody>
     </table>
+    <ngb-pagination [collectionSize]="establishments.length" [(page)]="page" [maxSize]="10" [boundaryLinks]="true">
+    </ngb-pagination>
 </div>
