@@ -64,7 +64,7 @@ export class TrackerManagementComponent implements OnInit {
   }
 
   openMap() {
-    const modalRef = this.modalService.open(CoordinatesComponent, { fullscreen: true });
+    const modalRef = this.modalService.open(CoordinatesComponent, { fullscreen: true,  scrollable: true  });
     modalRef.result.then((result) => {
       if (result != 'close') {
       }

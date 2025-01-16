@@ -1,10 +1,16 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Modal</h4>
+    <h4 class="modal-title" id="modal-basic-title">Map (Code: A20 , Block: 2, Type: Residential, Address: Calauag, Quezon)</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
-<div class="modal-body">
-
+<div class="map-controller">
+    <button type="button" class="btn btn-outline-primary btn-sm m-1" *ngIf="!isDrawing" (click)="selectArea()"><i
+            class="bi bi-pin-map-fill"></i> Select Area</button>
+    <button type="button" class="btn btn-outline-primary btn-sm m-1" *ngIf="isDrawing"><i class="bi bi-save"></i>
+        Save Coordinates</button>
+    <button type="button" class="btn btn-outline-secondary btn-sm m-1" (click)="reset()"><i
+            class="bi bi-arrow-counterclockwise"></i> Reset</button>
 </div>
-<div class="modal-footer">
-    
+<div class="modal-body p-0 m-0" style="height: 1200px;">
+    <canvas #innerCanvas></canvas>
+    <canvas #outerCanvas (click)="clickCanvas($event)"></canvas>
 </div>
