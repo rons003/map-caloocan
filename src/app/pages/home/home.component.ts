@@ -187,6 +187,7 @@ export class HomeComponent implements OnInit {
   clickCanvas(event: Event, content: TemplateRef<any>) {
     // const canvas = this.outerCanvas.nativeElement;
     // const { x, y } = this.getMousePos(canvas, event);
+    // console.log(x,y);
     // this.polygon.push({
     //   x: x,
     //   y: y
