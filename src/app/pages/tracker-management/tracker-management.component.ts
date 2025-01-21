@@ -64,7 +64,7 @@ export class TrackerManagementComponent implements OnInit {
   }
 
   openMap(e: any) {
-    const modalRef = this.modalService.open(CoordinatesComponent, { fullscreen: true,  scrollable: true  });
+    const modalRef = this.modalService.open(CoordinatesComponent, { fullscreen: true, scrollable: true });
     modalRef.componentInstance.id = e.id;
     modalRef.componentInstance.code = e.code;
     modalRef.componentInstance.block = e.block;
@@ -82,12 +82,12 @@ export class TrackerManagementComponent implements OnInit {
   }
 
   mapAreaDescription(coordinates: any[]): string {
-    if( coordinates.length == 0) {
+    if (coordinates.length == 0) {
       return 'No';
     } else {
       return 'Yes';
     }
   }
-  
+
 
 }

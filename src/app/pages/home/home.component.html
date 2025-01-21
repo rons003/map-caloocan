@@ -1,64 +1,11 @@
 <canvas #innerCanvas (click)="clickCanvas($event, searchmodal)"></canvas>
 <canvas #outerCanvas (click)="clickCanvas($event, searchmodal)"></canvas>
-
-<!-- <div class="row">
-  <div class="col-11">
-    
-  </div>
-  <div class="col-1">
-    <div class="d-flex justify-content-center p-1">
-      <ul class="list-group list-group-horizontal text-center">
-        <button type="button" class="list-group-item list-group-item-action list-group-button"
-          (click)="openLg(searchmodal)"><i class="bi bi-search"></i> <br>
-          Search</button>
-        <button type="button" class="list-group-item list-group-item-action list-group-button" (click)="open()"><i
-            class="bi bi-person-add"></i> <br> New
-          Resident</button>
-      </ul>
-    </div>
-
-  </div>
-</div> -->
-<!-- <div class="container-fluid">
-  <div class="row justify-content-between fixed-row-bottom p-3">
-    <div class="col">
-      <div class="row">
-        <div class="col-2">
-          <img class="rounded-circle me-3" src="assets/logo3.jpg" width="80" height="80" />
-        </div>
-        <div class="col-10">
-          <h3 class="text-light">Caloocan City Barangay <br>132 Resident Tracker System</h3>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <ul class="list-group list-group-horizontal text-center">
-        <button type="button" class="list-group-item list-group-item-action list-group-button"
-          (click)="openLg(searchmodal)"><i class="bi bi-search"></i> <br>
-          Search</button>
-        <button type="button" class="list-group-item list-group-item-action list-group-button" (click)="open()"><i
-            class="bi bi-person-add"></i> <br> New
-          Resident</button>
-      </ul>
-    </div>
-    <div class="col">
-      <div class="d-flex flex-row-reverse bd-highlight">
-        <div class="p-2 bd-highlight"><img class="rounded" src="assets/mayor.jpg" width="180" height="80" /></div>
-        <div class="p-2 bd-highlight"><img class="rounded-circle" src="assets/logo1.jpg" width="80" height="80" /></div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-
-<!-- <input class="form-control form-control-sm" id="search-bar" type="text" [(ngModel)]="resident"
-          [ngbTypeahead]="search" [resultFormatter]="searchFormatter" (change)="onSearch()">
-        <button class="btn btn-outline-primary" type="button" (click)="open(content)"><i
-            class="bi bi-house-add"></i></button> -->
+<div type="button" class="float" (click)="openLg(searchmodal)">
+  <i class="bi bi-search"></i>
+</div>
 
 
 <ng-template #searchmodal let-modal>
-
   <div class="modal-body">
     <div class="row mb-3">
       <div class="col text-center">
@@ -100,6 +47,9 @@
         <label>Result: {{ residents.length }}</label>
       </div>
     </div>
+  </div>
+  <div class="modal-footer">
+
   </div>
 
 </ng-template>

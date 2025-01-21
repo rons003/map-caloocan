@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, OnInit, TemplateRef, ViewChild } from '@angular/core';
 
 
-import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbDropdownModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeaheadModule, NgbCollapseModule, NgbModal, ModalDismissReasons, NgbDropdownModule, NgbCarouselModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { MasterDataComponent } from '../../shared/master-data/master-data.component';
 import { ApiService } from '../../services/api.service';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbTypeaheadModule, NgbCollapseModule, NgbDropdownModule, NgbCarouselModule, FormsModule],
+  imports: [NgbNavModule, NgbNavModule,CommonModule, FormsModule, NgbTypeaheadModule, NgbCollapseModule, NgbDropdownModule, NgbCarouselModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -56,15 +56,15 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getResident();
     const canvas = this.canvas.nativeElement;
-    canvas.width = 1918;
-    canvas.height = 2894;
+    canvas.width = 1900;
+    canvas.height = 2900;
 
 
 
     const outerCanvas = this.outerCanvas.nativeElement;
     outerCanvas.width = canvas.width;
     outerCanvas.height = canvas.height;
-    this.background.src = "assets/map2.png";
+    this.background.src = "assets/map_new.png";
     this.background.onload = this.Render.bind(this);
 
 
@@ -185,14 +185,14 @@ export class HomeComponent implements OnInit {
   polygon: any[] = [];
 
   clickCanvas(event: Event, content: TemplateRef<any>) {
-    const canvas = this.outerCanvas.nativeElement;
-    const { x, y } = this.getMousePos(canvas, event);
-    this.polygon.push({
-      x: x,
-      y: y
-    });
-    this.drawPolygon();
-    console.log(this.polygon);
+    // const canvas = this.outerCanvas.nativeElement;
+    // const { x, y } = this.getMousePos(canvas, event);
+    // this.polygon.push({
+    //   x: x,
+    //   y: y
+    // });
+    // this.drawPolygon();
+    // console.log(this.polygon);
   }
 
   drawPolygon() {
