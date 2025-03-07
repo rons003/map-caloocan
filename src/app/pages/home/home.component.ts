@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgbNavModule, NgbNavModule,CommonModule, FormsModule, NgbTypeaheadModule, NgbCollapseModule, NgbDropdownModule, NgbCarouselModule, FormsModule],
+  imports: [NgbNavModule, NgbNavModule, CommonModule, FormsModule, NgbTypeaheadModule, NgbCollapseModule, NgbDropdownModule, NgbCarouselModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -35,7 +35,9 @@ export class HomeComponent implements OnInit {
   background = new Image();
 
   residents: any[] = [];
+  polygon: any[] = [];
   search: string = '';
+  interval: any;
 
   constructor(private apiService: ApiService) {
 
@@ -56,33 +58,14 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getResident();
     const canvas = this.canvas.nativeElement;
-    canvas.width = 1900;
-    canvas.height = 2900;
-
-
+    canvas.width = 1918;
+    canvas.height = 2894;
 
     const outerCanvas = this.outerCanvas.nativeElement;
     outerCanvas.width = canvas.width;
     outerCanvas.height = canvas.height;
     this.background.src = "assets/map_new.png";
     this.background.onload = this.Render.bind(this);
-
-
-    const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
-
-    // context.fillStyle = "rgba(244, 4, 4, 0.57)";
-    // context.strokeStyle = "yellow";
-    // context.lineWidth = 5;
-    // context.beginPath();
-
-    // context.moveTo(648, 1276);
-    // context.lineTo(646, 1418);
-    // context.lineTo(873, 1420);
-    // context.lineTo(873, 1271);
-
-    // context.fill();
-    // context.closePath();
-    // context.stroke();
 
   }
 
@@ -94,40 +77,23 @@ export class HomeComponent implements OnInit {
 
   }
 
-  highlightArea () {
-    console.log('high light area');
-    const outerCanvas = this.outerCanvas.nativeElement;
-    const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
-    this.clearCanvas(context, outerCanvas);
-    
-    // requestAnimationFrame(this.highlightArea);
-  }
+  track(resident: any) {
 
-  track() {
-    const canvas = this.canvas.nativeElement;
-    const context: CanvasRenderingContext2D = canvas.getContext('2d');
-    const pin = new Image();
-    pin.src = "assets/pin.png";
-    pin.onload = () => {
-      context.drawImage(pin, 300, 500, 50, 50);
-      context.font = "12px Arial";
-      context.fillStyle = "purple";
-      context.fillText("Jaybee Cruz", 300, 560);
-    }
     this.modalService.dismissAll();
+    this.polygon = resident.coordinates;
+    let visible = true;
+    this.interval = setInterval(() => {
+      this.clearCanvas();
+      if (visible)
+        this.drawPolygon();
+      visible = !visible;
+
+    }, 500);
+
   }
-
-
-  // search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
-  //   text$.pipe(
-  //     debounceTime(200),
-  //     distinctUntilChanged(),
-  //     map((term) =>
-  //       term === '' ? [] : this.residence.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
-  //     ),
-  //   );
 
   open() {
+  
     const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
     modalRef.result.then((result) => {
       if (result != 'close') {
@@ -152,6 +118,10 @@ export class HomeComponent implements OnInit {
   }
 
   openLg(content: TemplateRef<any>) {
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.clearCanvas();
+    }
     this.modalService.open(content, { size: 'xl', centered: true });
   }
 
@@ -182,26 +152,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  polygon: any[] = [];
-
-  clickCanvas(event: Event, content: TemplateRef<any>) {
-    // const canvas = this.outerCanvas.nativeElement;
-    // const { x, y } = this.getMousePos(canvas, event);
-    // console.log(x,y);
-    // this.polygon.push({
-    //   x: x,
-    //   y: y
-    // });
-    // this.drawPolygon();
-    // console.log(this.polygon);
-  }
-
   drawPolygon() {
     const outerCanvas = this.outerCanvas.nativeElement;
     const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
-    this.clearCanvas(context, outerCanvas);
     context.fillStyle = "rgba(63, 62, 62, 0.57)";
-    context.strokeStyle = "rgba(193, 29, 29, 0.7)";
+    context.strokeStyle = context.strokeStyle = "rgb(11, 246, 38)";
     context.lineWidth = 3;
     context.beginPath();
 
@@ -218,7 +173,9 @@ export class HomeComponent implements OnInit {
     context.stroke();
   }
 
-  clearCanvas(context: CanvasRenderingContext2D, canvas: any) {
+  clearCanvas() {
+    const canvas = this.outerCanvas.nativeElement;
+    const context: CanvasRenderingContext2D = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
   }
 }
