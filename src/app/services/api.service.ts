@@ -28,6 +28,22 @@ export class ApiService {
     return this.http.request<any>("post", url_, options_);
   }
 
+  updateMasterData(id:number, body: any): Observable<any> {
+    let url_ = this.baseUrl + "/resident/update/{id}";
+    if (id === undefined || id === null)
+      throw new Error("The parameter 'id' must be defined.");
+    url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = body
+
+    let options_: any = {
+      body: content_,
+    };
+
+    return this.http.request<any>("put", url_, options_);
+  }
+
   getResident(options_?: {}): Observable<any[]> {
     let url_ = this.baseUrl + "/resident/";
     return this.http.request<any[]>("get", url_, options_);

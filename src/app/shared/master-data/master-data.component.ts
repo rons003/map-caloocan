@@ -48,16 +48,16 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   residents: Resident[] = [];
   selectedResident: number = 0;
 
-  
+
 
   selectedImages!: FileList;
   imagesBase64: string[] = []
-  
+
 
   constructor(private activeModal: NgbActiveModal,
     private apiService: ApiService
   ) {
-    
+
   }
 
   addMasterData() {
@@ -94,8 +94,41 @@ export class MasterDataComponent implements OnInit, OnDestroy {
           });
         }
 
-      }, error => {
+      });
+  }
+
+  update() {
+    Swal.showLoading();
+    const data = {
+      "code": this.establishment.code,
+      "block": this.establishment.block,
+      "address": this.establishment.address,
+      "type": this.establishment.type,
+      "residents": this.residents,
+      "images": this.selectedFiles
+    };
+    this.apiService.updateMasterData(this.id, data)
+      .subscribe(res => {
         Swal.close();
+        if (res.status == 'success') {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "error",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
       });
   }
 
@@ -155,7 +188,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteResident(){
+  deleteResident() {
     this.residents.splice(this.selectedResident, 1);
     this.selectedResident = 0;
   }

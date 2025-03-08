@@ -56,8 +56,9 @@ export class TrackerManagementComponent implements OnInit {
     modalRef.componentInstance.id = id;
     modalRef.componentInstance.action = "View";
     modalRef.result.then((result) => {
-      if (result != 'close') {
-      }
+      if (result == 'close') {
+        this.getEstablishments();
+      } 
     }).catch((error) => {
       console.log(error);
     });
