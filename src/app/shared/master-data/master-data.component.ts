@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDateStruct, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResidentInfoComponent } from '../resident-info/resident-info.component';
 import { ApiService } from '../../services/api.service';
 import { AsyncSubject, Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Resident } from '../../model/resident.model';
 import { Establishment } from '../../model/establishment.model';
+
 
 export interface SelectedFiles {
   name: string;
@@ -52,6 +53,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
 
   selectedImages!: FileList;
   imagesBase64: string[] = []
+  o: Resident | undefined;
 
 
   constructor(private activeModal: NgbActiveModal,
@@ -142,8 +144,6 @@ export class MasterDataComponent implements OnInit, OnDestroy {
         this.establishment.type = data.type;
         this.residents = data.residents
         this.establishment.image = "data:image/jpg;base64, " + data.image;
-        // this.resident_id = data.residents[0].id
-        // this.selectedResident = this.residents.findIndex(o=> o.id == this.resident_id);
       });
   }
 
@@ -164,11 +164,20 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     this.activeModal.close('close');
   }
 
-  newResidentInfo() {
+  ResidentInfo(action: string) {
     const modalRef = this.modalService.open(ResidentInfoComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.action = action;
+    if (action === 'Update'){
+      modalRef.componentInstance.resident = this.residents[this.selectedResident];
+    }
+      
     modalRef.result.then((result) => {
       if (result != 'close') {
-        this.residents.push(result);
+        console.log(result);
+        if (action === 'Add')
+          this.residents.push(result);
+        else
+          this.residents[this.selectedResident] = result;
       }
     }).catch((error) => {
       console.log(error);

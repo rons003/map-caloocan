@@ -23,8 +23,8 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Address</label>
-                                <textarea class="form-control form-control-sm" rows="3" [(ngModel)]="establishment.address"
-                                    placeholder="Address"></textarea>
+                                <textarea class="form-control form-control-sm" rows="3"
+                                    [(ngModel)]="establishment.address" placeholder="Address"></textarea>
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Establishment Type</label>
@@ -34,10 +34,12 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Image Attachment</label>
-                                <input class="form-control form-control-sm" type="file"  multiple="true" (change)="onImageSelected($event)" accept="image/*" >
+                                <input class="form-control form-control-sm" type="file" multiple="true"
+                                    (change)="onImageSelected($event)" accept="image/*">
                             </div>
                             <div class="mb-2">
-                                <img [src]="establishment.image" class="img-thumbnail" alt="profile" style="height: 90px; width: 130px;">
+                                <img [src]="establishment.image" class="img-thumbnail" alt="profile"
+                                    style="height: 90px; width: 130px;">
                             </div>
                         </div>
                     </div>
@@ -60,8 +62,8 @@
                                 Action
                             </button>
                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                <button ngbDropdownItem (click)="newResidentInfo()">Add</button>
-                                <button ngbDropdownItem>Edit</button>
+                                <button ngbDropdownItem (click)="ResidentInfo('Add')">Add</button>
+                                <button ngbDropdownItem (click)="ResidentInfo('Update')">Edit</button>
                                 <div class="dropdown-divider"></div>
                                 <button ngbDropdownItem (click)="deleteResident()">Delete</button>
                             </div>
@@ -86,8 +88,7 @@
                                     <th>Last Name</th>
                                     <td>{{ residents[selectedResident].last_name }}</td>
                                     <th>Date of Birth</th>
-                                    <td>
-                                    </td>
+                                    <td>{{ residents[selectedResident].birth_date }}</td>
                                 </tr>
                                 <tr>
                                     <th>Occupation</th>
@@ -139,7 +140,8 @@
 </div>
 <div class="modal-footer">
     <div *ngIf="action == 'Add'">
-        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addMasterData()"><i class="bi bi-save"></i>
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="addMasterData()"><i
+                class="bi bi-save"></i>
             Save</button>
     </div>
     <div *ngIf="action == 'View'">

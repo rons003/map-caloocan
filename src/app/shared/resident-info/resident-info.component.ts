@@ -1,18 +1,72 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule, NgbDateParserFormatter, NgbDateAdapter, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api.service';
 import { Resident } from '../../model/resident.model';
+
+/**
+ * This Service handles how the date is represented in scripts i.e. ngModel.
+ */
+@Injectable()
+export class CustomAdapter extends NgbDateAdapter<string> {
+  readonly DELIMITER = '-';
+
+  fromModel(value: string | null): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10),
+      };
+    }
+    return null;
+  }
+
+  toModel(date: NgbDateStruct | null): string | null {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+  }
+}
+
+/**
+ * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
+ */
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+  readonly DELIMITER = '/';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10),
+      };
+    }
+    return null;
+  }
+
+  format(date: NgbDateStruct | null): string {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+  }
+}
+
 
 @Component({
   selector: 'app-resident-info',
   standalone: true,
   imports: [CommonModule, FormsModule, NgbDatepickerModule, NgbAlertModule],
   templateUrl: './resident-info.component.html',
+  providers: [
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
+  ],
   styleUrl: './resident-info.component.scss'
 })
 export class ResidentInfoComponent implements OnInit {
+
 
   list_civil_status: any[] = [
     { value: "Single", label: "Single" },
@@ -33,37 +87,19 @@ export class ResidentInfoComponent implements OnInit {
   modalHeaderText = 'New Resident';
 
   constructor(private activeModal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private ngbCalendar: NgbCalendar,
+		private dateAdapter: NgbDateAdapter<string>
   ) {
 
   }
   ngOnInit(): void {
-    if (this.action == 'View'){
+
+    if (this.action === 'Update') {
       this.modalHeaderText = 'Resident Information';
-      this.getResidentInfo();
+
     }
   }
-
-  getResidentInfo() {
-    // this.apiService.getResidentInfo(this.id)
-    //   .subscribe(res => {
-    //     const data = res.body;
-    //     this.first_name = data.first_name;
-    //     this.middle_name = data.middle_name;
-    //     this.last_name = data.last_name;
-    //     this.occupation = data.occupation;
-    //     this.present_address = data.present_address;
-    //     this.age = data.age;
-    //     this.gender = data.sex;
-    //     this.nationality = data.nationality;
-    //     this.civil_status = data.civil_status;
-    //     this.contact_no = data.contact_no;
-    //     this.emergency_name = data.emergency_name;
-    //     this.emergency_address = data.address;
-    //     this.emergency_contact_no = data.emergency_contact_no;
-    //   });
-  }
-
   setResident() {
     this.activeModal.close(this.resident);
   }

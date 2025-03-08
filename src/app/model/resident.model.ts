@@ -11,7 +11,7 @@ export class Resident {
     gender: string | undefined;
     nationality: string | undefined;
     civil_status: string | undefined;
-    birth_date: NgbDateStruct | undefined;
+    birth_date: string | undefined;
     contact_no: string | undefined;
     emergency_name: string | undefined;
     emergency_address: string | undefined;
