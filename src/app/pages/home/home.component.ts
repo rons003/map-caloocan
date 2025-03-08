@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { MasterDataComponent } from '../../shared/master-data/master-data.component';
 import { ApiService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
+import { HomeInfoComponent } from '../../shared/home-info/home-info.component';
+import { Resident } from '../../model/resident.model';
+import { Establishment } from '../../model/establishment.model';
 
 @Component({
   selector: 'app-home',
@@ -106,11 +109,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openMasterData(id: number, resident_id: number) {
-    const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
-    modalRef.componentInstance.id = id;
-    modalRef.componentInstance.resident_id = resident_id;
-    modalRef.componentInstance.action = "View";
+  openResidentInfo(resident: any) {
+    const modalRef = this.modalService.open(HomeInfoComponent, { size: 'xl', centered: true });
+    modalRef.componentInstance.resident = resident;
     modalRef.result.then((result) => {
       if (result != 'close') {
       }
