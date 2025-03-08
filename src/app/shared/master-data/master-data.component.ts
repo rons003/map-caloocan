@@ -70,8 +70,10 @@ export class MasterDataComponent implements OnInit, OnDestroy {
         const reader = new FileReader();
         reader.readAsDataURL(files[i]);
         reader.onload = (e) => {
+          let b64string = reader?.result as string;
+          b64string = b64string.replace(/^data:image\/[a-z]+;base64,/, "");
           selectedFiles = selectedFiles?.filter(f => f?.name != files[i]?.name)
-          selectedFiles.push({ name: files[i]?.name, file: files[i], base64: reader?.result as string })
+          selectedFiles.push({ name: files[i]?.name, file: files[i], base64: b64string })
           result.next(selectedFiles);
           if (files?.length === (i + 1)) {
             result.complete();

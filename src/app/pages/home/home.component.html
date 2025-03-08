@@ -1,6 +1,6 @@
 <div class="canvas-container">
   <canvas #innerCanvas></canvas>
-  <canvas #outerCanvas></canvas>
+  <canvas #outerCanvas (click)="clickCanvas($event, content)"></canvas>
 </div>
 
 <div type="button" class="float" (click)="openLg(searchmodal)">
@@ -9,7 +9,7 @@
 
 <div class="px-4 py-5 my-5 text-center">
   <img class="d-block mx-auto mb-4" src="assets/logo3.jpg" alt="" width="160" height="150"
-        style="box-shadow: 2px 2px 3px #999;">
+    style="box-shadow: 2px 2px 3px #999;">
   <h1 class="display-5 fw-bold">Caloocan City Barangay
     132 Resident Tracker System</h1>
   <div class="col-lg-6 mx-auto">
@@ -54,7 +54,8 @@
             <div class="d-grid gap-1">
               <button type="button" class="btn btn-primary btn-sm" (click)="openMasterData(o.establishment_id, o.id)"><i
                   class="bi bi-arrow-right-short"></i> Details</button>
-              <button type="button" class="btn btn-secondary btn-sm" (click)="track(o)"><i class="bi bi-geo-alt-fill"></i> Track</button>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="track(o)"><i
+                  class="bi bi-geo-alt-fill"></i> Track</button>
             </div>
 
           </li>
@@ -70,4 +71,14 @@
 
 </ng-template>
 
-<!-- <img src="assets/map2.png" alt="Workplace" usemap="#workmap"> -->
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Image Attachment</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <img [src]="image" class="img-fluid" alt="image">
+  </div>
+
+</ng-template>

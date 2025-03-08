@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
   polygon: any[] = [];
   search: string = '';
   interval: any;
+  image: string = '';
 
   constructor(private apiService: ApiService) {
 
@@ -89,11 +90,12 @@ export class HomeComponent implements OnInit {
       visible = !visible;
 
     }, 500);
+    this.image = "data:image/jpg;base64, " + resident.image;
 
   }
 
   open() {
-  
+
     const modalRef = this.modalService.open(MasterDataComponent, { size: 'xl', backdrop: 'static' });
     modalRef.result.then((result) => {
       if (result != 'close') {
@@ -138,6 +140,23 @@ export class HomeComponent implements OnInit {
 
   onSearch() {
     this.getResident();
+  }
+
+
+  clickCanvas(event: Event, content: TemplateRef<any>) {
+    const outerCanvas = this.outerCanvas.nativeElement;
+    const innerCanvas = this.canvas.nativeElement;
+    const context: CanvasRenderingContext2D = outerCanvas.getContext('2d');
+    const innerContext: CanvasRenderingContext2D = innerCanvas.getContext('2d');
+    const { x, y } = this.getMousePos(outerCanvas, event);
+    let selected = context.isPointInPath(x, y);
+    if (selected) {
+      // const image = new Image();
+      // image.src = "assets/barangay.jpg";
+      // innerContext.drawImage(image, x, y, 150, 150);
+      this.modalService.open(content, { centered: true });
+      
+    }
   }
 
 
