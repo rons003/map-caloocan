@@ -7,32 +7,32 @@
         <div class="col">
             <div class="mb-1">
                 <label class="form-label form-label-sm">First Name</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="first_name">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.first_name">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Last Name</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="last_name">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.middle_name">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Middle Name</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="middle_name">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.last_name">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Occupation</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="occupation">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.occupation">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Present Address</label>
                 <textarea type="text" class="form-control form-control-sm" rows="3"
-                    [(ngModel)]="present_address"></textarea>
+                    [(ngModel)]="resident.present_address"></textarea>
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Age</label>
-                <input type="number" class="form-control form-control-sm" [(ngModel)]="age">
+                <input type="number" class="form-control form-control-sm" [(ngModel)]="resident.age">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Gender</label>
-                <select class="form-select form-select-sm" [(ngModel)]="gender">
+                <select class="form-select form-select-sm" [(ngModel)]="resident.gender">
                     <option *ngFor="let o of genders;" [value]="o.value">{{ o.label }}</option>
                 </select>
             </div>
@@ -41,18 +41,18 @@
         <div class="col">
             <div class="mb-1">
                 <label class="form-label form-label-sm">Nationality</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="nationality">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.nationality">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Civil Status</label>
-                <select class="form-select form-select-sm" [(ngModel)]="civil_status">
+                <select class="form-select form-select-sm" [(ngModel)]="resident.civil_status">
                     <option *ngFor="let o of list_civil_status;" [value]="o.value">{{ o.label }}</option>
                 </select>
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Date of Birth</label>
                 <div class="input-group">
-                    <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" [(ngModel)]="birth_date"
+                    <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" [(ngModel)]="resident.birth_date"
                         ngbDatepicker #bdayDP="ngbDatepicker" />
                     <button class="btn btn-sm btn-outline-secondary bi bi-calendar3" (click)="bdayDP.toggle()"
                         type="button"></button>
@@ -60,20 +60,20 @@
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Contact No</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="contact_no">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.contact_no">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Name / Person to be notified in case of emergency</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="emergency_name">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.emergency_name">
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Emergency Address</label>
                 <textarea type="text" class="form-control form-control-sm" rows="3"
-                    [(ngModel)]="emergency_address"></textarea>
+                    [(ngModel)]="resident.emergency_address"></textarea>
             </div>
             <div class="mb-1">
                 <label class="form-label form-label-sm">Emergency Contact No.</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="emergency_contact_no">
+                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.emergency_contact_no">
             </div>
         </div>
     </div>

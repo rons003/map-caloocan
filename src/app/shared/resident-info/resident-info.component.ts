@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api.service';
+import { Resident } from '../../model/resident.model';
 
 @Component({
   selector: 'app-resident-info',
@@ -25,22 +26,8 @@ export class ResidentInfoComponent implements OnInit {
     { value: "FEMALE", label: "FEMALE" }
   ];
 
-  first_name: string = '';
-  middle_name: string = '';
-  last_name: string = '';
-  occupation: string = '';
-  present_address: string = '';
-  age: number = 2;
-  gender: string = 'MALE';
-  nationality: string = 'Filipino';
-  civil_status: string = 'Single';
-  birth_date!: NgbDateStruct;
-  contact_no: string = '';
-  emergency_name: string = '';
-  emergency_address: string = '';
-  emergency_contact_no: string = '';
 
-  id: number = 0;
+  resident: Resident = new Resident();
   action: string = 'Add';
 
   modalHeaderText = 'New Resident';
@@ -78,22 +65,7 @@ export class ResidentInfoComponent implements OnInit {
   }
 
   setResident() {
-    this.activeModal.close({
-       "first_name": this.first_name,
-       "middle_name": this.middle_name,
-       "last_name": this.last_name,
-       "occupation": this.occupation,
-       "present_address": this.present_address,
-       "age": this.age,
-       "gender": this.gender,
-       "nationality": this.nationality,
-       "civil_status": this.civil_status,
-       "birth_date": this.birth_date,
-       "contact_no": this.contact_no,
-       "emergency_name": this.emergency_name,
-       "emergency_address": this.emergency_address,
-       "emergency_contact_no": this.emergency_contact_no
-    });
+    this.activeModal.close(this.resident);
   }
 
   closeModal() {

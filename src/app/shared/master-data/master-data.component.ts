@@ -6,6 +6,8 @@ import { ResidentInfoComponent } from '../resident-info/resident-info.component'
 import { ApiService } from '../../services/api.service';
 import { AsyncSubject, Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
+import { Resident } from '../../model/resident.model';
+import { Establishment } from '../../model/establishment.model';
 
 export interface SelectedFiles {
   name: string;
@@ -39,19 +41,18 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     { value: "Apartment", label: "Apartment" },
     { value: "Others", label: "Others" },
   ]
-
-  code: string = '';
-  block: number = 1;
-  address: string = '';
-  type: string = 'Residential';
   id: number = 0;
-  resident_id: number = 0;
-  residents: any[] = [];
-  selectedResident: number = 0;
-
   action: string = 'Add';
 
+  establishment: Establishment = new Establishment();
+  residents: Resident[] = [];
+  selectedResident: number = 0;
+
+  
+
   selectedImages!: FileList;
+  imagesBase64: string[] = []
+  
 
   constructor(private activeModal: NgbActiveModal,
     private apiService: ApiService
@@ -59,49 +60,13 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     
   }
 
-  imagesBase64: string[] = []
-
-  public selectedFiles: SelectedFiles[] = [];
-
-  public toFilesBase64(files: File[], selectedFiles: SelectedFiles[]): Observable<SelectedFiles[]> {
-    const result = new AsyncSubject<SelectedFiles[]>();
-    if (files?.length) {
-      Object.keys(files)?.forEach(async (file, i) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(files[i]);
-        reader.onload = (e) => {
-          let b64string = reader?.result as string;
-          b64string = b64string.replace(/^data:image\/[a-z]+;base64,/, "");
-          selectedFiles = selectedFiles?.filter(f => f?.name != files[i]?.name)
-          selectedFiles.push({ name: files[i]?.name, file: files[i], base64: b64string })
-          result.next(selectedFiles);
-          if (files?.length === (i + 1)) {
-            result.complete();
-          }
-        };
-      });
-      return result;
-    } else {
-      result.next([]);
-      result.complete();
-      return result;
-    }
-  }
-
-  public onFileSelected(files: File[]) {
-    // this.selectedFiles = []; // clear
-    this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
-      this.selectedFiles = res;
-    });
-  }
-
   addMasterData() {
     Swal.showLoading();
     const data = {
-      "code": this.code,
-      "block": this.block,
-      "address": this.address,
-      "type": this.type,
+      "code": this.establishment.code,
+      "block": this.establishment.block,
+      "address": this.establishment.address,
+      "type": this.establishment.type,
       "residents": this.residents,
       "images": this.selectedFiles
     };
@@ -138,13 +103,14 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     this.apiService.getMasterData(this.id)
       .subscribe(res => {
         const data = res.body;
-        this.code = data.code;
-        this.block = data.block;
-        this.address = data.address;
-        this.type = data.type;
+        this.establishment.code = data.code;
+        this.establishment.block = data.block;
+        this.establishment.address = data.address;
+        this.establishment.type = data.type;
         this.residents = data.residents
-        this.resident_id = data.residents[0].id
-        this.selectedResident = this.residents.findIndex(o=> o.id == this.resident_id);
+        this.establishment.image = "data:image/jpg;base64, " + data.image;
+        // this.resident_id = data.residents[0].id
+        // this.selectedResident = this.residents.findIndex(o=> o.id == this.resident_id);
       });
   }
 
@@ -184,6 +150,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       const files = Array.from(this.selectedImages);
       this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
         this.selectedFiles = res;
+        this.establishment.image = "data:image/jpg;base64, " + this.selectedFiles[0].base64;
       });
     }
   }
@@ -191,6 +158,41 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   deleteResident(){
     this.residents.splice(this.selectedResident, 1);
     this.selectedResident = 0;
+  }
+
+
+  public selectedFiles: SelectedFiles[] = [];
+
+  public toFilesBase64(files: File[], selectedFiles: SelectedFiles[]): Observable<SelectedFiles[]> {
+    const result = new AsyncSubject<SelectedFiles[]>();
+    if (files?.length) {
+      Object.keys(files)?.forEach(async (file, i) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        reader.onload = (e) => {
+          let b64string = reader?.result as string;
+          b64string = b64string.replace(/^data:image\/[a-z]+;base64,/, "");
+          selectedFiles = selectedFiles?.filter(f => f?.name != files[i]?.name)
+          selectedFiles.push({ name: files[i]?.name, file: files[i], base64: b64string })
+          result.next(selectedFiles);
+          if (files?.length === (i + 1)) {
+            result.complete();
+          }
+        };
+      });
+      return result;
+    } else {
+      result.next([]);
+      result.complete();
+      return result;
+    }
+  }
+
+  public onFileSelected(files: File[]) {
+    // this.selectedFiles = []; // clear
+    this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
+      this.selectedFiles = res;
+    });
   }
 
 }
