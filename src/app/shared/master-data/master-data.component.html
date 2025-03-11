@@ -37,7 +37,7 @@
                                 <input class="form-control form-control-sm" type="file" multiple="true"
                                     (change)="onImageSelected($event)" accept="image/*">
                             </div>
-                            <div class="mb-2">
+                            <div class="mb-2" *ngIf="establishment.image !== ''">
                                 <img [src]="establishment.image" class="img-thumbnail" alt="profile"
                                     style="height: 90px; width: 130px;">
                             </div>

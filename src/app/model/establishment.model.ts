@@ -8,5 +8,5 @@ export class Establishment {
     type: string | undefined;
     residents: Resident[] | undefined;
     coordinates: any[] | undefined;
-    image: string | undefined;
+    image: string  = '';
 }
