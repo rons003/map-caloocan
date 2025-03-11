@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbModal, NgbModalModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { MasterDataComponent } from '../../shared/master-data/master-data.component';
 import { CoordinatesComponent } from '../../shared/coordinates/coordinates.component';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-tracker-management',
   standalone: true,
@@ -36,6 +37,34 @@ export class TrackerManagementComponent implements OnInit {
       });
 
   }
+
+  deleteEstablishment(id: number) {
+    Swal.showLoading();
+    this.apiService.delete(id)
+      .subscribe(res => {
+        Swal.close();
+        if (res.status == 'success') {
+          this.getEstablishments();
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "success",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            toast: true,
+            position: "top-end",
+            icon: "error",
+            title: res.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      });
+  }
   // ------------------------------------------------
 
   open() {
@@ -58,7 +87,7 @@ export class TrackerManagementComponent implements OnInit {
     modalRef.result.then((result) => {
       if (result == 'close') {
         this.getEstablishments();
-      } 
+      }
     }).catch((error) => {
       console.log(error);
     });
@@ -88,6 +117,22 @@ export class TrackerManagementComponent implements OnInit {
     } else {
       return 'Yes';
     }
+  }
+
+  delete(id: number) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteEstablishment(id);
+      }
+    });
   }
 
 

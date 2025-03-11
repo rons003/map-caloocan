@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{ modalHeaderText }}</h4>
+    <h4 class="modal-title" id="modal-basic-title"> {{ isEdit ? "Update Resident" : "New Resident" }}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <form [formGroup]="residentForm" (ngSubmit)="setResident()" class="needs-validation">
@@ -63,6 +63,11 @@
                         <div *ngIf="residentForm.get('gender')?.errors?.['required']">Please Select Gender.</div>
 
                     </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label">Bio Data Attachment</label>
+                    <input class="form-control form-control-sm" type="file"
+                        (change)="onImageSelected($event)" accept="image/*">
                 </div>
             </div>
             <div class="col">

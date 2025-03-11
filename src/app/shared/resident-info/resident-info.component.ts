@@ -4,6 +4,13 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule, NgbDateParserFormatter, NgbDateAdapter, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api.service';
 import { Resident } from '../../model/resident.model';
+import { AsyncSubject, Observable } from 'rxjs';
+
+export interface SelectedFiles {
+  name: string;
+  file: any;
+  base64?: string;
+}
 
 /**
  * This Service handles how the date is represented in scripts i.e. ngModel.
@@ -72,7 +79,7 @@ export class ResidentInfoComponent implements OnInit {
     last_name: new FormControl('', Validators.required),
     middle_name: new FormControl('', Validators.required),
     occupation: new FormControl('', Validators.required),
-    present_address: new FormControl({value: '', disabled: true}, Validators.required),
+    present_address: new FormControl({ value: '', disabled: true }, Validators.required),
     gender: new FormControl('', Validators.required),
     nationality: new FormControl('', Validators.required),
     civil_status: new FormControl('', Validators.required),
@@ -97,23 +104,19 @@ export class ResidentInfoComponent implements OnInit {
     { value: "FEMALE", label: "FEMALE" }
   ];
 
-
   resident: Resident = new Resident();
-  action: string = 'Add';
+  address: string = '';
 
-  modalHeaderText = 'New Resident';
+  selectedImages!: FileList;
+  imagesBase64: string[] = []
 
-  constructor(private activeModal: NgbActiveModal,
-    private apiService: ApiService,
-    private ngbCalendar: NgbCalendar,
-    private dateAdapter: NgbDateAdapter<string>
+  constructor(private activeModal: NgbActiveModal
   ) {
-
+  
   }
   ngOnInit(): void {
-
-    if (this.action === 'Update') {
-      this.modalHeaderText = 'Resident Information';
+    this.residentForm.patchValue({present_address: this.address});
+    if (this.isEdit) {
       this.residentForm.patchValue({
         first_name: this.resident.first_name,
         middle_name: this.resident.middle_name,
@@ -136,6 +139,7 @@ export class ResidentInfoComponent implements OnInit {
       resident.first_name = this.residentForm.get('first_name')?.value?.toString();
       resident.last_name = this.residentForm.get('last_name')?.value?.toString();
       resident.middle_name = this.residentForm.get('middle_name')?.value?.toString();
+      resident.present_address = this.residentForm.get('present_address')?.value?.toString();
       resident.occupation = this.residentForm.get('occupation')?.value?.toString();
       resident.gender = this.residentForm.get('gender')?.value?.toString();
       resident.nationality = this.residentForm.get('nationality')?.value?.toString();
@@ -156,6 +160,53 @@ export class ResidentInfoComponent implements OnInit {
 
   closeModal() {
     this.activeModal.close('close');
+  }
+
+  onImageSelected(event: Event): void {
+    this.selectedFiles = [];
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement?.files && inputElement.files.length > 0) {
+      this.selectedImages = inputElement.files;
+      const files = Array.from(this.selectedImages);
+      this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
+        this.selectedFiles = res;
+        this.resident.bio_data_image = "data:image/jpg;base64, " + this.selectedFiles[0].base64;
+      });
+    }
+  }
+
+  public selectedFiles: SelectedFiles[] = [];
+
+  public toFilesBase64(files: File[], selectedFiles: SelectedFiles[]): Observable<SelectedFiles[]> {
+    const result = new AsyncSubject<SelectedFiles[]>();
+    if (files?.length) {
+      Object.keys(files)?.forEach(async (file, i) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[i]);
+        reader.onload = (e) => {
+          let b64string = reader?.result as string;
+          b64string = b64string.replace(/^data:image\/[a-z]+;base64,/, "");
+          selectedFiles = selectedFiles?.filter(f => f?.name != files[i]?.name)
+          selectedFiles.push({ name: files[i]?.name, file: files[i], base64: b64string })
+          result.next(selectedFiles);
+          if (files?.length === (i + 1)) {
+            result.complete();
+          }
+        };
+      });
+      return result;
+    } else {
+      result.next([]);
+      result.complete();
+      return result;
+    }
+  }
+
+  public onFileSelected(files: File[]) {
+    // this.selectedFiles = []; // clear
+    this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
+      this.selectedFiles = res;
+    });
   }
 
 }

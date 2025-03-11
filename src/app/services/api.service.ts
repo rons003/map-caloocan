@@ -44,6 +44,16 @@ export class ApiService {
     return this.http.request<any>("put", url_, options_);
   }
 
+  delete(id:number): Observable<any> {
+    let url_ = this.baseUrl + "/establishment/delete/{id}";
+    if (id === undefined || id === null)
+      throw new Error("The parameter 'id' must be defined.");
+    url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    url_ = url_.replace(/[?&]$/, "");
+
+    return this.http.request<any>("delete", url_);
+  }
+
   getResident(options_?: {}): Observable<any[]> {
     let url_ = this.baseUrl + "/resident/";
     return this.http.request<any[]>("get", url_, options_);

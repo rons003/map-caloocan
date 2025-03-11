@@ -166,14 +166,14 @@ export class MasterDataComponent implements OnInit, OnDestroy {
 
   ResidentInfo(action: string) {
     const modalRef = this.modalService.open(ResidentInfoComponent, { size: 'xl', backdrop: 'static' });
-    modalRef.componentInstance.action = action;
+    modalRef.componentInstance.address = this.establishment.address;
     if (action === 'Update'){
+      modalRef.componentInstance.isEdit = true;
       modalRef.componentInstance.resident = this.residents[this.selectedResident];
     }
       
     modalRef.result.then((result) => {
       if (result != 'close') {
-        console.log(result);
         if (action === 'Add')
           this.residents.push(result);
         else
