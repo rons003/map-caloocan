@@ -19,6 +19,7 @@ export class TrackerManagementComponent implements OnInit {
 
   page: number = 1;
   pageSize: number = 10;
+  search: string = '';
 
   constructor(private apiService: ApiService) {
 
@@ -30,8 +31,8 @@ export class TrackerManagementComponent implements OnInit {
   }
 
   // -------------- API REQUEST ---------------------
-  getEstablishments() {
-    this.apiService.getEstablishments()
+  getEstablishments(options?: any) {
+    this.apiService.getEstablishments(options)
       .subscribe(res => {
         this.establishments = res;
       });
@@ -134,6 +135,21 @@ export class TrackerManagementComponent implements OnInit {
       }
     });
   }
+
+  onEmptySearch() {
+    if (this.search === "")
+      this.getEstablishments();
+  }
+
+  onSearch() {
+    if (this.search !== "") {
+      let options = {
+        params: { filter: this.search }
+      }
+      this.getEstablishments(options);
+    }
+  }
+
 
 
 }
