@@ -13,7 +13,7 @@
                             <div class="mb-2">
                                 <label class="form-label">Code</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="Code"
-                                    [(ngModel)]="establishment.code">
+                                    [(ngModel)]="establishment.code" [disabled]="disableCode()">
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Block</label>

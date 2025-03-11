@@ -265,4 +265,11 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     });
   }
 
+  disableCode(){
+    if (this.action === 'View')
+      return true;
+    else
+      return false;
+  }
+
 }
