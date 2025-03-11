@@ -63,75 +63,103 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   }
 
   addMasterData() {
-    Swal.showLoading();
-    const data = {
-      "code": this.establishment.code,
-      "block": this.establishment.block,
-      "address": this.establishment.address,
-      "type": this.establishment.type,
-      "residents": this.residents,
-      "images": this.selectedFiles
-    };
-    this.apiService.addMasterData(data)
-      .subscribe(res => {
-        Swal.close();
-        if (res.status == 'success') {
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title: res.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.closeModal();
-        } else {
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "error",
-            title: res.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.showLoading();
+        const data = {
+          "code": this.establishment.code,
+          "block": this.establishment.block,
+          "address": this.establishment.address,
+          "type": this.establishment.type,
+          "residents": this.residents,
+          "images": this.selectedFiles
+        };
+        this.apiService.addMasterData(data)
+          .subscribe(res => {
+            Swal.close();
+            if (res.status == 'success') {
+              Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: res.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+              this.closeModal();
+            } else {
+              Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: res.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
 
-      });
+          });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+
   }
 
   update() {
-    Swal.showLoading();
-    const data = {
-      "code": this.establishment.code,
-      "block": this.establishment.block,
-      "address": this.establishment.address,
-      "type": this.establishment.type,
-      "residents": this.residents,
-      "images": this.selectedFiles
-    };
-    this.apiService.updateMasterData(this.id, data)
-      .subscribe(res => {
-        Swal.close();
-        if (res.status == 'success') {
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "success",
-            title: res.message,
-            showConfirmButton: false,
-            timer: 1500
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.showLoading();
+        const data = {
+          "code": this.establishment.code,
+          "block": this.establishment.block,
+          "address": this.establishment.address,
+          "type": this.establishment.type,
+          "residents": this.residents,
+          "images": this.selectedFiles
+        };
+        this.apiService.updateMasterData(this.id, data)
+          .subscribe(res => {
+            Swal.close();
+            if (res.status == 'success') {
+              Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: res.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            } else {
+              Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "error",
+                title: res.message,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            }
           });
-        } else {
-          Swal.fire({
-            toast: true,
-            position: "top-end",
-            icon: "error",
-            title: res.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-      });
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+      }
+    });
+
   }
 
   getMasterData() {
@@ -167,11 +195,11 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   ResidentInfo(action: string) {
     const modalRef = this.modalService.open(ResidentInfoComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.address = this.establishment.address;
-    if (action === 'Update'){
+    if (action === 'Update') {
       modalRef.componentInstance.isEdit = true;
       modalRef.componentInstance.resident = this.residents[this.selectedResident];
     }
-      
+
     modalRef.result.then((result) => {
       if (result != 'close') {
         if (action === 'Add')
