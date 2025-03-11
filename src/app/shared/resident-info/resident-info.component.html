@@ -2,83 +2,171 @@
     <h4 class="modal-title" id="modal-basic-title">{{ modalHeaderText }}</h4>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
-<div class="modal-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="mb-1">
-                <label class="form-label form-label-sm">First Name</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.first_name">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Last Name</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.last_name">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Middle Name</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.middle_name">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Occupation</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.occupation">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Present Address</label>
-                <textarea type="text" class="form-control form-control-sm" rows="3"
-                    [(ngModel)]="resident.present_address"></textarea>
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Age</label>
-                <input type="number" class="form-control form-control-sm" [(ngModel)]="resident.age">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Gender</label>
-                <select class="form-select form-select-sm" [(ngModel)]="resident.gender">
-                    <option *ngFor="let o of genders;" [value]="o.value">{{ o.label }}</option>
-                </select>
-            </div>
+<form [formGroup]="residentForm" (ngSubmit)="setResident()" class="needs-validation">
+    <div class="modal-body">
 
-        </div>
-        <div class="col">
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Nationality</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.nationality">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Civil Status</label>
-                <select class="form-select form-select-sm" [(ngModel)]="resident.civil_status">
-                    <option *ngFor="let o of list_civil_status;" [value]="o.value">{{ o.label }}</option>
-                </select>
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Date of Birth</label>
-                <div class="input-group">
-                    <input class="form-control form-control-sm" placeholder="dd/mm/yyyy" [(ngModel)]="resident.birth_date"
-                        ngbDatepicker #bdayDP="ngbDatepicker" />
-                    <button class="btn btn-sm btn-outline-secondary bi bi-calendar3" (click)="bdayDP.toggle()"
-                        type="button"></button>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">First Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="first_name" required
+                        [class.is-invalid]="residentForm.get('first_name')?.invalid && residentForm.get('first_name')?.touched" />
+                    <div *ngIf="residentForm.get('first_name')?.invalid && (residentForm.get('first_name')?.dirty || residentForm.get('first_name')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('first_name')?.errors?.['required']">First Name is required.</div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Last Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="last_name" required
+                        [class.is-invalid]="residentForm.get('last_name')?.invalid && residentForm.get('last_name')?.touched" />
+                    <div *ngIf="residentForm.get('last_name')?.invalid && (residentForm.get('last_name')?.dirty || residentForm.get('last_name')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('last_name')?.errors?.['required']">Last Name is required.</div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Middle Name</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="middle_name" required
+                        [class.is-invalid]="residentForm.get('middle_name')?.invalid && residentForm.get('middle_name')?.touched" />
+                    <div *ngIf="residentForm.get('middle_name')?.invalid && (residentForm.get('middle_name')?.dirty || residentForm.get('middle_name')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('middle_name')?.errors?.['required']">Middle Name is required.
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Occupation</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="occupation" required
+                        [class.is-invalid]="residentForm.get('occupation')?.invalid && residentForm.get('occupation')?.touched" />
+                    <div *ngIf="residentForm.get('occupation')?.invalid && (residentForm.get('occupation')?.dirty || residentForm.get('occupation')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('occupation')?.errors?.['required']">Middle Name is required.</div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Present Address</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="present_address" />
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Gender</label>
+                    <select class="form-select form-select-sm" formControlName="gender" required
+                        [class.is-invalid]="residentForm.get('gender')?.invalid && residentForm.get('gender')?.touched">
+                        <option *ngFor="let o of genders;" [value]="o.value">{{ o.label }}</option>
+                    </select>
+                    <div *ngIf="residentForm.get('gender')?.invalid && (residentForm.get('gender')?.dirty || residentForm.get('gender')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('gender')?.errors?.['required']">Please Select Gender.</div>
+
+                    </div>
                 </div>
             </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Contact No</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.contact_no">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Name / Person to be notified in case of emergency</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.emergency_name">
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Emergency Address</label>
-                <textarea type="text" class="form-control form-control-sm" rows="3"
-                    [(ngModel)]="resident.emergency_address"></textarea>
-            </div>
-            <div class="mb-1">
-                <label class="form-label form-label-sm">Emergency Contact No.</label>
-                <input type="text" class="form-control form-control-sm" [(ngModel)]="resident.emergency_contact_no">
+            <div class="col">
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Nationality</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="nationality" required
+                        [class.is-invalid]="residentForm.get('nationality')?.invalid && residentForm.get('nationality')?.touched" />
+                    <div *ngIf="residentForm.get('nationality')?.invalid && (residentForm.get('nationality')?.dirty || residentForm.get('nationality')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('nationality')?.errors?.['required']">Nationality is required.
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Civil Status</label>
+                    <select class="form-select form-select-sm" formControlName="civil_status" required
+                        [class.is-invalid]="residentForm.get('civil_status')?.invalid && residentForm.get('civil_status')?.touched">
+                        <option *ngFor="let o of list_civil_status;" [value]="o.value">{{ o.label }}</option>
+                    </select>
+                    <div *ngIf="residentForm.get('civil_status')?.invalid && (residentForm.get('civil_status')?.dirty || residentForm.get('civil_status')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('civil_status')?.errors?.['required']">Please select civil status.
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Date of Birth</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" placeholder="dd/mm/yyyy"
+                            formControlName="birth_date" required
+                            [class.is-invalid]="residentForm.get('birth_date')?.invalid && residentForm.get('birth_date')?.touched"
+                            ngbDatepicker #bdayDP="ngbDatepicker" />
+                        <button class="btn btn-sm btn-outline-secondary bi bi-calendar3" (click)="bdayDP.toggle()"
+                            type="button"></button>
+                        <div *ngIf="residentForm.get('birth_date')?.invalid && (residentForm.get('birth_date')?.dirty || residentForm.get('birth_date')?.touched)"
+                            class="invalid-feedback">
+                            <div *ngIf="residentForm.get('birth_date')?.errors?.['required']">Date of Birth is required.
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Contact No</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="contact_no" required
+                        [class.is-invalid]="residentForm.get('contact_no')?.invalid && residentForm.get('contact_no')?.touched" />
+                    <div *ngIf="residentForm.get('contact_no')?.invalid && (residentForm.get('contact_no')?.dirty || residentForm.get('contact_no')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('contact_no')?.errors?.['required']">Contact No is required.
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Emergency Contact Person</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="emergency_name" required
+                        [class.is-invalid]="residentForm.get('emergency_name')?.invalid && residentForm.get('emergency_name')?.touched" />
+                    <div *ngIf="residentForm.get('emergency_name')?.invalid && (residentForm.get('emergency_name')?.dirty || residentForm.get('emergency_name')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('emergency_name')?.errors?.['required']">Emergency Contact Person
+                            is required.
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Emergency Address</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="emergency_address" required
+                        [class.is-invalid]="residentForm.get('emergency_address')?.invalid && residentForm.get('emergency_address')?.touched" />
+                    <div *ngIf="residentForm.get('emergency_address')?.invalid && (residentForm.get('emergency_address')?.dirty || residentForm.get('emergency_address')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('emergency_address')?.errors?.['required']">Emergency Address is
+                            required.
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label class="form-label form-label-sm">Emergency Contact No.</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="emergency_contact_no"
+                        required
+                        [class.is-invalid]="residentForm.get('emergency_contact_no')?.invalid && residentForm.get('emergency_contact_no')?.touched" />
+                    <div *ngIf="residentForm.get('emergency_contact_no')?.invalid && (residentForm.get('emergency_contact_no')?.dirty || residentForm.get('emergency_contact_no')?.touched)"
+                        class="invalid-feedback">
+                        <div *ngIf="residentForm.get('emergency_contact_no')?.errors?.['required']">Emergency Contact No
+                            is required.
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
+
+
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="setResident()"><i
-                class="bi bi-save"></i>
-            Add</button>
+        <button type="submit" class="btn btn-outline-secondary btn-sm"><i class="bi bi-save"></i>
+            {{ isEdit ? "Update Resident" : "Add Resident" }}
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-sm ms-3" (click)="onClear()">
+            Clear
+        </button>
     </div>
+</form>
