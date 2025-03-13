@@ -16,5 +16,6 @@ export class Resident {
     emergency_name: string | undefined;
     emergency_address: string | undefined;
     emergency_contact_no: string | undefined;
-    bio_data_image: string | undefined;
+    attachment: string | undefined;
+    files: any = {}
 }

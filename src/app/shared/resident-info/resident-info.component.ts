@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, inject, Injectable, OnInit, signal, TemplateRef, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule, NgbDateParserFormatter, NgbDateAdapter, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule, NgbDateParserFormatter, NgbDateAdapter, NgbCalendar, NgbModal, NgbModalModule, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../services/api.service';
 import { Resident } from '../../model/resident.model';
 import { AsyncSubject, Observable } from 'rxjs';
@@ -64,7 +64,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 @Component({
   selector: 'app-resident-info',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbDatepickerModule, NgbAlertModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, NgbDatepickerModule, NgbAlertModule, ReactiveFormsModule, NgbModalModule],
   templateUrl: './resident-info.component.html',
   providers: [
     { provide: NgbDateAdapter, useClass: CustomAdapter },
@@ -73,6 +73,9 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   styleUrl: './resident-info.component.scss'
 })
 export class ResidentInfoComponent implements OnInit {
+
+  private modalService = inject(NgbModal);
+	closeResult: WritableSignal<string> = signal('');
 
   residentForm = new FormGroup({
     first_name: new FormControl('', Validators.required),
@@ -89,6 +92,8 @@ export class ResidentInfoComponent implements OnInit {
     emergency_address: new FormControl('', Validators.required),
     emergency_contact_no: new FormControl('', Validators.required)
   });
+
+  img_src: string = '';
 
   isEdit: boolean = false;
 
@@ -131,6 +136,7 @@ export class ResidentInfoComponent implements OnInit {
         emergency_address: this.resident.emergency_address,
         emergency_contact_no: this.resident.emergency_contact_no
       });
+      this.img_src = "data:image/jpg;base64, " + this.resident.attachment;
     }
   }
   setResident() {
@@ -149,6 +155,8 @@ export class ResidentInfoComponent implements OnInit {
       resident.emergency_name = this.residentForm.get('emergency_name')?.value?.toString();
       resident.emergency_address = this.residentForm.get('emergency_address')?.value?.toString();
       resident.emergency_contact_no = this.residentForm.get('emergency_contact_no')?.value?.toString();
+      resident.files = this.selectedFiles[0];
+      resident.attachment = this.selectedFiles[0].base64?.toString();
       this.activeModal.close(resident);
     }
 
@@ -170,7 +178,7 @@ export class ResidentInfoComponent implements OnInit {
       const files = Array.from(this.selectedImages);
       this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
         this.selectedFiles = res;
-        this.resident.bio_data_image = "data:image/jpg;base64, " + this.selectedFiles[0].base64;
+        // this.resident.attachment = "data:image/jpg;base64, " + this.selectedFiles[0].base64;
       });
     }
   }
@@ -208,5 +216,28 @@ export class ResidentInfoComponent implements OnInit {
       this.selectedFiles = res;
     });
   }
+
+
+  open(content: TemplateRef<any>) {
+		this.modalService.open(content, { fullscreen: true }).result.then(
+			(result) => {
+				this.closeResult.set(`Closed with: ${result}`);
+			},
+			(reason) => {
+				this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+			},
+		);
+	}
+
+	private getDismissReason(reason: any): string {
+		switch (reason) {
+			case ModalDismissReasons.ESC:
+				return 'by pressing ESC';
+			case ModalDismissReasons.BACKDROP_CLICK:
+				return 'by clicking on a backdrop';
+			default:
+				return `with: ${reason}`;
+		}
+	}
 
 }

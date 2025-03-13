@@ -24,7 +24,7 @@ export class HomeInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.resident);
+    // console.log(this.resident);
   }
 
   // API CALLS

@@ -79,7 +79,7 @@ export class CoordinatesComponent implements OnInit {
     const outerCanvas = this.outerCanvas.nativeElement;
     outerCanvas.width = canvas.width;
     outerCanvas.height = canvas.height;
-    this.background.src = "assets/map_new.png";
+    this.background.src = "assets/map_new2.png";
     this.background.onload = this.Render.bind(this);
     this.drawPolygon();
   }

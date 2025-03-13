@@ -65,9 +65,12 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label">Bio Data Attachment</label>
-                    <input class="form-control form-control-sm" type="file"
+                    <label class="form-label">Attachment</label>
+                    <div class="input-group input-group-sm">
+                        <input class="form-control form-control-sm" type="file"
                         (change)="onImageSelected($event)" accept="image/*">
+                        <button *ngIf="resident.attachment !== '' && resident.attachment !== undefined" type="button" class="btn btn-outline-secondary btn-sm" (click)="open(content)"><i class="bi bi-eye-fill"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="col">
@@ -175,3 +178,17 @@
         </button>
     </div>
 </form>
+
+
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Resident Info Attachment</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+       <div class="text-center">
+        <img [src]="img_src" class="img-fluid" alt="attachment">
+       </div>
+	</div>
+</ng-template>
