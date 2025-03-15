@@ -11,6 +11,7 @@ import { Establishment } from '../../model/establishment.model';
 import jsPDF from 'jspdf';
 import { right } from '@popperjs/core';
 import { add } from 'ol/coordinate';
+import { ResidentInfoAttachmentComponent } from '../resident-info-attachment/resident-info-attachment.component';
 
 
 export interface SelectedFiles {
@@ -215,6 +216,19 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     });
   }
 
+  openResidentInfoAttachment() {
+    const modalRef = this.modalService.open(ResidentInfoAttachmentComponent, { fullscreen: true });
+    modalRef.componentInstance.img_src = "data:image/jpg;base64, " + this.residents[this.selectedResident].attachment;
+
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   onImageSelected(event: Event): void {
     this.selectedFiles = [];
     const inputElement = event.target as HTMLInputElement;
@@ -317,7 +331,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       doc.text(civil_status.toUpperCase(), 115, 335.5);
       doc.text(gender.toUpperCase(), 115, 357.5);
       doc.text(nationality.toUpperCase(), 115, 380.5);
-      doc.text(text, 115, 402.5);
+      doc.text(text.toUpperCase(), 115, 402.5);
 
       doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
         + resident.middle_name?.toString() + "_BRGY_CLEARANCE.pdf");
@@ -365,7 +379,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       doc.text(civil_status.toUpperCase(), 115, 335.5);
       doc.text(gender.toUpperCase(), 115, 357.5);
       doc.text(nationality.toUpperCase(), 115, 380.5);
-      doc.text(text, 115, 402.5);
+      doc.text(text.toUpperCase(), 115, 402.5);
 
       doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
         + resident.middle_name?.toString() + "_BRGY_RESIDENCY.pdf");
@@ -414,7 +428,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       doc.text(civil_status.toUpperCase(), 115, 335.5);
       doc.text(gender.toUpperCase(), 115, 357.5);
       doc.text(nationality.toUpperCase(), 115, 380.5);
-      doc.text(text, 115, 402.5);
+      doc.text(text.toUpperCase(), 115, 402.5);
 
       doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
         + resident.middle_name?.toString() + "_BRGY_INDIGENCY.pdf");
@@ -444,7 +458,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       doc.addImage(template, 0, 0, 445, 600);
 
       doc.setFontSize(12);
-      doc.text(text, 25, 160, {maxWidth: 400, align: 'justify'});
+      doc.text(text.toUpperCase(), 25, 160, { maxWidth: 400, align: 'justify' });
       doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
         + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
     }

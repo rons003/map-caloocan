@@ -5,6 +5,7 @@ import { NgbActiveModal, NgbDateStruct, NgbDatepickerModule, NgbAlertModule, Ngb
 import { ApiService } from '../../services/api.service';
 import { Resident } from '../../model/resident.model';
 import { AsyncSubject, Observable } from 'rxjs';
+import { ResidentInfoAttachmentComponent } from '../resident-info-attachment/resident-info-attachment.component';
 
 export interface SelectedFiles {
   name: string;
@@ -223,15 +224,18 @@ export class ResidentInfoComponent implements OnInit {
   }
 
 
-  open(content: TemplateRef<any>) {
-    this.modalService.open(content, { fullscreen: true }).result.then(
-      (result) => {
-        this.closeResult.set(`Closed with: ${result}`);
-      },
-      (reason) => {
-        this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-      },
-    );
+  open() {
+    const modalRef = this.modalService.open(ResidentInfoAttachmentComponent, { fullscreen: true });
+    modalRef.componentInstance.img_src = this.img_src;
+
+    modalRef.result.then((result) => {
+      if (result != 'close') {
+        
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+   
   }
 
   private getDismissReason(reason: any): string {
