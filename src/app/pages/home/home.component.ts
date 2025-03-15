@@ -112,47 +112,34 @@ export class HomeComponent implements OnInit {
 
   async openResidentInfo(resident: any) {
 
-    const ri_access = this.getWithExpiry("info_access");
-    if (ri_access === null) {
-      const { value: password } = await Swal.fire({
-        title: "Enter your password",
-        input: "password",
-        inputLabel: "Password",
-        inputPlaceholder: "Enter your password",
-        inputAttributes: {
-          maxlength: "10",
-          autocapitalize: "off",
-          autocorrect: "off"
-        },
-        inputValidator: (result) => {
-          if (result !== "krm132")
-            return "Incorrect Password!";
-          return !result && "You need to enter a password";
+    const { value: password } = await Swal.fire({
+      title: "Enter your password",
+      input: "password",
+      inputLabel: "Password",
+      inputPlaceholder: "Enter your password",
+      inputAttributes: {
+        maxlength: "10",
+        autocapitalize: "off",
+        autocorrect: "off"
+      },
+      inputValidator: (result) => {
+        if (result !== "krm132")
+          return "Incorrect Password!";
+        return !result && "You need to enter a password";
 
-        }
-      });
-      if (password == "krm132") {
-        this.setWithExpiry("info_access", "Yes", 300000);
-        const modalRef = this.modalService.open(HomeInfoComponent, { size: 'xl', centered: true });
-        modalRef.componentInstance.resident = resident;
-        modalRef.result.then((result) => {
-          if (result != 'close') {
-          }
-        }).catch((error) => {
-          console.log(error);
-        });
-      } 
-    } else {
+      }
+    });
+    if (password == "krm132") {
+      this.setWithExpiry("info_access", "Yes", 300000);
       const modalRef = this.modalService.open(HomeInfoComponent, { size: 'xl', centered: true });
-        modalRef.componentInstance.resident = resident;
-        modalRef.result.then((result) => {
-          if (result != 'close') {
-          }
-        }).catch((error) => {
-          console.log(error);
-        });
-    }
-
+      modalRef.componentInstance.resident = resident;
+      modalRef.result.then((result) => {
+        if (result != 'close') {
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    } 
   }
 
   openLg(content: TemplateRef<any>) {

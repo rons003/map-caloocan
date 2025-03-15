@@ -8,6 +8,8 @@ import { AsyncSubject, Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Resident } from '../../model/resident.model';
 import { Establishment } from '../../model/establishment.model';
+import jsPDF from 'jspdf';
+import { right } from '@popperjs/core';
 
 
 export interface SelectedFiles {
@@ -265,11 +267,46 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     });
   }
 
-  disableCode(){
+  disableCode() {
     if (this.action === 'View')
       return true;
     else
       return false;
+  }
+
+  generateBarangayClearance() {
+
+    const margins = {
+      top: 10,
+      left: 10,
+      right: 10
+
+    };
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'px'
+    });
+
+    const logo1 = new Image();
+    logo1.src = "assets/along logo.png";
+
+    const logo2 = new Image();
+    logo2.src = "assets/citycaloocan.png";
+
+    doc.addImage(logo1, margins.left, margins.top, 75, 75);
+    doc.addImage(logo2, 360, margins.top, 75, 75);
+    doc.setFont('Times');
+    doc.setFontSize(18);
+    doc.text("REPUBLIC OF THE PHILIPPINES\nBARANGAY 132, ZONE 12, DISTRICT 1\nCITY OF CALOOCAN", 223, 27, { align: 'center', lineHeightFactor: 1.3 });
+    doc.setTextColor("#008000");
+    doc.text("OFFICE OF THE PUNONG BARANGAY", 223, 79, { align: 'center' })
+    doc.setLineWidth(20);
+    doc.line(margins.left, 105, 435, 105);
+    
+
+    // const pdfString = doc.output('datauristring');
+    doc.save('brgyclearance.pdf');
+    // window.open(pdfString, "_blank");
   }
 
 }
