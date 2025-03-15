@@ -275,38 +275,27 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   }
 
   generateBarangayClearance() {
-
-    const margins = {
-      top: 10,
-      left: 10,
-      right: 10
-
-    };
     const doc = new jsPDF({
       format: 'a4',
       unit: 'px'
     });
 
-    const logo1 = new Image();
-    logo1.src = "assets/along logo.png";
+    const template = new Image();
+    template.src = "assets/template_clearance.jpg";
+    doc.addImage(template, 0, 0, 445, 600);
 
-    const logo2 = new Image();
-    logo2.src = "assets/citycaloocan.png";
-
-    doc.addImage(logo1, margins.left, margins.top, 75, 75);
-    doc.addImage(logo2, 360, margins.top, 75, 75);
-    doc.setFont('Times');
-    doc.setFontSize(18);
-    doc.text("REPUBLIC OF THE PHILIPPINES\nBARANGAY 132, ZONE 12, DISTRICT 1\nCITY OF CALOOCAN", 223, 27, { align: 'center', lineHeightFactor: 1.3 });
-    doc.setTextColor("#008000");
-    doc.text("OFFICE OF THE PUNONG BARANGAY", 223, 79, { align: 'center' })
-    doc.setLineWidth(20);
-    doc.line(margins.left, 105, 435, 105);
-    
-
-    // const pdfString = doc.output('datauristring');
+    doc.setFontSize(10);
+    doc.text("2025/15/3", 115, 223.5);
+    doc.text("314234", 115, 245.5);
+    doc.text("Roger Tan", 115, 268.5);
+    doc.text("Caloocan City", 115, 290.5);
+    doc.text("1950/1/1", 115, 312.5);
+    doc.text("Married", 115, 335.5);
+    doc.text("MALE", 115, 357.5);
+    doc.text("Filipino", 115, 380.5);
+    doc.text("Hindi ko alam", 115, 402.5);
+ 
     doc.save('brgyclearance.pdf');
-    // window.open(pdfString, "_blank");
   }
 
 }
