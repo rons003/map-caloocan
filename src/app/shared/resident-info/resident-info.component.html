@@ -72,6 +72,10 @@
                         <button *ngIf="resident.attachment !== '' && resident.attachment !== undefined" type="button" class="btn btn-outline-secondary btn-sm" (click)="open(content)"><i class="bi bi-eye-fill"></i></button>
                     </div>
                 </div>
+                <div class="mb-1">
+                    <label class="form-label">Identification No.</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="id_no">
+                </div>
             </div>
             <div class="col">
                 <div class="mb-1">

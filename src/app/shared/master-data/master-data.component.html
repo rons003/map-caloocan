@@ -163,29 +163,35 @@
                         </table>
                     </div>
                 </div>
-                <h6>Forms</h6>
-                <div class="p-1">
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>Barangay Residency</td>
-                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0" (click)="generateBarangayResidency()">Generate</button></td>
-                            </tr>
-                            <tr>
-                                <td>Certificate Indigency</td>
-                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0" (click)="generateCertIndigency()">Generate</button></td>
-                            </tr>
-                            <tr>
-                                <td>Barangay Indigency</td>
-                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0" (click)="generateBarangayIndigency()">Generate</button></td>
-                            </tr>
-                            <tr>
-                                <td>Barangay Clearance</td>
-                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0" (click)="generateBarangayClearance()">Generate</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <ng-template [ngIf]="residents.length > 0">
+                    <h6>Forms</h6>
+                    <div class="p-1">
+                        <table class="table table-sm table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Barangay Residency</td>
+                                    <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
+                                            (click)="generateBarangayResidency()">Generate</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Certificate Indigency</td>
+                                    <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
+                                            (click)="generateCertIndigency()">Generate</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Barangay Indigency</td>
+                                    <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
+                                            (click)="generateBarangayIndigency()">Generate</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Barangay Clearance</td>
+                                    <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
+                                            (click)="generateBarangayClearance()">Generate</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>

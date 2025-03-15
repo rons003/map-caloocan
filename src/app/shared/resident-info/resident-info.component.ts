@@ -90,7 +90,8 @@ export class ResidentInfoComponent implements OnInit {
     contact_no: new FormControl('', Validators.required),
     emergency_name: new FormControl('', Validators.required),
     emergency_address: new FormControl('', Validators.required),
-    emergency_contact_no: new FormControl('', Validators.required)
+    emergency_contact_no: new FormControl('', Validators.required),
+    id_no: new FormControl('')
   });
 
   img_src: string = '';
@@ -134,7 +135,8 @@ export class ResidentInfoComponent implements OnInit {
         contact_no: this.resident.contact_no,
         emergency_name: this.resident.emergency_name,
         emergency_address: this.resident.emergency_address,
-        emergency_contact_no: this.resident.emergency_contact_no
+        emergency_contact_no: this.resident.emergency_contact_no,
+        id_no: this.resident.id_no
       });
       this.img_src = "data:image/jpg;base64, " + this.resident.attachment;
     }
@@ -155,6 +157,7 @@ export class ResidentInfoComponent implements OnInit {
       resident.emergency_name = this.residentForm.get('emergency_name')?.value?.toString();
       resident.emergency_address = this.residentForm.get('emergency_address')?.value?.toString();
       resident.emergency_contact_no = this.residentForm.get('emergency_contact_no')?.value?.toString();
+      resident.id_no = this.residentForm.get('id_no')?.value?.toString();
       if (this.selectedFiles.length > 0) {
         resident.files = this.selectedFiles[0];
         resident.attachment = this.selectedFiles[0].base64?.toString();

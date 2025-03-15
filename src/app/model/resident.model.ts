@@ -18,4 +18,5 @@ export class Resident {
     emergency_contact_no: string | undefined;
     attachment: string | undefined;
     files: any = {}
+    id_no: string | undefined;
 }
