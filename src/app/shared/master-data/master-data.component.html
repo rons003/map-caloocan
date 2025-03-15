@@ -15,17 +15,20 @@
                                 <input type="text" class="form-control form-control-sm" placeholder="Code"
                                     [(ngModel)]="establishment.code" [disabled]="disableCode()" required
                                     #code="ngModel">
-                                <div *ngIf="code.invalid && (code.dirty || code.touched)" class=" alert alert-danger p-1 mt-1">
+                                <div *ngIf="code.invalid && (code.dirty || code.touched)"
+                                    class=" alert alert-danger p-1 mt-1">
                                     <div *ngIf="code.errors?.['required']">Code is required.</div>
                                 </div>
 
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Block</label>
-                                <select class="form-select form-select-sm" [(ngModel)]="establishment.block" required #block="ngModel">
+                                <select class="form-select form-select-sm" [(ngModel)]="establishment.block" required
+                                    #block="ngModel">
                                     <option *ngFor="let o of blocks;" [value]="o.value">{{ o.label }}</option>
                                 </select>
-                                <div *ngIf="block.invalid && (block.dirty || block.touched)" class="alert alert-danger p-1 mt-1">
+                                <div *ngIf="block.invalid && (block.dirty || block.touched)"
+                                    class="alert alert-danger p-1 mt-1">
                                     <div *ngIf="block.errors?.['required']">Please select block.</div>
                                 </div>
                             </div>
@@ -41,10 +44,12 @@
                             </div>
                             <div class="mb-2">
                                 <label class="form-label">Establishment Type</label>
-                                <select class="form-select form-select-sm" [(ngModel)]="establishment.type" required #type="ngModel">
+                                <select class="form-select form-select-sm" [(ngModel)]="establishment.type" required
+                                    #type="ngModel">
                                     <option *ngFor="let o of types;" [value]="o.value">{{ o.label }}</option>
                                 </select>
-                                <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger p-1 mt-1">
+                                <div *ngIf="type.invalid && (type.dirty || type.touched)"
+                                    class="alert alert-danger p-1 mt-1">
                                     <div *ngIf="type.errors?.['required']">Please select type.</div>
                                 </div>
                             </div>
@@ -134,7 +139,7 @@
                                     <th>Attachment File</th>
                                     <td> <input class="form-control form-control-sm" type="file"></td>
                                 </tr> -->
-                                <tr>
+                                <!-- <tr>
                                     <th>Barangay ID</th>
                                     <td class="text-end"><button type="button"
                                             class="btn btn-outline-primary btn-sm">Generate</button>
@@ -146,18 +151,40 @@
                                 </tr>
                                 <tr>
                                     <th>Barangay Clearance</th>
-                                    <td class="text-end"><button type="button"
-                                            class="btn btn-outline-primary btn-sm" (click)="generateBarangayClearance()">Generate</button>
+                                    <td class="text-end"><button type="button" class="btn btn-outline-primary btn-sm"
+                                            (click)="generateBarangayClearance()">Generate</button>
                                     </td>
                                     <th>Barangay Indingency</th>
                                     <td class="text-end"><button type="button"
                                             class="btn btn-outline-primary btn-sm">Generate</button>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
-
+                </div>
+                <h6>Forms</h6>
+                <div class="p-1">
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td>Barangay Residency</td>
+                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0">Generate</button></td>
+                            </tr>
+                            <tr>
+                                <td>Certificate Indigency</td>
+                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0">Generate</button></td>
+                            </tr>
+                            <tr>
+                                <td>Barangay Indigency</td>
+                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0">Generate</button></td>
+                            </tr>
+                            <tr>
+                                <td>Barangay Clearance</td>
+                                <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0" (click)="generateBarangayClearance()">Generate</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -175,4 +202,3 @@
             Update</button>
     </div>
 </div>
-
