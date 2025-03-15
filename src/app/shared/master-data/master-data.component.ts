@@ -306,7 +306,94 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     doc.text(nationality.toUpperCase(), 115, 380.5);
     doc.text("", 115, 402.5);
 
-    doc.save('brgyclearance.pdf');
+    doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
+      + resident.middle_name?.toString() + "_BRGY_CLEARANCE.pdf");
+  }
+
+  generateBarangayResidency() {
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'px'
+    });
+    const resident = this.residents[this.selectedResident];
+    const fullName = resident.last_name?.toString() + ", "
+      + resident.first_name?.toString() + " "
+      + resident.middle_name?.toString()
+
+    const address = resident.present_address?.toString() ?? "";
+    const birth_date = resident.birth_date?.toString() ?? "";
+    const civil_status = resident.civil_status?.toString() ?? "";
+    const gender = resident.gender?.toString() ?? "";
+    const nationality = resident.nationality?.toString() ?? "";
+
+    const template = new Image();
+    template.src = "assets/template_brgy_residency.jpg";
+    doc.addImage(template, 0, 0, 445, 600);
+
+    doc.setFontSize(10);
+    doc.text("", 115, 223.5);
+    doc.text("314234", 115, 245.5);
+    doc.text(fullName.toUpperCase(), 115, 268.5);
+    doc.text(address.toUpperCase(), 115, 290.5);
+    doc.text(birth_date, 115, 312.5);
+    doc.text(civil_status.toUpperCase(), 115, 335.5);
+    doc.text(gender.toUpperCase(), 115, 357.5);
+    doc.text(nationality.toUpperCase(), 115, 380.5);
+    doc.text("", 115, 402.5);
+
+    doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
+      + resident.middle_name?.toString() + "_BRGY_RESIDENCY.pdf");
+  }
+
+  generateBarangayIndigency() {
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'px'
+    });
+    const resident = this.residents[this.selectedResident];
+    const fullName = resident.last_name?.toString() + ", "
+      + resident.first_name?.toString() + " "
+      + resident.middle_name?.toString()
+
+    const address = resident.present_address?.toString() ?? "";
+    const birth_date = resident.birth_date?.toString() ?? "";
+    const civil_status = resident.civil_status?.toString() ?? "";
+    const gender = resident.gender?.toString() ?? "";
+    const nationality = resident.nationality?.toString() ?? "";
+
+    const template = new Image();
+    template.src = "assets/template_brgy_indigency.jpg";
+    doc.addImage(template, 0, 0, 445, 600);
+
+    doc.setFontSize(10);
+    doc.text("", 115, 223.5);
+    doc.text("314234", 115, 245.5);
+    doc.text(fullName.toUpperCase(), 115, 268.5);
+    doc.text(address.toUpperCase(), 115, 290.5);
+    doc.text(birth_date, 115, 312.5);
+    doc.text(civil_status.toUpperCase(), 115, 335.5);
+    doc.text(gender.toUpperCase(), 115, 357.5);
+    doc.text(nationality.toUpperCase(), 115, 380.5);
+    doc.text("", 115, 402.5);
+
+    doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
+      + resident.middle_name?.toString() + "_BRGY_INDIGENCY.pdf");
+  }
+
+  generateCertIndigency() {
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'px'
+    });
+
+    const resident = this.residents[this.selectedResident];
+    const template = new Image();
+    template.src = "assets/template_cert_indigency.jpg";
+    doc.addImage(template, 0, 0, 445, 600);
+
+
+    doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
+      + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
   }
 
 }

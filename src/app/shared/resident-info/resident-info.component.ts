@@ -75,7 +75,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 export class ResidentInfoComponent implements OnInit {
 
   private modalService = inject(NgbModal);
-	closeResult: WritableSignal<string> = signal('');
+  closeResult: WritableSignal<string> = signal('');
 
   residentForm = new FormGroup({
     first_name: new FormControl('', Validators.required),
@@ -84,7 +84,7 @@ export class ResidentInfoComponent implements OnInit {
     occupation: new FormControl('', Validators.required),
     present_address: new FormControl({ value: '', disabled: true }, Validators.required),
     gender: new FormControl('', Validators.required),
-    nationality: new FormControl('', Validators.required),
+    nationality: new FormControl('Filipino', Validators.required),
     civil_status: new FormControl('', Validators.required),
     birth_date: new FormControl('', Validators.required),
     contact_no: new FormControl('', Validators.required),
@@ -117,10 +117,10 @@ export class ResidentInfoComponent implements OnInit {
 
   constructor(private activeModal: NgbActiveModal
   ) {
-  
+
   }
   ngOnInit(): void {
-    this.residentForm.patchValue({present_address: this.address});
+    this.residentForm.patchValue({ present_address: this.address });
     if (this.isEdit) {
       this.residentForm.patchValue({
         first_name: this.resident.first_name,
@@ -155,8 +155,10 @@ export class ResidentInfoComponent implements OnInit {
       resident.emergency_name = this.residentForm.get('emergency_name')?.value?.toString();
       resident.emergency_address = this.residentForm.get('emergency_address')?.value?.toString();
       resident.emergency_contact_no = this.residentForm.get('emergency_contact_no')?.value?.toString();
-      resident.files = this.selectedFiles[0];
-      resident.attachment = this.selectedFiles[0].base64?.toString();
+      if (this.selectedFiles.length > 0) {
+        resident.files = this.selectedFiles[0];
+        resident.attachment = this.selectedFiles[0].base64?.toString();
+      }
       this.activeModal.close(resident);
     }
 
@@ -219,25 +221,25 @@ export class ResidentInfoComponent implements OnInit {
 
 
   open(content: TemplateRef<any>) {
-		this.modalService.open(content, { fullscreen: true }).result.then(
-			(result) => {
-				this.closeResult.set(`Closed with: ${result}`);
-			},
-			(reason) => {
-				this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
-			},
-		);
-	}
+    this.modalService.open(content, { fullscreen: true }).result.then(
+      (result) => {
+        this.closeResult.set(`Closed with: ${result}`);
+      },
+      (reason) => {
+        this.closeResult.set(`Dismissed ${this.getDismissReason(reason)}`);
+      },
+    );
+  }
 
-	private getDismissReason(reason: any): string {
-		switch (reason) {
-			case ModalDismissReasons.ESC:
-				return 'by pressing ESC';
-			case ModalDismissReasons.BACKDROP_CLICK:
-				return 'by clicking on a backdrop';
-			default:
-				return `with: ${reason}`;
-		}
-	}
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return 'by pressing ESC';
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return 'by clicking on a backdrop';
+      default:
+        return `with: ${reason}`;
+    }
+  }
 
 }
