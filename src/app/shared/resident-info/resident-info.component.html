@@ -8,7 +8,7 @@
         <div class="row mb-3">
             <div class="col">
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">First Name</label>
+                    <label class="form-label fw-bold form-label-sm">First Name</label>
                     <input type="text" class="form-control form-control-sm" formControlName="first_name" required
                         [class.is-invalid]="residentForm.get('first_name')?.invalid && residentForm.get('first_name')?.touched" />
                     <div *ngIf="residentForm.get('first_name')?.invalid && (residentForm.get('first_name')?.dirty || residentForm.get('first_name')?.touched)"
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Last Name</label>
+                    <label class="form-label fw-bold form-label-sm">Last Name</label>
                     <input type="text" class="form-control form-control-sm" formControlName="last_name" required
                         [class.is-invalid]="residentForm.get('last_name')?.invalid && residentForm.get('last_name')?.touched" />
                     <div *ngIf="residentForm.get('last_name')?.invalid && (residentForm.get('last_name')?.dirty || residentForm.get('last_name')?.touched)"
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Middle Name</label>
+                    <label class="form-label fw-bold form-label-sm">Middle Name</label>
                     <input type="text" class="form-control form-control-sm" formControlName="middle_name" required
                         [class.is-invalid]="residentForm.get('middle_name')?.invalid && residentForm.get('middle_name')?.touched" />
                     <div *ngIf="residentForm.get('middle_name')?.invalid && (residentForm.get('middle_name')?.dirty || residentForm.get('middle_name')?.touched)"
@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Occupation</label>
+                    <label class="form-label fw-bold form-label-sm">Occupation</label>
                     <input type="text" class="form-control form-control-sm" formControlName="occupation" required
                         [class.is-invalid]="residentForm.get('occupation')?.invalid && residentForm.get('occupation')?.touched" />
                     <div *ngIf="residentForm.get('occupation')?.invalid && (residentForm.get('occupation')?.dirty || residentForm.get('occupation')?.touched)"
@@ -49,11 +49,11 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Present Address (base on Establishment Address)</label>
+                    <label class="form-label fw-bold form-label-sm">Present Address (base on Establishment Address)</label>
                     <input type="text" class="form-control form-control-sm" formControlName="present_address" />
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Gender</label>
+                    <label class="form-label fw-bold form-label-sm">Gender</label>
                     <select class="form-select form-select-sm" formControlName="gender" required
                         [class.is-invalid]="residentForm.get('gender')?.invalid && residentForm.get('gender')?.touched">
                         <option *ngFor="let o of genders;" [value]="o.value">{{ o.label }}</option>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label">Attachment</label>
+                    <label class="form-label fw-bold">Personal Info</label>
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-sm" type="file"
                         (change)="onImageSelected($event)" accept="image/*">
@@ -73,13 +73,13 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label">Identification No.</label>
+                    <label class="form-label fw-bold">Identification No.</label>
                     <input type="text" class="form-control form-control-sm" formControlName="id_no">
                 </div>
             </div>
             <div class="col">
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Nationality</label>
+                    <label class="form-label fw-bold form-label-sm">Nationality</label>
                     <input type="text" class="form-control form-control-sm" formControlName="nationality" required
                         [class.is-invalid]="residentForm.get('nationality')?.invalid && residentForm.get('nationality')?.touched" />
                     <div *ngIf="residentForm.get('nationality')?.invalid && (residentForm.get('nationality')?.dirty || residentForm.get('nationality')?.touched)"
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Civil Status</label>
+                    <label class="form-label fw-bold form-label-sm">Civil Status</label>
                     <select class="form-select form-select-sm" formControlName="civil_status" required
                         [class.is-invalid]="residentForm.get('civil_status')?.invalid && residentForm.get('civil_status')?.touched">
                         <option *ngFor="let o of list_civil_status;" [value]="o.value">{{ o.label }}</option>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Date of Birth</label>
+                    <label class="form-label fw-bold form-label-sm">Date of Birth</label>
                     <div class="input-group">
                         <input type="text" class="form-control form-control-sm" placeholder="dd/mm/yyyy"
                             formControlName="birth_date" required
@@ -121,7 +121,7 @@
 
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Contact No</label>
+                    <label class="form-label fw-bold form-label-sm">Contact No</label>
                     <input type="text" class="form-control form-control-sm" formControlName="contact_no" required
                         [class.is-invalid]="residentForm.get('contact_no')?.invalid && residentForm.get('contact_no')?.touched" />
                     <div *ngIf="residentForm.get('contact_no')?.invalid && (residentForm.get('contact_no')?.dirty || residentForm.get('contact_no')?.touched)"
@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Emergency Contact Person</label>
+                    <label class="form-label fw-bold form-label-sm">Emergency Contact Person</label>
                     <input type="text" class="form-control form-control-sm" formControlName="emergency_name" required
                         [class.is-invalid]="residentForm.get('emergency_name')?.invalid && residentForm.get('emergency_name')?.touched" />
                     <div *ngIf="residentForm.get('emergency_name')?.invalid && (residentForm.get('emergency_name')?.dirty || residentForm.get('emergency_name')?.touched)"
@@ -144,7 +144,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Emergency Address</label>
+                    <label class="form-label fw-bold form-label-sm">Emergency Address</label>
                     <input type="text" class="form-control form-control-sm" formControlName="emergency_address" required
                         [class.is-invalid]="residentForm.get('emergency_address')?.invalid && residentForm.get('emergency_address')?.touched" />
                     <div *ngIf="residentForm.get('emergency_address')?.invalid && (residentForm.get('emergency_address')?.dirty || residentForm.get('emergency_address')?.touched)"
@@ -156,7 +156,7 @@
                     </div>
                 </div>
                 <div class="mb-1">
-                    <label class="form-label form-label-sm">Emergency Contact No.</label>
+                    <label class="form-label fw-bold form-label-sm">Emergency Contact No.</label>
                     <input type="text" class="form-control form-control-sm" formControlName="emergency_contact_no"
                         required
                         [class.is-invalid]="residentForm.get('emergency_contact_no')?.invalid && residentForm.get('emergency_contact_no')?.touched" />
@@ -182,17 +182,3 @@
         </button>
     </div>
 </form>
-
-
-
-<ng-template #content let-modal>
-	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title">Resident Info Attachment</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	</div>
-	<div class="modal-body">
-       <div class="text-center">
-        <img [src]="img_src" class="img-fluid" alt="attachment">
-       </div>
-	</div>
-</ng-template>

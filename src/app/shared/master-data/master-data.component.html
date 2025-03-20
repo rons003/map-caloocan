@@ -11,7 +11,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="mb-2">
-                                <label class="form-label">Code</label>
+                                <label class="form-label fw-bold">Code</label>
                                 <input type="text" class="form-control form-control-sm" placeholder="Code"
                                     [(ngModel)]="establishment.code" [disabled]="disableCode()" required
                                     #code="ngModel">
@@ -22,7 +22,7 @@
 
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Block</label>
+                                <label class="form-label fw-bold">Block</label>
                                 <select class="form-select form-select-sm" [(ngModel)]="establishment.block" required
                                     #block="ngModel">
                                     <option *ngFor="let o of blocks;" [value]="o.value">{{ o.label }}</option>
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Address</label>
+                                <label class="form-label fw-bold">Address</label>
                                 <textarea class="form-control form-control-sm" rows="3"
                                     [(ngModel)]="establishment.address" placeholder="Address" required
                                     #address="ngModel"></textarea>
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Establishment Type</label>
+                                <label class="form-label fw-bold">Establishment Type</label>
                                 <select class="form-select form-select-sm" [(ngModel)]="establishment.type" required
                                     #type="ngModel">
                                     <option *ngFor="let o of types;" [value]="o.value">{{ o.label }}</option>
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                             <div class="mb-2">
-                                <label class="form-label">Image Attachment</label>
+                                <label class="form-label fw-bold">Image Attachment</label>
                                 <input class="form-control form-control-sm" type="file" multiple="true"
                                     (change)="onImageSelected($event)" accept="image/*">
                             </div>
@@ -136,7 +136,7 @@
                                     <td>{{ residents[selectedResident].emergency_contact_no }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Attachment</th>
+                                    <th>Personal Info</th>
                                     <td class="text-center"><button type="button" class="btn btn-sm btn-link p-0" (click)="openResidentInfoAttachment()">View</button></td>
                                 </tr>
                                 <!-- <tr>
@@ -173,22 +173,22 @@
                         <table class="table table-sm table-bordered">
                             <tbody>
                                 <tr>
-                                    <td>Barangay Residency</td>
+                                    <th>Barangay Residency</th>
                                     <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
                                             (click)="generateBarangayResidency()">Generate</button></td>
                                 </tr>
                                 <tr>
-                                    <td>Certificate Indigency</td>
+                                    <th>Certificate Indigency</th>
                                     <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
                                             (click)="generateCertIndigency()">Generate</button></td>
                                 </tr>
                                 <tr>
-                                    <td>Barangay Indigency</td>
+                                    <th>Barangay Indigency</th>
                                     <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
                                             (click)="generateBarangayIndigency()">Generate</button></td>
                                 </tr>
                                 <tr>
-                                    <td>Barangay Clearance</td>
+                                    <th>Barangay Clearance</th>
                                     <td class="text-center"><button type="button" class="btn btn-link btn-sm p-0"
                                             (click)="generateBarangayClearance()">Generate</button></td>
                                 </tr>
