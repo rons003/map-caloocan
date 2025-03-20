@@ -125,7 +125,7 @@
                                 </tr>
                                 <tr>
                                     <th>Age</th>
-                                    <td>{{ residents[selectedResident].age }}</td>
+                                    <td>{{ getAge(residents[selectedResident].birth_date ?? "") }}</td>
                                     <th>Address</th>
                                     <td>{{ residents[selectedResident].emergency_address}}</td>
                                 </tr>

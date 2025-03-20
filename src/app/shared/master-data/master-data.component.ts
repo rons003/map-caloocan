@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbActiveModal, NgbDateStruct, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResidentInfoComponent } from '../resident-info/resident-info.component';
 import { ApiService } from '../../services/api.service';
 import { AsyncSubject, Observable, Subject } from 'rxjs';
@@ -9,9 +9,9 @@ import Swal from 'sweetalert2';
 import { Resident } from '../../model/resident.model';
 import { Establishment } from '../../model/establishment.model';
 import jsPDF from 'jspdf';
-import { right } from '@popperjs/core';
-import { add } from 'ol/coordinate';
 import { ResidentInfoAttachmentComponent } from '../resident-info-attachment/resident-info-attachment.component';
+import { CustomAdapter } from '../../services/custom-adapter.service';
+import { CustomDateParserFormatter } from '../../services/custom-adapter-formatter.service';
 
 
 export interface SelectedFiles {
@@ -25,6 +25,10 @@ export interface SelectedFiles {
   standalone: true,
   imports: [NgbDropdownModule, FormsModule, CommonModule],
   templateUrl: './master-data.component.html',
+  providers: [
+    { provide: NgbDateAdapter, useClass: CustomAdapter },
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter },
+  ],
   styleUrl: './master-data.component.scss'
 })
 export class MasterDataComponent implements OnInit, OnDestroy {
@@ -61,7 +65,8 @@ export class MasterDataComponent implements OnInit, OnDestroy {
 
 
   constructor(private activeModal: NgbActiveModal,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private dateAdapter: NgbDateAdapter<string>
   ) {
 
   }
@@ -463,6 +468,18 @@ export class MasterDataComponent implements OnInit, OnDestroy {
         + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
     }
 
+  }
+
+  getAge(birth_date: string) {
+    const date = this.dateAdapter.fromModel(birth_date);
+    const year = date?.year ?? 1111;
+    const day = date?.day ?? 1;
+    const month = date?.month ?? 1;
+    
+    const jsDate = new Date(year, month - 1, day);
+    let timeDiff = Math.abs(Date.now() - jsDate.getTime());
+    let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
+    return age;
   }
 
 }

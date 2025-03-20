@@ -6,61 +6,14 @@ import { ApiService } from '../../services/api.service';
 import { Resident } from '../../model/resident.model';
 import { AsyncSubject, Observable } from 'rxjs';
 import { ResidentInfoAttachmentComponent } from '../resident-info-attachment/resident-info-attachment.component';
+import { CustomAdapter } from '../../services/custom-adapter.service';
+import { CustomDateParserFormatter } from '../../services/custom-adapter-formatter.service';
 
 export interface SelectedFiles {
   name: string;
   file: any;
   base64?: string;
 }
-
-/**
- * This Service handles how the date is represented in scripts i.e. ngModel.
- */
-@Injectable()
-export class CustomAdapter extends NgbDateAdapter<string> {
-  readonly DELIMITER = '-';
-
-  fromModel(value: string | null): NgbDateStruct | null {
-    if (value) {
-      const date = value.split(this.DELIMITER);
-      return {
-        day: parseInt(date[0], 10),
-        month: parseInt(date[1], 10),
-        year: parseInt(date[2], 10),
-      };
-    }
-    return null;
-  }
-
-  toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
-  }
-}
-
-/**
- * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
- */
-@Injectable()
-export class CustomDateParserFormatter extends NgbDateParserFormatter {
-  readonly DELIMITER = '/';
-
-  parse(value: string): NgbDateStruct | null {
-    if (value) {
-      const date = value.split(this.DELIMITER);
-      return {
-        day: parseInt(date[0], 10),
-        month: parseInt(date[1], 10),
-        year: parseInt(date[2], 10),
-      };
-    }
-    return null;
-  }
-
-  format(date: NgbDateStruct | null): string {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
-  }
-}
-
 
 @Component({
   selector: 'app-resident-info',
@@ -142,6 +95,7 @@ export class ResidentInfoComponent implements OnInit {
       this.img_src = "data:image/jpg;base64, " + this.resident.attachment;
     }
   }
+
   setResident() {
     if (this.residentForm.valid) {
       const resident = new Resident();
