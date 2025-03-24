@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   search: string = '';
   interval: any;
   image: string = '';
+  type: string = '';
 
   constructor(private apiService: ApiService) {
 
@@ -95,7 +96,7 @@ export class HomeComponent implements OnInit {
 
     }, 500);
     this.image = "data:image/jpg;base64, " + resident.image;
-
+    this.type = resident.type;
   }
 
   open() {
