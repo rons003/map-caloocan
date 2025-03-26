@@ -454,11 +454,23 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       format: 'a4',
       unit: 'px'
     });
-    const today = new Date();
+    const dateObj = new Date();
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString("default", { month: "long" });
+    const year = dateObj.getFullYear();
+    const nthNumber = (number: number) => {
+      return number > 0
+        ? ["th", "st", "nd", "rd"][
+        (number > 3 && number < 21) || number % 10 > 3 ? 0 : number % 10
+        ]
+        : "";
+    };
+
+    const date = `${day}${nthNumber(day)} day of ${month}, ${year}`;
     const resident = this.residents[this.selectedResident];
     const fullName = resident.last_name?.toString() + ", "
-        + resident.first_name?.toString() + " "
-        + resident.middle_name?.toString();
+      + resident.first_name?.toString() + " "
+      + resident.middle_name?.toString();
     const template = new Image();
     template.src = "assets/template_cert_indigency.jpg";
     doc.addImage(template, 0, 0, 445, 600);
@@ -471,9 +483,10 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     doc.text(this.parameters.relation.toUpperCase(), 110, 245, { align: 'center' });
     doc.text(this.parameters.purpose.toUpperCase(), 275, 245, { align: 'center' });
 
-    doc.text(today.toDateString(), 152, 271, { align: 'center' });
+    doc.text(date, 152, 271, { align: 'center' });
     doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
       + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
+    
 
   }
 
@@ -495,7 +508,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     this.parameters.street = "";
     this.parameters.relation = "";
     this.parameters.purpose = "";
-		this.modalService.open(content, { size: 'sm', centered: true });
-	}
+    this.modalService.open(content, { size: 'sm', centered: true });
+  }
 
 }
