@@ -1,15 +1,16 @@
-<div class="row mb-3 bg-dark text-white p-3">
+<div class="row bg-dark text-white p-3">
   <div class="col">
-    <img src="assets/mayor.jpg" alt="mayor-banner" width="850" height="300">
+    <img src="assets/mayor.jpg" alt="mayor-banner" width="500" height="250">
   </div>
   <div class="col align-self-end">
     <p class="h6 text-center header-color" style="margin-left: 30px;">Aksyon at</p>
     <p class="h6 text-end header-color">Malasakit</p>
   </div>
   <div class="col-1 text-end">
-    <button type="button" class="btn btn-secondary btn-lg">About</button>
+    <button type="button" class="btn btn-outline-secondary btn-lg">About</button>
   </div>
 </div>
+
 <div class="canvas-container">
   <canvas #innerCanvas></canvas>
   <canvas #outerCanvas (click)="clickCanvas($event, content)"></canvas>

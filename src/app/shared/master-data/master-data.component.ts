@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbActiveModal, NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct, NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResidentInfoComponent } from '../resident-info/resident-info.component';
@@ -62,6 +62,14 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   selectedImages!: FileList;
   imagesBase64: string[] = []
   o: Resident | undefined;
+
+  parameters = {
+    name: '',
+    age: '',
+    street: '',
+    relation: '',
+    purpose: ''
+  };
 
 
   constructor(private activeModal: NgbActiveModal,
@@ -411,7 +419,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
       const resident = this.residents[this.selectedResident];
       const fullName = resident.last_name?.toString() + ", "
         + resident.first_name?.toString() + " "
-        + resident.middle_name?.toString()
+        + resident.middle_name?.toString();
 
       const address = resident.present_address?.toString() ?? "";
       const birth_date = resident.birth_date?.toString() ?? "";
@@ -442,31 +450,30 @@ export class MasterDataComponent implements OnInit, OnDestroy {
   }
 
   async generateCertIndigency() {
-    const { value: text } = await Swal.fire({
-      input: "textarea",
-      inputLabel: "Message",
-      inputPlaceholder: "Type your message here...",
-      inputAttributes: {
-        "aria-label": "Type your message here"
-      },
-      showCancelButton: true
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'px'
     });
-    if (text) {
-      const doc = new jsPDF({
-        format: 'a4',
-        unit: 'px'
-      });
+    const today = new Date();
+    const resident = this.residents[this.selectedResident];
+    const fullName = resident.last_name?.toString() + ", "
+        + resident.first_name?.toString() + " "
+        + resident.middle_name?.toString();
+    const template = new Image();
+    template.src = "assets/template_cert_indigency.jpg";
+    doc.addImage(template, 0, 0, 445, 600);
 
-      const resident = this.residents[this.selectedResident];
-      const template = new Image();
-      template.src = "assets/template_cert_indigency.jpg";
-      doc.addImage(template, 0, 0, 445, 600);
+    doc.setFontSize(12);
+    doc.text(this.parameters.name.toUpperCase(), 250, 155, { align: 'center' });
+    doc.text(this.parameters.age, 358, 155);
+    doc.text(this.parameters.street.toUpperCase(), 300, 173, { align: 'center' });
+    doc.text(fullName.toUpperCase(), 310, 228, { align: 'center' });
+    doc.text(this.parameters.relation.toUpperCase(), 110, 245, { align: 'center' });
+    doc.text(this.parameters.purpose.toUpperCase(), 275, 245, { align: 'center' });
 
-      doc.setFontSize(12);
-      doc.text(text.toUpperCase(), 25, 160, { maxWidth: 400, align: 'justify' });
-      doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
-        + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
-    }
+    doc.text(today.toDateString(), 152, 271, { align: 'center' });
+    doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
+      + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
 
   }
 
@@ -475,11 +482,20 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     const year = date?.year ?? 1111;
     const day = date?.day ?? 1;
     const month = date?.month ?? 1;
-    
+
     const jsDate = new Date(year, month - 1, day);
     let timeDiff = Math.abs(Date.now() - jsDate.getTime());
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365.25);
     return age;
   }
+
+  openCertIndigency(content: TemplateRef<any>) {
+    this.parameters.name = "";
+    this.parameters.age = "";
+    this.parameters.street = "";
+    this.parameters.relation = "";
+    this.parameters.purpose = "";
+		this.modalService.open(content, { size: 'sm', centered: true });
+	}
 
 }
