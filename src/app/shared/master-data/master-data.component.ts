@@ -486,7 +486,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     doc.text(date, 152, 271, { align: 'center' });
     doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
       + resident.middle_name?.toString() + "_CERT_INDIGENCY.pdf");
-    
+
 
   }
 
@@ -509,6 +509,47 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     this.parameters.relation = "";
     this.parameters.purpose = "";
     this.modalService.open(content, { size: 'sm', centered: true });
+  }
+
+  generateBrgyID() {
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'cm'
+    });
+    const today = new Date();
+    const resident = this.residents[this.selectedResident];
+    const fullName = resident.last_name?.toString() + ", "
+      + resident.first_name?.toString() + " "
+      + resident.middle_name?.toString();
+
+    const birth_date = resident.birth_date?.toString() ?? "";
+    const civil_status = resident.civil_status?.toString() ?? "";
+
+    const emergency_name = resident.emergency_name?.toString() ?? "";
+    const contact_no = resident.emergency_contact_no?.toString() ?? "";
+
+    const front = new Image();
+    front.src = "assets/template_id_front.png";
+    const back = new Image();
+    back.src = "assets/template_id_back.png";
+
+    doc.addImage(front, 0, 0, 5.5, 8.5);
+    doc.addImage(back, 5.5, 0, 5.5, 8.5);
+
+    doc.setFontSize(8);
+    doc.text(fullName.toUpperCase(), 2.75, 5.7, { align: 'center' });
+
+    doc.setFontSize(6);
+    doc.text(birth_date, 1.5, 6.85);
+    doc.text(civil_status.toUpperCase(), 1.62, 7.15);
+    doc.text(today.toLocaleDateString(), 1.62, 7.78);
+
+    doc.setFontSize(8);
+
+    doc.text(emergency_name.toUpperCase(), 6.73, 1.78);
+    doc.text(contact_no, 7.30, 3.05);
+    doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
+      + resident.middle_name?.toString() + "_BARANGAY_ID.pdf");
   }
 
 }
