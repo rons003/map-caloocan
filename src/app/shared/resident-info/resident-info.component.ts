@@ -116,6 +116,8 @@ export class ResidentInfoComponent implements OnInit {
       if (this.selectedFiles.length > 0) {
         resident.files = this.selectedFiles[0];
         resident.attachment = this.selectedFiles[0].base64?.toString();
+      } else {
+        resident.attachment = this.resident.attachment;
       }
       this.activeModal.close(resident);
     }
