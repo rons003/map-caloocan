@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   background = new Image();
 
   residents: any[] = [];
+  birthdays: any[] = [];
   polygon: any[] = [];
   search: string = '';
   interval: any;
@@ -70,10 +71,18 @@ export class HomeComponent implements OnInit {
         this.residents = res;
       });
   }
+
+  getBirthDateAlert() {
+    this.apiService.getBirthDateAlert()
+    .subscribe(res => {
+      this.birthdays = res;
+    });
+  }
   //----------------------------------------------
 
   ngOnInit(): void {
     this.getResident();
+    this.getBirthDateAlert();
     const canvas = this.canvas.nativeElement;
     canvas.width = 1918;
     canvas.height = 2894;
@@ -267,5 +276,9 @@ export class HomeComponent implements OnInit {
   openAbout(content: TemplateRef<any>) {
     this.modalService.open(content, { centered: true, size: 'xl' });
 
+  }
+
+  openBirthdays(content: TemplateRef<any>) {
+    this.modalService.open(content, { centered: true, size: 'xl' });
   }
 }

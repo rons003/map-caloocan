@@ -92,4 +92,9 @@ export class ApiService {
 
     return this.http.request<any>("post", url_, options_);
   }
+
+  getBirthDateAlert(): Observable<any[]> {
+    let url_ = this.baseUrl + "/resident/birth-date-alert";
+    return this.http.request<any[]>("get", url_);
+  }
 }

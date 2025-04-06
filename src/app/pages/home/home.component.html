@@ -6,8 +6,11 @@
     <p class="h6 text-center header-color" style="margin-left: 30px;">Aksyon at</p>
     <p class="h6 text-end header-color">Malasakit</p>
   </div>
-  <div class="col-1 text-end me-2">
-    <button type="button" class="btn btn-outline-secondary btn-lg" (click)="openAbout(aboutcontent)">About</button>
+  <div class="col-1 text-end">
+    <button type="button" class="btn btn-secondary mb-2" (click)="openAbout(aboutcontent)">About</button>
+    <button *ngIf="birthdays.length > 0" type="button" class="btn btn-primary btn-sm" (click)="openBirthdays(birthdayscontent)"><i class="bi bi-bell p-1"></i><span class="badge bg-danger">{{
+        birthdays.length }}</span>
+    </button>
   </div>
 </div>
 
@@ -111,6 +114,40 @@
         The system also generates official forms and IDs automatically, streamlining registration, verification, and
         record-keeping. This system enhances efficiency, security, and administrative convenience.
       </p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #birthdayscontent let-modal>
+  <div class="card">
+    <div class="card-header">
+      List of Birthday's
+    </div>
+    <div class="card-body">
+      <ol class="list-group list-group-numbered mb-3">
+        <li class="list-group-item d-flex justify-content-between align-items-start"
+          *ngFor="let o of birthdays;let i = index">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{o.first_name}} {{ o.last_name}} <img
+                [src]="o.sex == 'MALE' ? src_male_avatar : src_female_avatar" alt="Avatar" width="28" height="28"
+                style="border-radius: 50%; margin-left: 5px;"></div>
+            <label class="me-1">Block: {{ o.block }}</label>
+            <label class="me-1">Code: {{o.code}}</label>
+            <label class="me-1">Address: {{ o.address }}</label>
+
+          </div>
+          <div class="fw-bold">{{ o.birth_date }}</div>
+          <!-- <div class="d-grid gap-1">
+            <button type="button" class="btn btn-primary btn-sm" (click)="openResidentInfo(o)"><i
+                class="bi bi-arrow-right-short"></i> Details</button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="track(o)"><i
+                class="bi bi-geo-alt-fill"></i> Track</button>
+          </div> -->
+
+        </li>
+
+      </ol>
+      <label>Result: {{ residents.length }}</label>
     </div>
   </div>
 </ng-template>
