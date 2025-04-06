@@ -527,12 +527,12 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     const civil_status = resident.civil_status?.toString() ?? "";
 
     const address = resident.present_address?.toString() ?? "";
-    const split_address = address.split("ST.", 1);
+    const split_address = address.toUpperCase().split("ST", 1);
 
     const emergency_name = resident.emergency_name?.toString() ?? "";
     const contact_no = resident.emergency_contact_no?.toString() ?? "";
     const emergency_address = resident.emergency_address?.toString() ?? "";
-    const split_emergency_address = emergency_address.split("ST.", 1);
+    const split_emergency_address = emergency_address.toUpperCase().split("ST", 1);
 
     const front = new Image();
     front.src = "assets/template_id_front.png";
@@ -554,7 +554,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     doc.setFontSize(8);
 
     doc.text(emergency_name.toUpperCase(), 6.73, 1.78);
-    doc.text(split_emergency_address.length > 0 ? split_emergency_address[0].toUpperCase() : "", 6.85, 2.20);
+    doc.text(split_emergency_address.length > 0 ? split_emergency_address[0].toUpperCase() + " ST." : "", 6.85, 2.20);
     doc.text(contact_no, 7.30, 3.05);
     doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
       + resident.middle_name?.toString() + "_BARANGAY_ID.pdf");

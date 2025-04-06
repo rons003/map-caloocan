@@ -45,6 +45,15 @@ export class HomeComponent implements OnInit {
   image: string = '';
   type: string = '';
 
+  block: number = 1;
+
+  blocks: any[] = [
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+  ];
+
   constructor(private apiService: ApiService) {
 
   }
@@ -52,7 +61,7 @@ export class HomeComponent implements OnInit {
   //-------------------API CALLS------------------
   getResident() {
     let options = {
-      params: { filter: this.search }
+      params: { block: this.block, filter: this.search }
     }
     this.apiService.getResident(options)
       .subscribe(res => {
@@ -140,7 +149,7 @@ export class HomeComponent implements OnInit {
       }).catch((error) => {
         console.log(error);
       });
-    } 
+    }
   }
 
   openLg(content: TemplateRef<any>) {
@@ -178,7 +187,7 @@ export class HomeComponent implements OnInit {
       // const image = new Image();
       // image.src = "assets/barangay.jpg";
       // innerContext.drawImage(image, x, y, 150, 150);
-      this.modalService.open(content, { centered: true });
+      this.modalService.open(content, { centered: true, size: 'xl' });
 
     }
   }
@@ -250,5 +259,10 @@ export class HomeComponent implements OnInit {
       return null
     }
     return item.value
+  }
+
+  openAbout(content: TemplateRef<any>) {
+    this.modalService.open(content, { centered: true, size: 'xl' });
+
   }
 }

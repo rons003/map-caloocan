@@ -6,8 +6,8 @@
     <p class="h6 text-center header-color" style="margin-left: 30px;">Aksyon at</p>
     <p class="h6 text-end header-color">Malasakit</p>
   </div>
-  <div class="col-1 text-end">
-    <button type="button" class="btn btn-outline-secondary btn-lg">About</button>
+  <div class="col-1 text-end me-2">
+    <button type="button" class="btn btn-outline-secondary btn-lg" (click)="openAbout(aboutcontent)">About</button>
   </div>
 </div>
 
@@ -20,7 +20,7 @@
   <i class="bi bi-search"></i>
 </div>
 
-<div class="px-4 py-5 my-5 text-center">
+<!-- <div class="px-4 py-5 my-5 text-center">
   <img class="d-block mx-auto mb-4" src="assets/logo3.jpg" alt="" width="160" height="150"
     style="box-shadow: 2px 2px 3px #999;">
   <h1 class="display-5 fw-bold">Caloocan City Barangay
@@ -30,7 +30,7 @@
       such as homeless shelter residents or program participants. Resident tracker systems can help with tracking
       educational needs, financial shortfalls, medical needs, and more.</p>
   </div>
-</div>
+</div> -->
 
 
 
@@ -38,9 +38,19 @@
   <div class="modal-body">
     <div class="row mb-3">
       <div class="col text-center">
-        <!-- <input type="text" class="form-control" placeholder="Search" [(ngModel)]="resident" [ngbTypeahead]="search"
-          [resultFormatter]="searchFormatter" (change)="onSearch()"> -->
-        <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search" (change)="onSearch()">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Block</span>
+          <div class="input-group-prepend">
+            <select class="form-select" [(ngModel)]="block" (change)="getResident()">
+              <option *ngFor="let o of blocks;" [value]="o.value">{{ o.label }}</option>
+            </select>
+          </div>
+          <span class="input-group-text">Resident</span>
+          <input type="text" class="form-control " placeholder="Search" [(ngModel)]="search" (change)="onSearch()">
+          <button class="btn btn-outline-secondary" type="button" (click)="onSearch()"><i
+              class="bi bi-search"></i></button>
+        </div>
+
       </div>
     </div>
     <div class="row mb-3">
@@ -86,12 +96,34 @@
 
 
 <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">{{ type }}</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  <div class="card">
+    <div class="card-header">
+      {{ type }}
+    </div>
+    <div class="card-body">
+      <img [src]="image" class="img-fluid" alt="image">
+    </div>
   </div>
-  <div class="modal-body">
-    <img [src]="image" class="img-fluid" alt="image">
-  </div>
+</ng-template>
 
+<ng-template #aboutcontent let-modal>
+  <div class="card">
+    <div class="card-header">
+      About
+    </div>
+    <div class="card-body">
+      <p>
+        Barangay Resident Locator is a smart application designed to track and manage residents within the
+        [community/barangay].
+      </p>
+      <p>
+        It features a real-time locator for registered individuals, allowing authorities or [community managers/barangay
+        or local officials] to verify residency quickly.
+      </p>
+      <p>
+        The system also generates official forms and IDs automatically, streamlining registration, verification, and
+        record-keeping. This system enhances efficiency, security, and administrative convenience.
+      </p>
+    </div>
+  </div>
 </ng-template>
