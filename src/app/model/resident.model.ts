@@ -19,4 +19,5 @@ export class Resident {
     attachment: string | undefined;
     files: any = {}
     id_no: string | undefined;
+    info_filename: string | undefined;
 }

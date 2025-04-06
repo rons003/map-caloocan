@@ -540,6 +540,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     doc.text(fullName.toUpperCase(), 2.75, 5.7, { align: 'center' });
 
     doc.setFontSize(6);
+    doc.text("78 GENERAL CONCEPCION", 1.22, 6.25);
     doc.text(birth_date, 1.5, 6.85);
     doc.text(civil_status.toUpperCase(), 1.62, 7.15);
     doc.text(today.toLocaleDateString(), 1.62, 7.78);
@@ -547,6 +548,7 @@ export class MasterDataComponent implements OnInit, OnDestroy {
     doc.setFontSize(8);
 
     doc.text(emergency_name.toUpperCase(), 6.73, 1.78);
+    doc.text("78 GENERAL CONCEPCION", 6.85, 2.20);
     doc.text(contact_no, 7.30, 3.05);
     doc.save(resident.last_name?.toString() + "_" + resident.first_name?.toString() + "_"
       + resident.middle_name?.toString() + "_BARANGAY_ID.pdf");

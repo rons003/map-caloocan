@@ -68,7 +68,6 @@ export class ResidentInfoComponent implements OnInit {
   address: string = '';
 
   selectedImages!: FileList;
-  imagesBase64: string[] = []
 
   constructor(private activeModal: NgbActiveModal
   ) {
@@ -93,6 +92,11 @@ export class ResidentInfoComponent implements OnInit {
         id_no: this.resident.id_no
       });
       this.img_src = "data:image/jpg;base64, " + this.resident.attachment;
+      this.selectedFiles.push({
+        name: this.resident.info_filename ?? "",
+        file: null,
+        base64: this.resident.attachment
+      });
     }
   }
 
@@ -141,6 +145,7 @@ export class ResidentInfoComponent implements OnInit {
       this.toFilesBase64(files, this.selectedFiles).subscribe((res: SelectedFiles[]) => {
         this.selectedFiles = res;
         // this.resident.attachment = "data:image/jpg;base64, " + this.selectedFiles[0].base64;
+        console.log(this.selectedFiles);
       });
     }
   }
@@ -186,12 +191,12 @@ export class ResidentInfoComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result != 'close') {
-        
+
       }
     }).catch((error) => {
       console.log(error);
     });
-   
+
   }
 
   private getDismissReason(reason: any): string {
