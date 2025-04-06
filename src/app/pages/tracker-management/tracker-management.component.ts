@@ -21,6 +21,15 @@ export class TrackerManagementComponent implements OnInit {
   pageSize: number = 10;
   search: string = '';
 
+  block: number = 1;
+
+  blocks: any[] = [
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+    { value: 4, label: 4 },
+  ];
+
   constructor(private apiService: ApiService) {
 
   }
@@ -137,19 +146,29 @@ export class TrackerManagementComponent implements OnInit {
   }
 
   onEmptySearch() {
-    if (this.search === "")
-      this.getEstablishments();
+    if (this.search === "") {
+      let options = {
+        params: { block: this.block }
+      }
+      this.getEstablishments(options);
+    }
+
   }
 
   onSearch() {
     if (this.search !== "") {
       let options = {
-        params: { filter: this.search }
+        params: { block: this.block, filter: this.search }
       }
       this.getEstablishments(options);
     }
   }
 
-
+  onChangeBlock() {
+    let options = {
+      params: { block: this.block, filter: this.search }
+    }
+    this.getEstablishments(options);
+  }
 
 }

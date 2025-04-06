@@ -153,6 +153,7 @@ export class HomeComponent implements OnInit {
   }
 
   openLg(content: TemplateRef<any>) {
+    this.block = 1;
     if (this.interval) {
       clearInterval(this.interval);
       this.clearCanvas();
