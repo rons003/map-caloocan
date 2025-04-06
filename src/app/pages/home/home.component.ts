@@ -54,6 +54,8 @@ export class HomeComponent implements OnInit {
     { value: 4, label: 4 },
   ];
 
+  src_male_avatar: string = 'assets/male_avatar.jpg';
+  src_female_avatar: string = 'assets/female_avatar.jpg';
   constructor(private apiService: ApiService) {
 
   }

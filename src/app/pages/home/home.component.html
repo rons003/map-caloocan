@@ -53,8 +53,9 @@
           <li class="list-group-item d-flex justify-content-between align-items-start"
             *ngFor="let o of residents;let i = index">
             <div class="ms-2 me-auto">
-              <div class="fw-bold">{{o.first_name}} {{ o.last_name}} <img src="assets/img_avatar.png" alt="Avatar"
-                  width="28" height="28" style="border-radius: 50%; margin-left: 5px;"></div>
+              <div class="fw-bold">{{o.first_name}} {{ o.last_name}} <img
+                  [src]="o.sex == 'MALE' ? src_male_avatar : src_female_avatar" alt="Avatar" width="28" height="28"
+                  style="border-radius: 50%; margin-left: 5px;"></div>
               <label class="me-1">Block: {{ o.block }}</label>
               <label class="me-1">Code: {{o.code}}</label>
               <label class="me-1">Address: {{ o.address }}</label>
