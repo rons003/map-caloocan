@@ -28,10 +28,6 @@ export class HomeComponent implements OnInit {
 
   isMenuCollapsed = true;
 
-  searchFormatter = (result: string) => result.toUpperCase();
-
-  images = [944, 1011, 984].map((n) => 'assets/barangay.jpg');
-
   resident: string = '';
 
   pinDescription: boolean = false;
@@ -86,6 +82,9 @@ export class HomeComponent implements OnInit {
     const canvas = this.canvas.nativeElement;
     canvas.width = 1918;
     canvas.height = 2894;
+
+    // canvas.width = 1918;
+    // canvas.height = 2894;
 
     const outerCanvas = this.outerCanvas.nativeElement;
     outerCanvas.width = canvas.width;

@@ -8,7 +8,8 @@
   </div>
   <div class="col-1 text-end">
     <button type="button" class="btn btn-secondary mb-2" (click)="openAbout(aboutcontent)">About</button>
-    <button *ngIf="birthdays.length > 0" type="button" class="btn btn-primary btn-sm" (click)="openBirthdays(birthdayscontent)"><i class="bi bi-bell p-1"></i><span class="badge bg-danger">{{
+    <button *ngIf="birthdays.length > 0" type="button" class="btn btn-primary btn-sm"
+      (click)="openBirthdays(birthdayscontent)"><i class="bi bi-bell p-1"></i><span class="badge bg-danger">{{
         birthdays.length }}</span>
     </button>
   </div>
@@ -21,6 +22,20 @@
 
 <div type="button" class="float" (click)="openLg(searchmodal)">
   <i class="bi bi-search"></i>
+</div>
+
+<div class="row d-flex align-items-center bg-dark text-white p-3 mt-3">
+  <div class="col">
+    <img src="assets/logo3.jpg" height="150" class="rounded float-start" alt="...">
+  </div>
+
+  <div class="col-8 text-center">
+    <p class="footer-text">Responsableng Mamumuno</p>
+  </div>
+
+  <div class="col">
+    <img src="assets/banner3.png" height="150" class="rounded float-end" alt="...">
+  </div>
 </div>
 
 <ng-template #searchmodal let-modal>
